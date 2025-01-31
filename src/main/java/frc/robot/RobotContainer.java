@@ -20,10 +20,12 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -41,6 +43,7 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 public class RobotContainer {
   // Subsystems
   private final Drive drive;
+  public final Elevator m_Elevator = new Elevator();
 
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
@@ -50,6 +53,7 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
@@ -146,6 +150,13 @@ public class RobotContainer {
                             new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
                     drive)
                 .ignoringDisable(true));
+
+    // elevator button binding
+    controller.povUp().onTrue(new InstantCommand(m_Elevator::setelevatorL4));
+    controller.povDown().onTrue(new InstantCommand(m_Elevator::setelevatorL1));
+    controller.povRight().onTrue(new InstantCommand(m_Elevator::setelevatorposback));
+    controller.povLeft().onTrue(new InstantCommand(m_Elevator::setelevatorpos));
+    controller.y().onTrue(new InstantCommand(m_Elevator::stopelevator));
   }
 
   /**
