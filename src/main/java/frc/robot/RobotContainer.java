@@ -25,6 +25,9 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
+import frc.robot.subsystems.AlgaeIntake;
+import frc.robot.subsystems.CLIMBER;
+import frc.robot.subsystems.CoralIntake;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
@@ -44,7 +47,9 @@ public class RobotContainer {
   // Subsystems
   private final Drive drive;
   public final Elevator m_Elevator = new Elevator();
-
+  public final CLIMBER m_climber = new CLIMBER();
+  public final CoralIntake m_CoralIntake = new CoralIntake();
+  public final AlgaeIntake m_AlgaeIntake = new AlgaeIntake();
   // Controller
   private final CommandXboxController controller = new CommandXboxController(0);
 
@@ -128,14 +133,14 @@ public class RobotContainer {
             () -> -controller.getRightX()));
 
     // Lock to 0° when A button is held
-    controller
-        .a()
-        .whileTrue(
-            DriveCommands.joystickDriveAtAngle(
-                drive,
-                () -> -controller.getLeftY(),
-                () -> -controller.getLeftX(),
-                () -> new Rotation2d()));
+    // controller
+    //     .a()
+    //     .whileTrue(
+    //         DriveCommands.joystickDriveAtAngle(
+    //             drive,
+    //             () -> -controller.getLeftY(),
+    //             () -> -controller.getLeftX(),
+    //             () -> new Rotation2d()));
 
     // Switch to X pattern when X button is pressed
     controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
@@ -152,11 +157,42 @@ public class RobotContainer {
                 .ignoringDisable(true));
 
     // elevator button binding
-    controller.povUp().onTrue(new InstantCommand(m_Elevator::setelevatorL4));
-    controller.povDown().onTrue(new InstantCommand(m_Elevator::setelevatorL1));
-    controller.povRight().onTrue(new InstantCommand(m_Elevator::setelevatorposback));
-    controller.povLeft().onTrue(new InstantCommand(m_Elevator::setelevatorpos));
-    controller.y().onTrue(new InstantCommand(m_Elevator::stopelevator));
+    // controller.povUp().onTrue(new InstantCommand(m_Elevator::setelevatorL4));
+    // controller.povDown().onTrue(new InstantCommand(m_Elevator::setelevatorL1));
+    // controller.povRight().onTrue(new InstantCommand(m_Elevator::setelevatorposback));
+    // controller.povLeft().onTrue(new InstantCommand(m_Elevator::setelevatorpos));
+    // controller.y().onTrue(new InstantCommand(m_Elevator::stopelevator));
+
+    // climber button binding
+    controller
+        .y()
+        .onTrue(new InstantCommand(m_climber::climbup))
+        .onFalse(new InstantCommand(m_climber::climbstop));
+    controller
+        .a()
+        .onTrue(new InstantCommand(m_climber::climbdown))
+        .onFalse(new InstantCommand(m_climber::climbstop));
+
+    // coral intake button binding
+    controller
+        .rightBumper()
+        .onTrue(new InstantCommand(m_CoralIntake::coralin))
+        .onFalse(new InstantCommand(m_CoralIntake::coralstop));
+    controller
+        .leftBumper()
+        .onTrue(new InstantCommand(m_CoralIntake::coralout))
+        .onFalse(new InstantCommand(m_CoralIntake::coralstop));
+
+
+            // algae intake button binding
+    controller
+    .rightTrigger()
+    .onTrue(new InstantCommand(m_AlgaeIntake::algaein))
+    .onFalse(new InstantCommand(m_AlgaeIntake::algaestop));
+    controller
+    .leftTrigger()
+    .onTrue(new InstantCommand(m_AlgaeIntake::algaeout))
+    .onFalse(new InstantCommand(m_AlgaeIntake::algaestop));
   }
 
   /**
