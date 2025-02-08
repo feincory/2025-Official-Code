@@ -6,27 +6,27 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AlgaeIntake extends SubsystemBase {
   /** Creates a new AlgaeIntake. */
-   TalonSRX m_Algae = new TalonSRX(26);
+  TalonSRX m_Algae = new TalonSRX(26);
+
   public AlgaeIntake() {}
 
   @Override
-  public void periodic() {
-  }
-
+  public void periodic() {}
 
   public void algaein() {
-    m_Algae.set(ControlMode.PercentOutput,.20);
+    m_Algae.set(ControlMode.PercentOutput, .35);
   }
 
   public void algaestop() {
- m_Algae.set(ControlMode.PercentOutput,0);  }
+    m_Algae.set(ControlMode.PercentOutput, .05);
+  }
 
   public void algaeout() {
- m_Algae.set(ControlMode.PercentOutput,-.20);  }
-    // This method will be called once per scheduler run
+    m_Algae.set(ControlMode.PercentOutput, -.35);
   }
+  // This method will be called once per scheduler run
+}

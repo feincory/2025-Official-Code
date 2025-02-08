@@ -21,7 +21,10 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+// import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+// import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
 import frc.robot.generated.TunerConstants;
@@ -29,6 +32,7 @@ import frc.robot.subsystems.AlgaeIntake;
 import frc.robot.subsystems.CLIMBER;
 import frc.robot.subsystems.CoralIntake;
 import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.FerrisWheel;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -50,9 +54,11 @@ public class RobotContainer {
   public final CLIMBER m_climber = new CLIMBER();
   public final CoralIntake m_CoralIntake = new CoralIntake();
   public final AlgaeIntake m_AlgaeIntake = new AlgaeIntake();
+  public final FerrisWheel m_FerrisWheel = new FerrisWheel();
   // Controller
-  private final CommandXboxController controller = new CommandXboxController(0);
 
+  private final CommandXboxController controller = new CommandXboxController(1);
+  public final CommandJoystick m_drivercontroller = new CommandJoystick(0);
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
 
@@ -128,9 +134,9 @@ public class RobotContainer {
     drive.setDefaultCommand(
         DriveCommands.joystickDrive(
             drive,
-            () -> -controller.getLeftY(),
-            () -> -controller.getLeftX(),
-            () -> -controller.getRightX()));
+            () -> m_drivercontroller.getRawAxis(1),
+            () -> -m_drivercontroller.getRawAxis(0),
+            () -> -m_drivercontroller.getRawAxis(3)));
 
     // Lock to 0° when A button is held
     // controller
@@ -143,11 +149,11 @@ public class RobotContainer {
     //             () -> new Rotation2d()));
 
     // Switch to X pattern when X button is pressed
-    controller.x().onTrue(Commands.runOnce(drive::stopWithX, drive));
+    m_drivercontroller.button(16).onTrue(Commands.runOnce(drive::stopWithX, drive));
 
     // Reset gyro to 0° when B button is pressed
-    controller
-        .b()
+    m_drivercontroller
+        .button(14)
         .onTrue(
             Commands.runOnce(
                     () ->
@@ -157,11 +163,21 @@ public class RobotContainer {
                 .ignoringDisable(true));
 
     // elevator button binding
-    // controller.povUp().onTrue(new InstantCommand(m_Elevator::setelevatorL4));
-    // controller.povDown().onTrue(new InstantCommand(m_Elevator::setelevatorL1));
+    controller
+        .povUp()
+        .onTrue(new InstantCommand(m_Elevator::manualelevatorup))
+        .onFalse(new InstantCommand(m_Elevator::stopelevator));
+
+    controller
+        .povDown()
+        .onTrue(new InstantCommand(m_Elevator::manualelevatordown))
+        .onFalse(new InstantCommand(m_Elevator::stopelevator));
+
+    // controller.start().onTrue(new HomeLiftCommand(m_Elevator,0));
+
+    // controller.y().onTrue(new InstantCommand(m_Elevator::stopelevator));
     // controller.povRight().onTrue(new InstantCommand(m_Elevator::setelevatorposback));
     // controller.povLeft().onTrue(new InstantCommand(m_Elevator::setelevatorpos));
-    // controller.y().onTrue(new InstantCommand(m_Elevator::stopelevator));
 
     // climber button binding
     controller
@@ -183,16 +199,25 @@ public class RobotContainer {
         .onTrue(new InstantCommand(m_CoralIntake::coralout))
         .onFalse(new InstantCommand(m_CoralIntake::coralstop));
 
+    // algae intake button binding
+    controller
+        .rightTrigger()
+        .onTrue(new InstantCommand(m_AlgaeIntake::algaein))
+        .onFalse(new InstantCommand(m_AlgaeIntake::algaestop));
+    controller
+        .leftTrigger()
+        .onTrue(new InstantCommand(m_AlgaeIntake::algaeout))
+        .onFalse(new InstantCommand(m_AlgaeIntake::algaestop));
 
-            // algae intake button binding
+    // ferris wheel controls
     controller
-    .rightTrigger()
-    .onTrue(new InstantCommand(m_AlgaeIntake::algaein))
-    .onFalse(new InstantCommand(m_AlgaeIntake::algaestop));
+        .leftStick()
+        .onTrue(new InstantCommand(m_FerrisWheel::manferrisCW))
+        .onFalse(new InstantCommand(m_FerrisWheel::ferrisstop));
     controller
-    .leftTrigger()
-    .onTrue(new InstantCommand(m_AlgaeIntake::algaeout))
-    .onFalse(new InstantCommand(m_AlgaeIntake::algaestop));
+        .rightStick()
+        .onTrue(new InstantCommand(m_FerrisWheel::manferrisCCW))
+        .onFalse(new InstantCommand(m_FerrisWheel::ferrisstop));
   }
 
   /**

@@ -11,7 +11,6 @@ import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
-import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
@@ -22,12 +21,14 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.measure.Angle;
 // import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+// Elevator Homing Command Speed
+// import com.ctre.phoenix6.controls.PositionVoltage;
 
 public class Elevator extends SubsystemBase {
   /** Creates a new Elevator. */
-  private final TalonFX m_liftlead = new TalonFX(18);
+  private final TalonFX m_liftlead = new TalonFX(18, "CANIVORE");
 
-  private final TalonFX m_liftfollow = new TalonFX(19);
+  private final TalonFX m_liftfollow = new TalonFX(19, "CANIVORE");
 
   private final DutyCycleOut m_liftoutput = new DutyCycleOut(0);
   private final PositionDutyCycle m_liftpPositionDutyCycle = new PositionDutyCycle(0);
@@ -80,6 +81,24 @@ public class Elevator extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 
+  // Elevator HomeLiftCommand
+  public void setElevatorPower(double power) {
+    m_liftlead.set(power);
+  }
+
+  public void resetEncoder() {
+    m_liftlead.setPosition(0);
+  }
+
+  ////////////////////////////////////////////////////////
+  public void manualelevatorup() {
+    m_liftlead.setControl(m_liftoutput.withOutput(-.2));
+  }
+
+  public void manualelevatordown() {
+    m_liftlead.setControl(m_liftoutput.withOutput(.1));
+  }
+
   public void setelevatorL4() {
     m_liftlead.setControl(m_liftoutput.withOutput(.25));
   }
@@ -89,7 +108,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public void stopelevator() {
-    m_liftlead.setControl(m_liftoutput.withOutput(0));
+    m_liftlead.setControl(m_liftoutput.withOutput(-.025));
   }
 
   public void setelevatorpos() {
@@ -102,24 +121,5 @@ public class Elevator extends SubsystemBase {
 
   public StatusSignal<Angle> getLeftPos() {
     return m_liftlead.getPosition();
-  }
-
-  /**
-   * Initialize a left drive TalonFX device from the configurator object
-   *
-   * @param cfg Configurator of the TalonFX device
-   */
-  private void initliftTalonFX(TalonFXConfigurator cfg) {
-    var toApply = new TalonFXConfiguration();
-
-    /*
-     * User can change configs if they want, or leave this blank for factory-default
-     */
-    toApply.MotorOutput.Inverted = InvertedValue.CounterClockwise_Positive;
-
-    cfg.apply(toApply);
-
-    /* And initialize position to 0 */
-    cfg.setPosition(0);
   }
 }

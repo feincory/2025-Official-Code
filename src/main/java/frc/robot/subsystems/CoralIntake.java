@@ -6,13 +6,11 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
-
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CoralIntake extends SubsystemBase {
   /** Creates a new CoralIntake. */
   TalonSRX m_coral = new TalonSRX(25);
- 
 
   public CoralIntake() {}
 
@@ -22,12 +20,14 @@ public class CoralIntake extends SubsystemBase {
   }
 
   public void coralin() {
-    m_coral.set(ControlMode.PercentOutput,.20);
+    m_coral.set(ControlMode.PercentOutput, -.35);
   }
 
   public void coralstop() {
- m_coral.set(ControlMode.PercentOutput,0);  }
+    m_coral.set(ControlMode.PercentOutput, 0);
+  }
 
   public void coralout() {
- m_coral.set(ControlMode.PercentOutput,-.20);  }
+    m_coral.set(ControlMode.PercentOutput, .35);
+  }
 }
