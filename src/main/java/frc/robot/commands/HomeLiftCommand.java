@@ -15,8 +15,8 @@ public class HomeLiftCommand extends Command {
   private final Elevator lift;
 
   private final DigitalInput homeSwitch;
-  private static final double HOMING_SPEED = -0.2; // Slow descent
-  private static final double TIMEOUT = 3.0; // Stop after 3 seconds
+  private static final double HOMING_SPEED = 0.025; // Slow descent
+  private static final double TIMEOUT = 5.0; // Stop after 3 seconds
 
   private Timer timer = new Timer();
 
@@ -36,8 +36,8 @@ public class HomeLiftCommand extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (!homeSwitch.get()) { // Switch is triggered (active low)
-      lift.setElevatorPower(0);
+    if (homeSwitch.get()) { // Switch is triggered (active low)
+      lift.setElevatorPower(-.025);
       lift.resetEncoder(); // Set position to zero
       timer.stop();
     } else {
@@ -49,14 +49,17 @@ public class HomeLiftCommand extends Command {
   @Override
   public void end(boolean interrupted) {
     lift.setElevatorPower(0);
+
     if (timer.hasElapsed(TIMEOUT)) {
       System.out.println("ERROR: Lift homing failed! Sensor not detected.");
+    } else {
+      System.out.println("Homing Success");
     }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return !homeSwitch.get() || timer.hasElapsed(TIMEOUT);
+    return homeSwitch.get() || timer.hasElapsed(TIMEOUT);
   }
 }

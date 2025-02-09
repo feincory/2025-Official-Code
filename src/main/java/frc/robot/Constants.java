@@ -34,4 +34,10 @@ public final class Constants {
     /** Replaying from a log file. */
     REPLAY
   }
+
+  // ferris wheel
+  public static double kfPc = 2; // was 11
+  public static double kfIc = 0; // was 4 was 6
+  public static double kfDc = 0;
+  public static double kfGc = 0; // Gravity
 }

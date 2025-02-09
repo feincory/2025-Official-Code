@@ -33,7 +33,13 @@ public class Elevator extends SubsystemBase {
   private final DutyCycleOut m_liftoutput = new DutyCycleOut(0);
   private final PositionDutyCycle m_liftpPositionDutyCycle = new PositionDutyCycle(0);
 
-  // private final double kGearRatio = 5.45;
+  static boolean m_elevatorlhomed;
+  static boolean m_elevatorlowered;
+
+  private final double kGearRatio = 5.45;
+  private final double kinchesperrotation = 4;
+  private double kinchtorotation;
+  private double elevatorpos;
 
   public Elevator() {
     TalonFXConfiguration elevator_cfg = new TalonFXConfiguration();
@@ -74,10 +80,18 @@ public class Elevator extends SubsystemBase {
      * they're all on a CANivore
      */
     BaseStatusSignal.setUpdateFrequencyForAll(100, m_liftlead.getPosition());
+
+    m_elevatorlhomed = false;
+    m_elevatorlowered = true;
+    kinchtorotation = kGearRatio * kinchesperrotation;
+    elevatorpos = 5;
+
+    createDashboards();
   }
 
   @Override
   public void periodic() {
+    // elevatorpos = m_liftlead.getPosition();
     // This method will be called once per scheduler run
   }
 
@@ -121,5 +135,14 @@ public class Elevator extends SubsystemBase {
 
   public StatusSignal<Angle> getLeftPos() {
     return m_liftlead.getPosition();
+  }
+
+  public void createDashboards() {
+    // ShuffleboardTab tab = Shuffleboard.getTab("Elevator");
+    // Shuffleboard.getTab("ELEVATOR").add("TEST", getLeftPos());
+    // Shuffleboard.getTab("Elevator").add("position", m_liftlead.getPosition());
+    // elevatortab.addNumber("arm comp", this::armcompvalue)
+    // .withSize(1,1)
+    // .withPosition(0,0);
   }
 }

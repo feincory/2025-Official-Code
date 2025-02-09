@@ -21,12 +21,15 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 // import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 // import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.HomeLiftCommand;
+import frc.robot.commands.FerrisWheelHoming;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlgaeIntake;
 import frc.robot.subsystems.CLIMBER;
@@ -173,7 +176,7 @@ public class RobotContainer {
         .onTrue(new InstantCommand(m_Elevator::manualelevatordown))
         .onFalse(new InstantCommand(m_Elevator::stopelevator));
 
-    // controller.start().onTrue(new HomeLiftCommand(m_Elevator,0));
+    controller.start().onTrue(new HomeLiftCommand(m_Elevator, 0));
 
     // controller.y().onTrue(new InstantCommand(m_Elevator::stopelevator));
     // controller.povRight().onTrue(new InstantCommand(m_Elevator::setelevatorposback));
@@ -212,11 +215,11 @@ public class RobotContainer {
     // ferris wheel controls
     controller
         .leftStick()
-        .onTrue(new InstantCommand(m_FerrisWheel::manferrisCW))
+        .onTrue(new InstantCommand(m_FerrisWheel::placeposition))
         .onFalse(new InstantCommand(m_FerrisWheel::ferrisstop));
     controller
         .rightStick()
-        .onTrue(new InstantCommand(m_FerrisWheel::manferrisCCW))
+        .onTrue(new InstantCommand(m_FerrisWheel::retreiveposition))
         .onFalse(new InstantCommand(m_FerrisWheel::ferrisstop));
   }
 
