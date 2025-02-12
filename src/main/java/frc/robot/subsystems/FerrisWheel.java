@@ -74,7 +74,7 @@ public class FerrisWheel extends SubsystemBase {
     // constant values
     coralplacepositionvalue = .168;
     coralretreivepositionvalue = .624;
-    coralplacepositionvalue = .515;
+    coralstartpositionvalue = .524;
 
     createDashboards();
   }
@@ -107,6 +107,11 @@ public class FerrisWheel extends SubsystemBase {
   public void retreiveposition() {
     if (m_elevatorlowered == false) {}
     m_FerrisWheel.setControl(m_PositionDutyCycle.withPosition(coralretreivepositionvalue));
+  }
+
+  public void algaeposition() {
+    if (m_elevatorlowered == false) {}
+    m_FerrisWheel.setControl(m_PositionDutyCycle.withPosition(.911));
   }
 
   public void manferrisCW() {

@@ -4,7 +4,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.robot.subsystems.Elevator;
@@ -14,16 +13,16 @@ public class ClearElevator extends Command {
   /** Creates a new HomeLiftCommand. */
   private final Elevator lift;
 
-  private final DigitalInput homeSwitch;
-  private static final double HOMING_SPEED = 0.025; // Slow descent
+  // private final DigitalInput homeSwitch;
+  // private static final double HOMING_SPEED = 0.05; // Slow descent
   private static final double clearrotation = -5;
-  private static final double TIMEOUT = 5.0; // Stop after 3 seconds
+  private static final double TIMEOUT = 2.5; // Stop after 3 seconds
 
   private Timer timer = new Timer();
 
-  public ClearElevator(Elevator lift, int switchPort) {
+  public ClearElevator(Elevator lift /* , int switchPort*/) {
     this.lift = lift;
-    this.homeSwitch = new DigitalInput(switchPort);
+    // this.homeSwitch = new DigitalInput(switchPort);
     addRequirements(lift);
   }
 

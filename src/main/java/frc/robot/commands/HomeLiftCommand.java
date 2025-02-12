@@ -15,7 +15,7 @@ public class HomeLiftCommand extends Command {
   private final Elevator lift;
 
   private final DigitalInput homeSwitch;
-  private static final double HOMING_SPEED = 0.025; // Slow descent
+  private static final double HOMING_SPEED = 0.05; // Slow descent
   private static final double TIMEOUT = 5.0; // Stop after 3 seconds
 
   private Timer timer = new Timer();
@@ -37,7 +37,7 @@ public class HomeLiftCommand extends Command {
   @Override
   public void execute() {
     if (homeSwitch.get()) { // Switch is triggered (active low)
-      lift.setElevatorPower(-.025);
+      lift.setElevatorPower(0);
       lift.resetEncoder(); // Set position to zero
       timer.stop();
     } else {

@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class AlgaeIntake extends SubsystemBase {
   /** Creates a new AlgaeIntake. */
-  TalonSRX m_Algae = new TalonSRX(26);
+  TalonSRX m_Algae = new TalonSRX(25);
 
   public AlgaeIntake() {}
 
@@ -18,15 +18,15 @@ public class AlgaeIntake extends SubsystemBase {
   public void periodic() {}
 
   public void algaein() {
-    m_Algae.set(ControlMode.PercentOutput, .35);
+    m_Algae.set(ControlMode.PercentOutput, .75);
   }
 
   public void algaestop() {
-    m_Algae.set(ControlMode.PercentOutput, .05);
+    m_Algae.set(ControlMode.PercentOutput, -.2);
   }
 
   public void algaeout() {
-    m_Algae.set(ControlMode.PercentOutput, -.35);
+    m_Algae.set(ControlMode.PercentOutput, -.75);
   }
   // This method will be called once per scheduler run
 }

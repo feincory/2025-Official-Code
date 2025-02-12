@@ -21,6 +21,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 // import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
@@ -178,10 +180,17 @@ public class RobotContainer {
     controller
         .start()
         .onTrue(
-            new ClearElevator(m_Elevator, 0)
-            .andThen(new InstantCommand(m_FerrisWheel::placeposition)));
+            new SequentialCommandGroup(
+                new ClearElevator(m_Elevator),
+                new InstantCommand(m_FerrisWheel::startingposition),
+                new WaitCommand(2),
+                new HomeLiftCommand(m_Elevator, 0),
+                new InstantCommand(m_FerrisWheel::ferrisstop)));
 
-                // climber button binding
+    // new ClearElevator(m_Elevator, 0)
+    //     .andThen(new InstantCommand(m_FerrisWheel::placeposition)));
+
+    // climber button binding
     controller
         .y()
         .onTrue(new InstantCommand(m_climber::climbup))
@@ -219,6 +228,10 @@ public class RobotContainer {
     controller
         .rightStick()
         .onTrue(new InstantCommand(m_FerrisWheel::retreiveposition))
+        .onFalse(new InstantCommand(m_FerrisWheel::ferrisstop));
+    controller
+        .back()
+        .onTrue(new InstantCommand(m_FerrisWheel::algaeposition))
         .onFalse(new InstantCommand(m_FerrisWheel::ferrisstop));
   }
 

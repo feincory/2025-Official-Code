@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CoralIntake extends SubsystemBase {
   /** Creates a new CoralIntake. */
-  TalonSRX m_coral = new TalonSRX(25);
+  TalonSRX m_coral = new TalonSRX(26);
 
   public CoralIntake() {}
 
@@ -20,7 +20,7 @@ public class CoralIntake extends SubsystemBase {
   }
 
   public void coralin() {
-    m_coral.set(ControlMode.PercentOutput, -.35);
+    m_coral.set(ControlMode.PercentOutput, -.75);
   }
 
   public void coralstop() {
@@ -28,6 +28,6 @@ public class CoralIntake extends SubsystemBase {
   }
 
   public void coralout() {
-    m_coral.set(ControlMode.PercentOutput, .35);
+    m_coral.set(ControlMode.PercentOutput, .75);
   }
 }
