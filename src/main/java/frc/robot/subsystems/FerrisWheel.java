@@ -21,6 +21,8 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class FerrisWheel extends SubsystemBase {
@@ -38,6 +40,7 @@ public class FerrisWheel extends SubsystemBase {
   static double ferriswheelpos;
   static double coralplacepositionvalue;
   static double coralretreivepositionvalue;
+  static double coralstartpositionvalue;
 
   public FerrisWheel() {
 
@@ -69,12 +72,24 @@ public class FerrisWheel extends SubsystemBase {
     m_FerrisWheel.setNeutralMode(NeutralModeValue.Coast);
 
     // constant values
-    coralplacepositionvalue = -.25;
-    coralretreivepositionvalue = .25;
+    coralplacepositionvalue = .168;
+    coralretreivepositionvalue = .624;
+    coralplacepositionvalue = .515;
+
+    createDashboards();
   }
 
   @Override
   public void periodic() {
+    if (cc_pos.getValueAsDouble() > .51 && cc_pos.getValueAsDouble() < .525) {
+      m_fwheelclear = true;
+    } else {
+      m_fwheelclear = false;
+    }
+
+    getpostion();
+    outputferris();
+
     // ferriswheelpos = m_cc.getPosition();
 
   }
@@ -82,6 +97,11 @@ public class FerrisWheel extends SubsystemBase {
   public void placeposition() {
     if (m_elevatorlowered == false) {}
     m_FerrisWheel.setControl(m_PositionDutyCycle.withPosition(coralplacepositionvalue));
+  }
+
+  public void startingposition() {
+    if (m_elevatorlowered == false) {}
+    m_FerrisWheel.setControl(m_PositionDutyCycle.withPosition(coralstartpositionvalue));
   }
 
   public void retreiveposition() {
@@ -99,5 +119,19 @@ public class FerrisWheel extends SubsystemBase {
 
   public void ferrisstop() {
     m_FerrisWheel.setControl(m_ferrisDutyCycleOut.withOutput(0));
+  }
+
+  public double getpostion() {
+    return cc_pos.getValueAsDouble();
+  }
+
+  public boolean outputferris() {
+    return m_fwheelclear;
+  }
+
+  public void createDashboards() {
+    ShuffleboardTab ferristab = Shuffleboard.getTab("Ferris Wheel");
+    Shuffleboard.getTab("Ferris Wheel").add("position", getpostion());
+    Shuffleboard.getTab("Ferris Wheel").add("Ferris Wheel Clear", outputferris());
   }
 }

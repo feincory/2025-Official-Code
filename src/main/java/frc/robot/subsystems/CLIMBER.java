@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
@@ -14,8 +15,11 @@ public class CLIMBER extends SubsystemBase {
   private final TalonFX m_climber = new TalonFX(23, "CANIVORE");
 
   private final DutyCycleOut m_climbOutput = new DutyCycleOut(0);
+  TalonFXConfiguration climb_cfg = new TalonFXConfiguration();
 
   public CLIMBER() {
+    climb_cfg.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .3;
+    m_climber.getConfigurator().apply(climb_cfg);
     m_climber.setNeutralMode(NeutralModeValue.Brake);
   }
 
@@ -25,14 +29,14 @@ public class CLIMBER extends SubsystemBase {
   }
 
   public void climbdown() {
-    m_climber.setControl(m_climbOutput.withOutput(-.20));
+    m_climber.setControl(m_climbOutput.withOutput(-.750));
   }
 
   public void climbup() {
-    m_climber.setControl(m_climbOutput.withOutput(0.20));
+    m_climber.setControl(m_climbOutput.withOutput(0.50));
   }
 
   public void climbstop() {
-    m_climber.setControl(m_climbOutput.withOutput(0));
+    m_climber.setControl(m_climbOutput.withOutput(.0));
   }
 }

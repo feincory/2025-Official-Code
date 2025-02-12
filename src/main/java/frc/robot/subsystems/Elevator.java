@@ -47,9 +47,9 @@ public class Elevator extends SubsystemBase {
     elevator_cfg.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .3;
     elevator_cfg.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = 1;
     // pid config
-    elevator_cfg.Slot0.GravityType = GravityTypeValue.Arm_Cosine;
-    elevator_cfg.Slot0.kP = .25;
-    elevator_cfg.Slot0.kD = 0;
+    elevator_cfg.Slot0.GravityType = GravityTypeValue.Elevator_Static;
+    elevator_cfg.Slot0.kP = .1;
+    elevator_cfg.Slot0.kD = 0.05;
     elevator_cfg.Slot0.kI = 0;
     elevator_cfg.Slot0.kG = 0;
     elevator_cfg.Voltage.PeakForwardVoltage = 12;
@@ -93,6 +93,11 @@ public class Elevator extends SubsystemBase {
   public void periodic() {
     // elevatorpos = m_liftlead.getPosition();
     // This method will be called once per scheduler run
+  }
+
+  // Elevator Clear Command
+  public void setelevatorclear(double position) {
+    m_liftlead.setControl(m_liftpPositionDutyCycle.withPosition(position));
   }
 
   // Elevator HomeLiftCommand
