@@ -40,4 +40,8 @@ public final class Constants {
   public static double kfIc = 0; //
   public static double kfDc = .25;
   public static double kfGc = 0; // Gravity
+
+  // elevator constances
+  public static double elevatoridlepos = -10;
+  public static double elevatorL4value = -25.5;
 }

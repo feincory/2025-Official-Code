@@ -13,6 +13,9 @@
 
 package frc.robot;
 
+import static frc.robot.Constants.elevatorL4value;
+import static frc.robot.Constants.elevatoridlepos;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -21,6 +24,8 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 // import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -30,6 +35,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.ClearElevator;
 import frc.robot.commands.DriveCommands;
+import frc.robot.commands.Elevatorsetpos;
+import frc.robot.commands.FerrisWheelVertical;
 import frc.robot.commands.HomeLiftCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlgaeIntake;
@@ -223,12 +230,32 @@ public class RobotContainer {
     // ferris wheel controls
     controller
         .leftStick()
-        .onTrue(new InstantCommand(m_FerrisWheel::placeposition))
-        .onFalse(new InstantCommand(m_FerrisWheel::ferrisstop));
+        .onTrue(
+            new SequentialCommandGroup(
+                new FerrisWheelVertical(m_FerrisWheel),
+                new Elevatorsetpos(m_Elevator, elevatoridlepos),
+                new ParallelCommandGroup(
+                    new Elevatorsetpos(m_Elevator, elevatorL4value),
+                    new InstantCommand(m_FerrisWheel::placeposition))));
+
     controller
         .rightStick()
-        .onTrue(new InstantCommand(m_FerrisWheel::retreiveposition))
-        .onFalse(new InstantCommand(m_FerrisWheel::ferrisstop));
+        .onTrue(
+            new SequentialCommandGroup(
+                new FerrisWheelVertical(m_FerrisWheel),
+                new Elevatorsetpos(m_Elevator, elevatoridlepos),
+                new ParallelDeadlineGroup(
+                    new Elevatorsetpos(m_Elevator, -4.25),
+                    new InstantCommand(m_FerrisWheel::retreiveposition))));
+
+    // controller
+    //     .leftStick()
+    //     .onTrue(new InstantCommand(m_FerrisWheel::placeposition))
+    //     .onFalse(new InstantCommand(m_FerrisWheel::ferrisstop));
+    // controller
+    //     .rightStick()
+    //     .onTrue(new InstantCommand(m_FerrisWheel::retreiveposition))
+    //     .onFalse(new InstantCommand(m_FerrisWheel::ferrisstop));
     controller
         .back()
         .onTrue(new InstantCommand(m_FerrisWheel::algaeposition))

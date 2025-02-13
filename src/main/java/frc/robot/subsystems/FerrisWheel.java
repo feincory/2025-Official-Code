@@ -127,7 +127,7 @@ public class FerrisWheel extends SubsystemBase {
   }
 
   public double getpostion() {
-    return cc_pos.getValueAsDouble();
+    return m_cc.getPosition().getValueAsDouble();
   }
 
   public boolean outputferris() {

@@ -45,10 +45,10 @@ public class Elevator extends SubsystemBase {
     TalonFXConfiguration elevator_cfg = new TalonFXConfiguration();
     elevator_cfg.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
     elevator_cfg.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .3;
-    elevator_cfg.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = 1;
+    elevator_cfg.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = .25;
     // pid config
     elevator_cfg.Slot0.GravityType = GravityTypeValue.Elevator_Static;
-    elevator_cfg.Slot0.kP = .1;
+    elevator_cfg.Slot0.kP = .2;
     elevator_cfg.Slot0.kD = 0.05;
     elevator_cfg.Slot0.kI = 0;
     elevator_cfg.Slot0.kG = 0;
@@ -103,6 +103,16 @@ public class Elevator extends SubsystemBase {
   // Elevator HomeLiftCommand
   public void setElevatorPower(double power) {
     m_liftlead.set(power);
+  }
+
+  // Elevator set position
+  public void setElevatorpositon(double position) {
+    m_liftlead.setControl(m_liftpPositionDutyCycle.withPosition(position));
+  }
+
+  public double getpostion() {
+    // return m_liftpPositionDutyCycle.getPositionMeasure().in(Rotation);
+    return m_liftlead.getPosition().getValueAsDouble();
   }
 
   public void resetEncoder() {
