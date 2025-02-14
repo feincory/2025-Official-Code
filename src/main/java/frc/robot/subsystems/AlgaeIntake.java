@@ -22,7 +22,7 @@ public class AlgaeIntake extends SubsystemBase {
   }
 
   public void algaestop() {
-    m_Algae.set(ControlMode.PercentOutput, -.2);
+    m_Algae.set(ControlMode.PercentOutput, -.15);
   }
 
   public void algaeout() {

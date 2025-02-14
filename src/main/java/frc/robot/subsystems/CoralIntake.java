@@ -20,7 +20,7 @@ public class CoralIntake extends SubsystemBase {
   }
 
   public void coralin() {
-    m_coral.set(ControlMode.PercentOutput, -.75);
+    m_coral.set(ControlMode.PercentOutput, -.6);
   }
 
   public void coralstop() {
@@ -28,6 +28,6 @@ public class CoralIntake extends SubsystemBase {
   }
 
   public void coralout() {
-    m_coral.set(ControlMode.PercentOutput, .75);
+    m_coral.set(ControlMode.PercentOutput, .6);
   }
 }

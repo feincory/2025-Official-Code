@@ -37,7 +37,7 @@ public class ClearElevator extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    lift.setelevatorclear(clearrotation);
+    lift.setElevatorPower(-.05);
 
     // if (homeSwitch.get()) { // Switch is triggered (active low)
     //   lift.setElevatorPower(-.025);
@@ -51,7 +51,7 @@ public class ClearElevator extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    lift.setelevatorclear(clearrotation);
+    lift.stopelevator();
   }
 
   // Returns true when the command should end.

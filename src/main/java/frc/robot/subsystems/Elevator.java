@@ -13,6 +13,7 @@ import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.controls.Follower;
+import com.ctre.phoenix6.controls.MotionMagicExpoVoltage;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.GravityTypeValue;
@@ -41,19 +42,39 @@ public class Elevator extends SubsystemBase {
   private double kinchtorotation;
   private double elevatorpos;
 
+  // private static final double EXPONENT = 4.0; // Controls motion smoothing
+
   public Elevator() {
     TalonFXConfiguration elevator_cfg = new TalonFXConfiguration();
     elevator_cfg.MotorOutput.Inverted = InvertedValue.Clockwise_Positive;
     elevator_cfg.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .3;
-    elevator_cfg.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = .25;
+    elevator_cfg.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = .1;
     // pid config
     elevator_cfg.Slot0.GravityType = GravityTypeValue.Elevator_Static;
-    elevator_cfg.Slot0.kP = .2;
-    elevator_cfg.Slot0.kD = 0.05;
+
+    elevator_cfg.Slot0.kS = 0;
+    elevator_cfg.Slot0.kV = 0;
+    elevator_cfg.Slot0.kA = 0;
+    elevator_cfg.Slot0.kP = 2; // was .2
     elevator_cfg.Slot0.kI = 0;
+    elevator_cfg.Slot0.kD = 0.1;
     elevator_cfg.Slot0.kG = 0;
     elevator_cfg.Voltage.PeakForwardVoltage = 12;
     elevator_cfg.Voltage.PeakReverseVoltage = -12;
+
+    // current limiting
+    elevator_cfg.CurrentLimits.SupplyCurrentLimit = 50;
+    elevator_cfg.CurrentLimits.SupplyCurrentLowerLimit = 60;
+    elevator_cfg.CurrentLimits.SupplyCurrentLimitEnable = true;
+    elevator_cfg.CurrentLimits.StatorCurrentLimit = 60;
+    elevator_cfg.CurrentLimits.StatorCurrentLimitEnable = true;
+
+    // Configure MotionMagicExpo settings
+    var motionMagicConfigs = elevator_cfg.MotionMagic;
+    motionMagicConfigs.MotionMagicCruiseVelocity = 0;
+    motionMagicConfigs.MotionMagicExpo_kV = .07;
+    motionMagicConfigs.MotionMagicExpo_kA = .075;
+
     m_liftlead.getConfigurator().apply(elevator_cfg);
     m_liftfollow.getConfigurator().apply(elevator_cfg);
     m_liftlead.setNeutralMode(NeutralModeValue.Brake);
@@ -107,7 +128,9 @@ public class Elevator extends SubsystemBase {
 
   // Elevator set position
   public void setElevatorpositon(double position) {
-    m_liftlead.setControl(m_liftpPositionDutyCycle.withPosition(position));
+    final MotionMagicExpoVoltage m_request = new MotionMagicExpoVoltage(0);
+    // m_liftlead.setControl(m_liftpPositionDutyCycle.withPosition(position));
+    m_liftlead.setControl(m_request.withPosition(position));
   }
 
   public double getpostion() {

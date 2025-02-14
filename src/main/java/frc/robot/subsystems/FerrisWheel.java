@@ -104,6 +104,10 @@ public class FerrisWheel extends SubsystemBase {
     m_FerrisWheel.setControl(m_PositionDutyCycle.withPosition(coralstartpositionvalue));
   }
 
+  public void setposition(double position) {
+    m_FerrisWheel.setControl(m_PositionDutyCycle.withPosition(position));
+  }
+
   public void retreiveposition() {
     if (m_elevatorlowered == false) {}
     m_FerrisWheel.setControl(m_PositionDutyCycle.withPosition(coralretreivepositionvalue));
