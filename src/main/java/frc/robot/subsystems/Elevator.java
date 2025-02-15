@@ -6,7 +6,6 @@ package frc.robot.subsystems;
 
 // import static edu.wpi.first.units.Units.*;
 // import static frc.robot.Constants.*;
-
 import com.ctre.phoenix6.BaseStatusSignal;
 import com.ctre.phoenix6.StatusCode;
 import com.ctre.phoenix6.StatusSignal;
@@ -22,6 +21,8 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import edu.wpi.first.units.measure.Angle;
 // import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import java.util.function.BooleanSupplier;
+
 // Elevator Homing Command Speed
 // import com.ctre.phoenix6.controls.PositionVoltage;
 
@@ -34,13 +35,13 @@ public class Elevator extends SubsystemBase {
   private final DutyCycleOut m_liftoutput = new DutyCycleOut(0);
   private final PositionDutyCycle m_liftpPositionDutyCycle = new PositionDutyCycle(0);
 
-  static boolean m_elevatorlhomed;
+  static boolean elevatorcrashposition;
   static boolean m_elevatorlowered;
 
   private final double kGearRatio = 5.45;
   private final double kinchesperrotation = 4;
-  private double kinchtorotation;
-  private double elevatorpos;
+  // private double kinchtorotation;
+  // private double elevatorpos;
 
   // private static final double EXPONENT = 4.0; // Controls motion smoothing
 
@@ -55,7 +56,7 @@ public class Elevator extends SubsystemBase {
     elevator_cfg.Slot0.kS = 0;
     elevator_cfg.Slot0.kV = 0;
     elevator_cfg.Slot0.kA = 0;
-    elevator_cfg.Slot0.kP = 2; // was .2
+    elevator_cfg.Slot0.kP = 1.5; // was 2
     elevator_cfg.Slot0.kI = 0;
     elevator_cfg.Slot0.kD = 0.1;
     elevator_cfg.Slot0.kG = 0;
@@ -102,10 +103,10 @@ public class Elevator extends SubsystemBase {
      */
     BaseStatusSignal.setUpdateFrequencyForAll(100, m_liftlead.getPosition());
 
-    m_elevatorlhomed = false;
     m_elevatorlowered = true;
-    kinchtorotation = kGearRatio * kinchesperrotation;
-    elevatorpos = 5;
+    elevatorcrashposition = false;
+    // kinchtorotation = kGearRatio * kinchesperrotation;
+    // elevatorpos = 5;
 
     createDashboards();
   }
@@ -114,6 +115,7 @@ public class Elevator extends SubsystemBase {
   public void periodic() {
     // elevatorpos = m_liftlead.getPosition();
     // This method will be called once per scheduler run
+    // BooleanSupplier sup = () -> elevatorcrashposition;
   }
 
   // Elevator Clear Command
@@ -174,6 +176,27 @@ public class Elevator extends SubsystemBase {
   public StatusSignal<Angle> getLeftPos() {
     return m_liftlead.getPosition();
   }
+
+  public void elevatoratcrashpos() {
+    elevatorcrashposition = true;
+    System.out.println("crash = true");
+  }
+
+  public void elevatoratnotatcrashpos() {
+    elevatorcrashposition = false;
+    System.out.println("crash = false");
+  }
+
+  public boolean elevatorstatus() {
+    System.out.println("command called status");
+    return elevatorcrashposition;
+  }
+
+  public BooleanSupplier elevatorcrashSupplier() {
+    return () -> elevatorcrashposition;
+  }
+
+  // BooleanSupplier sup = ()-> elevatorcrashposition;
 
   public void createDashboards() {
     // ShuffleboardTab tab = Shuffleboard.getTab("Elevator");

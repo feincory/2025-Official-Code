@@ -36,7 +36,7 @@ public final class Constants {
   }
 
   // ferris wheel PIDs
-  public static double kfPc = 60; //
+  public static double kfPc = 20; //
   public static double kfIc = 0; //
   public static double kfDc = 2.5;
   public static double kfGc = 0; // Gravity

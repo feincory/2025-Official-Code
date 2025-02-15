@@ -43,7 +43,7 @@ public class CoralGround extends SubsystemBase {
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
         // Set PID values for position control. We don't need to pass a closed
         // loop slot, as it will default to slot 0.
-        .p(1.5)
+        .p(1)
         .i(0)
         .d(0)
         .outputRange(-1, 1)

@@ -80,7 +80,7 @@ public class FerrisWheel extends SubsystemBase {
 
     // Configure MotionMagicExpo settings
     var motionMagicConfigs = fx_cfg.MotionMagic;
-    motionMagicConfigs.MotionMagicCruiseVelocity = 2;
+    motionMagicConfigs.MotionMagicCruiseVelocity = 1;
     motionMagicConfigs.MotionMagicExpo_kV = .001;
     motionMagicConfigs.MotionMagicExpo_kA = .001;
 

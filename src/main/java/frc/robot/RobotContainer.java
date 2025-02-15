@@ -48,6 +48,7 @@ import frc.robot.commands.Elevatorsetpos;
 import frc.robot.commands.FerrisWheelSetPos;
 import frc.robot.commands.FerrisWheelVertical;
 import frc.robot.commands.HomeLiftCommand;
+import frc.robot.commands.SetFerrisAndElevator;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlgaeIntake;
 import frc.robot.subsystems.CLIMBER;
@@ -226,16 +227,37 @@ public class RobotContainer {
         .onTrue(new InstantCommand(m_AlgaeIntake::algaeout))
         .onFalse(new InstantCommand(m_AlgaeIntake::algaestop));
 
+    // // ferris wheel controls
+    // controller
+    //     .y()
+    //     .onTrue(
+    //         new SequentialCommandGroup(
+    //             new FerrisWheelVertical(m_FerrisWheel),
+    //             new Elevatorsetpos(m_Elevator, elevatoridlepos),
+    //             new ParallelCommandGroup(
+    //                 new Elevatorsetpos(m_Elevator, elevatorL4pos),
+    //                 new FerrisWheelSetPos(m_FerrisWheel, ferriscoralplace))));
     // ferris wheel controls
     controller
         .y()
         .onTrue(
-            new SequentialCommandGroup(
-                new FerrisWheelVertical(m_FerrisWheel),
-                new Elevatorsetpos(m_Elevator, elevatoridlepos),
-                new ParallelCommandGroup(
-                    new Elevatorsetpos(m_Elevator, elevatorL4pos),
-                    new FerrisWheelSetPos(m_FerrisWheel, ferriscoralplace))));
+            new SetFerrisAndElevator(
+                m_Elevator,
+                elevatorL4pos, // elevator positon
+                m_FerrisWheel,
+                ferriscoralplace));
+    controller
+        .a()
+        .onTrue(
+            new SetFerrisAndElevator(
+                m_Elevator,
+                elevatorRetreivepos, // elevator positon
+                m_FerrisWheel,
+                ferriscoralretreive));
+
+    testcontroller.start().onTrue(new InstantCommand(m_Elevator::elevatoratcrashpos));
+    testcontroller.back().onTrue(new InstantCommand(m_Elevator::elevatoratnotatcrashpos));
+
     controller
         .b()
         .onTrue(
@@ -287,15 +309,15 @@ public class RobotContainer {
     //                 new FerrisWheelSetPos(m_FerrisWheel, ferriscoralplaceL2),
     //                 new Elevatorsetpos(m_Elevator, elevatorL2pos))));
 
-    controller
-        .a()
-        .onTrue(
-            new SequentialCommandGroup(
-                new FerrisWheelVertical(m_FerrisWheel),
-                new Elevatorsetpos(m_Elevator, elevatoridlepos),
-                new SequentialCommandGroup(
-                    new Elevatorsetpos(m_Elevator, elevatorRetreivepos),
-                    new FerrisWheelSetPos(m_FerrisWheel, ferriscoralretreive))));
+    // controller
+    //     .a()
+    //     .onTrue(
+    //         new SequentialCommandGroup(
+    //             new FerrisWheelVertical(m_FerrisWheel),
+    //             new Elevatorsetpos(m_Elevator, elevatoridlepos),
+    //             new SequentialCommandGroup(
+    //                 new Elevatorsetpos(m_Elevator, elevatorRetreivepos),
+    //                 new FerrisWheelSetPos(m_FerrisWheel, ferriscoralretreive))));
 
     testcontroller
         .leftStick()
