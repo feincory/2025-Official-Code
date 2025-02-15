@@ -26,7 +26,7 @@ public class AlgaeIntake extends SubsystemBase {
   }
 
   public void algaeout() {
-    m_Algae.set(ControlMode.PercentOutput, -.75);
+    m_Algae.set(ControlMode.PercentOutput, -1);
   }
   // This method will be called once per scheduler run
 }

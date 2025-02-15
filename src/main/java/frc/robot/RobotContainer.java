@@ -51,6 +51,7 @@ import frc.robot.commands.HomeLiftCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlgaeIntake;
 import frc.robot.subsystems.CLIMBER;
+import frc.robot.subsystems.CoralGround;
 import frc.robot.subsystems.CoralIntake;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.FerrisWheel;
@@ -76,10 +77,12 @@ public class RobotContainer {
   public final CoralIntake m_CoralIntake = new CoralIntake();
   public final AlgaeIntake m_AlgaeIntake = new AlgaeIntake();
   public final FerrisWheel m_FerrisWheel = new FerrisWheel();
+  public final CoralGround m_coralground = new CoralGround();
   // Controller
-
+  private final CommandXboxController testcontroller = new CommandXboxController(2);
   private final CommandXboxController controller = new CommandXboxController(1);
   public final CommandJoystick m_drivercontroller = new CommandJoystick(0);
+
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
 
@@ -159,6 +162,17 @@ public class RobotContainer {
             () -> -m_drivercontroller.getRawAxis(0),
             () -> -m_drivercontroller.getRawAxis(3)));
 
+    // drivetrain.setDefaultCommand(
+    //     // Drivetrain will execute this command periodically
+    //     drivetrain.applyRequest(() ->
+    //         drive.withVelocityX(-testcontroller.getLeftY() * MaxSpeed) // Drive forward with
+    // negative Y (forward)
+    //             .withVelocityY(-testcontroller.getLeftX() * MaxSpeed) // Drive left with negative
+    // X (left)
+    //             .withRotationalRate(-testcontroller.getRightX() * MaxAngularRate) // Drive
+    // counterclockwise with negative X (left)
+    //     )
+
     // Lock to 0° when A button is held
     // controller
     //     .a()
@@ -183,17 +197,6 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-    // elevator button binding
-    // controller
-    //     .povUp()
-    //     .onTrue(new InstantCommand(m_Elevator::manualelevatorup))
-    //     .onFalse(new InstantCommand(m_Elevator::stopelevator));
-
-    // controller
-    //     .povDown()
-    //     .onTrue(new InstantCommand(m_Elevator::manualelevatordown))
-    //     .onFalse(new InstantCommand(m_Elevator::stopelevator));
-
     controller
         .start()
         .onTrue(
@@ -202,19 +205,6 @@ public class RobotContainer {
                 new InstantCommand(m_FerrisWheel::startingposition),
                 new HomeLiftCommand(m_Elevator, 0),
                 new InstantCommand(m_FerrisWheel::ferrisstop)));
-
-    // new ClearElevator(m_Elevator, 0)
-    //     .andThen(new InstantCommand(m_FerrisWheel::placeposition)));
-
-    // climber button binding
-    // controller
-    //     .y()
-    //     .onTrue(new InstantCommand(m_climber::climbup))
-    //     .onFalse(new InstantCommand(m_climber::climbstop));
-    // controller
-    //     .a()
-    //     .onTrue(new InstantCommand(m_climber::climbdown))
-    //     .onFalse(new InstantCommand(m_climber::climbstop));
 
     // coral intake button binding
     controller
@@ -307,19 +297,54 @@ public class RobotContainer {
                     new Elevatorsetpos(m_Elevator, elevatorRetreivepos),
                     new FerrisWheelSetPos(m_FerrisWheel, ferriscoralretreive))));
 
-    controller
+    testcontroller
         .leftStick()
         .onTrue(
             new ParallelRaceGroup(
                 new FerrisWheelSetPos(m_FerrisWheel, ferriswheelvert),
                 new Elevatorsetpos(m_Elevator, -5)));
 
-    controller
+    testcontroller
         .rightStick()
         .onTrue(
             new ParallelRaceGroup(
                 new FerrisWheelSetPos(m_FerrisWheel, ferriswheelvert),
                 new Elevatorsetpos(m_Elevator, -25)));
+
+    // ferris wheel testing buttons
+    testcontroller
+        .povRight()
+        .onTrue(
+            new ParallelRaceGroup(
+                new FerrisWheelSetPos(m_FerrisWheel, ferrisAlgaeReefPic),
+                new Elevatorsetpos(m_Elevator, -25)));
+
+    testcontroller
+        .povLeft()
+        .onTrue(
+            new ParallelRaceGroup(
+                new FerrisWheelSetPos(m_FerrisWheel, ferriscoralplace),
+                new Elevatorsetpos(m_Elevator, -25)));
+
+    testcontroller
+        .x()
+        .onTrue(new InstantCommand(m_coralground::runtoposition1)) // retract
+        .onFalse(new InstantCommand(m_coralground::stop));
+
+    testcontroller
+        .b()
+        .onTrue(new InstantCommand(m_coralground::runtoposition3)) // place coral on reef
+        .onFalse(new InstantCommand(m_coralground::stop));
+
+    testcontroller
+        .a()
+        .onTrue(new InstantCommand(m_coralground::runtoposition2)) // run to ground
+        .onFalse(new InstantCommand(m_coralground::stop));
+
+    testcontroller
+        .y()
+        .onTrue(new InstantCommand(m_coralground::homingroutine))
+        .onFalse(new InstantCommand(m_coralground::stop));
     // controller
     //     .leftStick()
     //     .onTrue(new InstantCommand(m_FerrisWheel::placeposition))

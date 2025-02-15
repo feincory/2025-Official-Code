@@ -12,6 +12,7 @@ import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
+import com.ctre.phoenix6.controls.MotionMagicExpoVoltage;
 import com.ctre.phoenix6.controls.PositionDutyCycle;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
@@ -59,14 +60,29 @@ public class FerrisWheel extends SubsystemBase {
     fx_cfg.Feedback.SensorToMechanismRatio = 1.0;
     fx_cfg.Feedback.RotorToSensorRatio = 83.740234375;
     fx_cfg.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .5;
-    fx_cfg.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = .2;
+    fx_cfg.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = .1;
     fx_cfg.Slot0.GravityType = GravityTypeValue.Elevator_Static;
+    fx_cfg.Slot0.kS = 0;
+    fx_cfg.Slot0.kV = 0;
+    fx_cfg.Slot0.kA = 0;
     fx_cfg.Slot0.kP = kfPc;
     fx_cfg.Slot0.kD = kfDc;
     fx_cfg.Slot0.kI = kfIc;
     fx_cfg.Slot0.kG = kfGc;
     fx_cfg.Voltage.PeakForwardVoltage = 12;
     fx_cfg.Voltage.PeakReverseVoltage = -12;
+    // current limiting
+    fx_cfg.CurrentLimits.SupplyCurrentLimit = 25;
+    fx_cfg.CurrentLimits.SupplyCurrentLowerLimit = 30;
+    fx_cfg.CurrentLimits.SupplyCurrentLimitEnable = true;
+    fx_cfg.CurrentLimits.StatorCurrentLimit = 30;
+    fx_cfg.CurrentLimits.StatorCurrentLimitEnable = true;
+
+    // Configure MotionMagicExpo settings
+    var motionMagicConfigs = fx_cfg.MotionMagic;
+    motionMagicConfigs.MotionMagicCruiseVelocity = 2;
+    motionMagicConfigs.MotionMagicExpo_kV = .001;
+    motionMagicConfigs.MotionMagicExpo_kA = .001;
 
     m_FerrisWheel.getConfigurator().apply(fx_cfg);
     m_FerrisWheel.setNeutralMode(NeutralModeValue.Coast);
@@ -105,7 +121,8 @@ public class FerrisWheel extends SubsystemBase {
   }
 
   public void setposition(double position) {
-    m_FerrisWheel.setControl(m_PositionDutyCycle.withPosition(position));
+    final MotionMagicExpoVoltage m_request = new MotionMagicExpoVoltage(0);
+    m_FerrisWheel.setControl(m_request.withPosition(position));
   }
 
   public void retreiveposition() {
