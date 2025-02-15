@@ -34,6 +34,7 @@ public class CoralGround extends SubsystemBase {
     motor = new SparkMax(41, MotorType.kBrushless);
     spinner = new SparkMax(40, MotorType.kBrushless);
     closedLoopController = motor.getClosedLoopController();
+
     encoder = motor.getEncoder();
     motorConfig = new SparkMaxConfig();
     motorConfig.encoder.positionConversionFactor(1).velocityConversionFactor(1);
@@ -43,7 +44,7 @@ public class CoralGround extends SubsystemBase {
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)
         // Set PID values for position control. We don't need to pass a closed
         // loop slot, as it will default to slot 0.
-        .p(1)
+        .p(3)
         .i(0)
         .d(0)
         .outputRange(-1, 1)
@@ -75,14 +76,13 @@ public class CoralGround extends SubsystemBase {
   }
 
   public void homingroutine() {
-    if (!m_proxswitch.get() == true) {
+    if (!m_proxswitch.get() == true || coralgroundhomed == true) {
       closedLoopController.setReference(0, ControlType.kDutyCycle);
       coralgroundhomed = true;
       encoder.setPosition(0);
       System.out.print("homed homie");
     } else {
-      closedLoopController.setReference(-.075, ControlType.kDutyCycle);
-      coralgroundhomed = false;
+      closedLoopController.setReference(-.125, ControlType.kDutyCycle);
     } // This method will be called once per scheduler run
     spinner.set(0);
   }
@@ -92,7 +92,7 @@ public class CoralGround extends SubsystemBase {
     encoder.setPosition(0);
   }
 
-  public void runtoposition1() {
+  public void storagepos() {
     // This method will be called once per scheduler run
     if (coralgroundhomed) {
       closedLoopController.setReference(
@@ -101,22 +101,32 @@ public class CoralGround extends SubsystemBase {
     spinner.set(0);
   }
 
-  public void runtoposition2() {
+  public void shootpos() {
+    // This method will be called once per scheduler run
+    if (coralgroundhomed) {
+      closedLoopController.setReference(
+          3, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0);
+      spinner.set(0);
+    }
+  }
+
+  public void pickupos() {
     // This method will be called once per scheduler run
     if (coralgroundhomed) {
       closedLoopController.setReference(
           14.5, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0);
-      spinner.set(.5);
+      spinner.set(.6);
     }
   }
 
-  public void runtoposition3() {
+  public void runspinner() {
     // This method will be called once per scheduler run
-    if (coralgroundhomed) {
-      closedLoopController.setReference(
-          4, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0);
-      spinner.set(.5);
-    }
+    spinner.set(-.65);
+  }
+
+  public void stopspinner() {
+    // This method will be called once per scheduler run
+    spinner.set(.0);
   }
 
   public void stop() {

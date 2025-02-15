@@ -7,7 +7,6 @@ package frc.robot.commands;
 import static frc.robot.Constants.elevatoridlepos;
 
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Elevator.*;
@@ -26,70 +25,104 @@ public class SetFerrisAndElevator extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     BooleanSupplier conditiontest = () -> true;
-    // addCommands(
-    //     new FerrisWheelVertical(m_FerrisWheel),
-    //     new Elevatorsetpos(m_Elevator, elevatoridlepos),
-    //     new ParallelCommandGroup(
-    //         new Elevatorsetpos(m_Elevator, elevatortarget),
-    //         new FerrisWheelSetPos(m_FerrisWheel, ferristarget)));
 
-    // if (new InstantCommand()m_Elevator.elevatorstatus) {
-    //   addCommands( // ontrue
-    //       new SequentialCommandGroup(
-    //           new Elevatorsetpos(m_Elevator, elevatoridlepos),
-    //           new FerrisWheelVertical(m_FerrisWheel),
-    //           new ParallelCommandGroup(
-    //               new Elevatorsetpos(m_Elevator, elevatortarget),
-    //               new FerrisWheelSetPos(m_FerrisWheel, ferristarget))));
-    // } else {
-    //   addCommands(
-    //       new SequentialCommandGroup(
-    //           new FerrisWheelVertical(m_FerrisWheel),
-    //           new Elevatorsetpos(m_Elevator, elevatoridlepos),
-    //           new ParallelCommandGroup(
-    //               new Elevatorsetpos(m_Elevator, elevatortarget),
-    //               new FerrisWheelSetPos(m_FerrisWheel, ferristarget))));
-    //   addCommands(new InstantCommand(m_Elevator::elevatorstatus));
-    // }
     addCommands(
         new ConditionalCommand(
-            // ontrue
-            new SequentialCommandGroup(
-                new Elevatorsetpos(m_Elevator, elevatoridlepos),
-                new FerrisWheelVertical(m_FerrisWheel),
-                new ParallelCommandGroup(
-                    new Elevatorsetpos(m_Elevator, elevatortarget),
-                    new FerrisWheelSetPos(m_FerrisWheel, ferristarget))),
+            new ConditionalCommand(
+                new SequentialCommandGroup(
+                    new Elevatorsetpos(m_Elevator, elevatoridlepos),
+                    new FerrisWheelVertical(m_FerrisWheel),
+                    new SequentialCommandGroup(
+                        new Elevatorsetpos(m_Elevator, elevatortarget),
+                        new FerrisWheelSetPos(m_FerrisWheel, ferristarget))),
+                new SequentialCommandGroup(
+                    new FerrisWheelVertical(m_FerrisWheel),
+                    new Elevatorsetpos(m_Elevator, elevatoridlepos),
+                    new SequentialCommandGroup(
+                        new FerrisWheelSetPos(m_FerrisWheel, ferristarget),
+                        new Elevatorsetpos(m_Elevator, elevatortarget))),
 
-            // onfalse
+                // conditon for 2nd conditional
+                m_Elevator.elevatorfirst()),
+
+            // false true case
             new SequentialCommandGroup(
-                new FerrisWheelVertical(m_FerrisWheel),
                 new Elevatorsetpos(m_Elevator, elevatoridlepos),
-                new ParallelCommandGroup(
-                    new Elevatorsetpos(m_Elevator, elevatortarget),
-                    new FerrisWheelSetPos(m_FerrisWheel, ferristarget))),
-            m_Elevator.elevatorcrashSupplier()));
+                new FerrisWheelVertical(m_FerrisWheel),
+                new FerrisWheelSetPos(m_FerrisWheel, ferristarget),
+                new Elevatorsetpos(m_Elevator, elevatortarget)),
+            // conditon for 1st conditional
+            m_Elevator.crashparallel()));
 
     // addCommands(
-    //     new ConditionalCommand(
-    //         // ontrue
-    //         new SequentialCommandGroup(
-    //             new Elevatorsetpos(m_Elevator, elevatoridlepos),
-    //             new FerrisWheelVertical(m_FerrisWheel),
-    //             new ParallelCommandGroup(
-    //                 new Elevatorsetpos(m_Elevator, elevatortarget),
-    //                 new FerrisWheelSetPos(m_FerrisWheel, ferristarget))),
+    //   new ConditionalCommand(
+    //   new ConditionalCommand(
+    //     new SequentialCommandGroup(
+    //           new FerrisWheelVertical(m_FerrisWheel),//true true command
+    //           new Elevatorsetpos(m_Elevator, elevatoridlepos),//true true command
+    //             new ParallelCommandGroup(//true true command
+    //               new FerrisWheelSetPos(m_FerrisWheel, ferristarget),//true true command
+    //               new Elevatorsetpos(m_Elevator, elevatortarget))), //true true command
+    //     new SequentialCommandGroup(
+    //           new Elevatorsetpos(m_Elevator, elevatoridlepos),//true false command
+    //           new FerrisWheelVertical(m_FerrisWheel),//true false command
+    //           new ParallelCommandGroup(//true false command
+    //               new FerrisWheelSetPos(m_FerrisWheel, ferristarget),//true false command
+    //               new Elevatorsetpos(m_Elevator, elevatortarget))), //true false command
+    //     m_Elevator.crashonentrystatus()),
 
-    //         // onfalse
+    //   new ParallelCommandGroup(
+    //         new FerrisWheelVertical(m_FerrisWheel),
+    //         new Elevatorsetpos(m_Elevator, elevatoridlepos),
+    //           new SequentialCommandGroup(
+    //             new FerrisWheelSetPos(m_FerrisWheel, ferristarget),
+    //             new Elevatorsetpos(m_Elevator, elevatortarget))),
+    //   new ParallelCommandGroup(
+    //         new Elevatorsetpos(m_Elevator, elevatoridlepos),
+    //         new FerrisWheelVertical(m_FerrisWheel),
     //         new SequentialCommandGroup(
-    //             new FerrisWheelVertical(m_FerrisWheel),
-    //             new Elevatorsetpos(m_Elevator, elevatoridlepos),
-    //             new ParallelCommandGroup(
-    //                 new Elevatorsetpos(m_Elevator, elevatortarget),
-    //                 new FerrisWheelSetPos(m_FerrisWheel, ferristarget))),
+    //             new FerrisWheelSetPos(m_FerrisWheel, ferristarget),
+    //             new Elevatorsetpos(m_Elevator, elevatortarget))),
+    //   m_Elevator.crashonexitstatus());
 
-    //         // condition
-    //         conditiontest));
-    //  //m_Elevator.elevatorcrashSupplier()));
+    /*
+    case 1
+    seq
+    ferris
+    elevator
+    par
+    ferris
+    elevator
+
+    case 2
+    seq
+    elevator
+    ferris wheel
+    par
+    ferris
+    elevator
+
+    case 3
+    par
+    ferris
+    elevator
+    seq
+    ferris
+    elevator
+
+    case 4
+    par
+    elevator
+    ferris
+    seq
+    elevator
+    ferris
+
+
+
+
+
+
+    */
   }
 }

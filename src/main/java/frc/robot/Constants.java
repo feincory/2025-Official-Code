@@ -36,29 +36,36 @@ public final class Constants {
   }
 
   // ferris wheel PIDs
-  public static double kfPc = 20; //
+  public static double kfPc = 22; //
   public static double kfIc = 0; //
-  public static double kfDc = 2.5;
+  public static double kfDc = 3;
   public static double kfGc = 0; // Gravity
 
   // Algae Elevator constances
-  public static double elevatorRetreiveAlgaepos = -5;
+  public static double elevatorRetreiveAlgaepos = -2.05;
   public static double elevatoridlepos = -15.5;
   public static double elevatoridleposL2 = -15.5;
-  public static double elevatorL2Algaepos = -12.13;
+  public static double elevatorL2Algaepos = -10.73;
   public static double elevatorL3Algaepos = -19;
   public static double elevatornetpos = -27;
-  public static double ferrisalageretreive = .5;
+  public static double ferrisalageretreive = .9;
   public static double ferrisAlgaeReefPic = .814;
   public static double ferrisAlgaeNet = .615;
   public static double ferriswheelvert = .524;
+  public static double ferrisalgaeprocessor = .86;
+  public static double elevatorprocessor = -3;
 
   // Coral Elevator Positions
   public static double elevatorRetreivepos = -4;
+
   public static double elevatorL2pos = -6.9;
   public static double elevatorL3pos = -15;
-  public static double elevatorL4pos = -26.5;
+  public static double elevatorL4pos = -27;
   public static double ferriscoralplace = .179;
   public static double ferriscoralplaceL2 = .175;
   public static double ferriscoralretreive = .620;
+
+  // climb
+
+  public static double elevatorclimb = -1;
 }

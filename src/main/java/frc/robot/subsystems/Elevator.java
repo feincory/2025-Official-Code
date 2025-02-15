@@ -35,11 +35,12 @@ public class Elevator extends SubsystemBase {
   private final DutyCycleOut m_liftoutput = new DutyCycleOut(0);
   private final PositionDutyCycle m_liftpPositionDutyCycle = new PositionDutyCycle(0);
 
-  static boolean elevatorcrashposition;
+  static boolean crashparallel;
+  static boolean elevatorfirst;
   static boolean m_elevatorlowered;
 
-  private final double kGearRatio = 5.45;
-  private final double kinchesperrotation = 4;
+  // private final double kGearRatio = 5.45;
+  // private final double kinchesperrotation = 4;
   // private double kinchtorotation;
   // private double elevatorpos;
 
@@ -104,7 +105,8 @@ public class Elevator extends SubsystemBase {
     BaseStatusSignal.setUpdateFrequencyForAll(100, m_liftlead.getPosition());
 
     m_elevatorlowered = true;
-    elevatorcrashposition = false;
+    crashparallel = false;
+    elevatorfirst = false;
     // kinchtorotation = kGearRatio * kinchesperrotation;
     // elevatorpos = 5;
 
@@ -177,26 +179,29 @@ public class Elevator extends SubsystemBase {
     return m_liftlead.getPosition();
   }
 
-  public void elevatoratcrashpos() {
-    elevatorcrashposition = true;
-    System.out.println("crash = true");
+  public void crashparalleltrue() {
+    crashparallel = true;
   }
 
-  public void elevatoratnotatcrashpos() {
-    elevatorcrashposition = false;
-    System.out.println("crash = false");
+  public void crashparallelfalse() {
+    crashparallel = false;
   }
 
-  public boolean elevatorstatus() {
-    System.out.println("command called status");
-    return elevatorcrashposition;
+  public void elevatorfirsttrue() {
+    elevatorfirst = true;
   }
 
-  public BooleanSupplier elevatorcrashSupplier() {
-    return () -> elevatorcrashposition;
+  public void elevatorfirstfalse() {
+    elevatorfirst = false;
   }
 
-  // BooleanSupplier sup = ()-> elevatorcrashposition;
+  public BooleanSupplier crashparallel() {
+    return () -> crashparallel;
+  }
+
+  public BooleanSupplier elevatorfirst() {
+    return () -> elevatorfirst;
+  }
 
   public void createDashboards() {
     // ShuffleboardTab tab = Shuffleboard.getTab("Elevator");
