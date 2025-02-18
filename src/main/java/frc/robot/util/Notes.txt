@@ -1,0 +1,47 @@
+import static frc.robot.Constants.elevatorL2Algaepos;
+import static frc.robot.Constants.elevatorL2pos;
+import static frc.robot.Constants.elevatorL3Algaepos;
+import static frc.robot.Constants.elevatorL3pos;
+import static frc.robot.Constants.elevatorL4pos;
+import static frc.robot.Constants.elevatorRetreiveAlgaepos;
+import static frc.robot.Constants.elevatorRetreivepos;
+import static frc.robot.Constants.elevatorclimb;
+import static frc.robot.Constants.elevatornetpos;
+import static frc.robot.Constants.elevatorprocessor;
+import static frc.robot.Constants.elevatorstow;
+import static frc.robot.Constants.ferrisAlgaeNet;
+import static frc.robot.Constants.ferrisAlgaeReefPic;
+import static frc.robot.Constants.ferrisalageretreive;
+import static frc.robot.Constants.ferrisalgaeprocessor;
+import static frc.robot.Constants.ferriscoralplace;
+import static frc.robot.Constants.ferriscoralretreive;
+import static frc.robot.Constants.ferriswheelvert;
+
+
+        // Define elevator positions for each index
+        elevatorPositions.put(0, elevatorstow);  //stow
+        elevatorPositions.put(1, elevatorRetreivepos); 
+        elevatorPositions.put(2, elevatorL2pos);
+        elevatorPositions.put(3, elevatorL3pos);
+        elevatorPositions.put(4, elevatorL4pos);
+        elevatorPositions.put(5, elevatorRetreiveAlgaepos);  //stow
+        elevatorPositions.put(6, elevatorL2Algaepos); 
+        elevatorPositions.put(7, elevatorL3Algaepos);
+        elevatorPositions.put(8, elevatorprocessor);
+        elevatorPositions.put(9, elevatornetpos);
+        elevatorPositions.put(10, elevatorclimb);
+       
+
+        // Define ferris wheel positions for each index
+        ferrisWheelPositions.put(0, ferriswheelvert);
+        ferrisWheelPositions.put(1, ferriscoralretreive);
+        ferrisWheelPositions.put(2, ferriscoralplace);
+        ferrisWheelPositions.put(3, ferriscoralplace);
+        ferrisWheelPositions.put(4, ferriscoralplace);
+        ferrisWheelPositions.put(5, ferrisalageretreive);
+        ferrisWheelPositions.put(6, ferrisAlgaeReefPic);
+        ferrisWheelPositions.put(7, ferrisAlgaeReefPic);
+        ferrisWheelPositions.put(8, ferrisalgaeprocessor);
+        ferrisWheelPositions.put(9, ferrisAlgaeNet);
+        ferrisWheelPositions.put(10, ferriswheelvert);
+     

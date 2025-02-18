@@ -51,6 +51,7 @@ import frc.robot.commands.DriveCommands;
 import frc.robot.commands.Elevatorsetpos;
 import frc.robot.commands.FerrisWheelSetPos;
 import frc.robot.commands.HomeLiftCommand;
+import frc.robot.commands.MoveToPositionCommand;
 import frc.robot.commands.SetFerrisAndElevator;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlgaeIntake;
@@ -86,6 +87,8 @@ public class RobotContainer {
   private final CommandXboxController testcontroller = new CommandXboxController(2);
   private final CommandXboxController controller = new CommandXboxController(1);
   public final CommandJoystick m_drivercontroller = new CommandJoystick(0);
+
+  private int lastPositionKey = 0; // Store last known position (start at 0)
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -359,8 +362,15 @@ public class RobotContainer {
     //     .onTrue(new InstantCommand(m_FerrisWheel::retreiveposition))
     //     .onFalse(new InstantCommand(m_FerrisWheel::ferrisstop));
 
+    testcontroller.start().onTrue(new InstantCommand(() -> moveToPosition(3)));
+    testcontroller.back().onTrue(new InstantCommand(() -> moveToPosition(7)));
   }
 
+  private void moveToPosition(int targetKey) {
+    new MoveToPositionCommand(m_Elevator, m_FerrisWheel, lastPositionKey, targetKey)
+        .andThen(() -> lastPositionKey = targetKey) // Update last position AFTER movement
+        .schedule();
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

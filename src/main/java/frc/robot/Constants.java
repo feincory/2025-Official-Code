@@ -65,7 +65,7 @@ public final class Constants {
   public static double ferriscoralplaceL2 = .175;
   public static double ferriscoralretreive = .620;
 
-  // climb
-
+  // climb/stow
+  public static double elevatorstow = -5;
   public static double elevatorclimb = -1;
 }

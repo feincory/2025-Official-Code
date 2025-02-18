@@ -38,6 +38,8 @@ public class Elevator extends SubsystemBase {
   static boolean crashparallel;
   static boolean elevatorfirst;
   static boolean m_elevatorlowered;
+  private double currentPosition = 0; // Tracks the current position
+  private boolean isHomed = false; // Homing check
 
   // private final double kGearRatio = 5.45;
   // private final double kinchesperrotation = 4;
@@ -107,6 +109,7 @@ public class Elevator extends SubsystemBase {
     m_elevatorlowered = true;
     crashparallel = false;
     elevatorfirst = false;
+
     // kinchtorotation = kGearRatio * kinchesperrotation;
     // elevatorpos = 5;
 
@@ -135,11 +138,25 @@ public class Elevator extends SubsystemBase {
     final MotionMagicExpoVoltage m_request = new MotionMagicExpoVoltage(0);
     // m_liftlead.setControl(m_liftpPositionDutyCycle.withPosition(position));
     m_liftlead.setControl(m_request.withPosition(position));
+    currentPosition = position;
+  }
+
+  public double getcurrentposition() {
+    // return m_liftpPositionDutyCycle.getPositionMeasure().in(Rotation);
+    return currentPosition;
   }
 
   public double getpostion() {
     // return m_liftpPositionDutyCycle.getPositionMeasure().in(Rotation);
     return m_liftlead.getPosition().getValueAsDouble();
+  }
+
+  public boolean isHomed() {
+    return isHomed;
+  }
+
+  public void setHomed(boolean homed) {
+    isHomed = homed;
   }
 
   public void resetEncoder() {

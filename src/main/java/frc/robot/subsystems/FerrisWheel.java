@@ -42,6 +42,7 @@ public class FerrisWheel extends SubsystemBase {
   static double coralplacepositionvalue;
   static double coralretreivepositionvalue;
   static double coralstartpositionvalue;
+  private double currentPosition = 0;
 
   public FerrisWheel() {
 
@@ -108,6 +109,15 @@ public class FerrisWheel extends SubsystemBase {
 
     // ferriswheelpos = m_cc.getPosition();
 
+  }
+
+  public void setFerrisWheelPosition(double position) {
+    final MotionMagicExpoVoltage m_request = new MotionMagicExpoVoltage(0);
+    m_FerrisWheel.setControl(m_request.withPosition(position));
+  }
+
+  public double getCurrentPosition() {
+    return currentPosition;
   }
 
   public void placeposition() {
