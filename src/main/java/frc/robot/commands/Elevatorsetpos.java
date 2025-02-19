@@ -34,7 +34,7 @@ public class Elevatorsetpos extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.print("Lift at position");
+    // System.out.print("Lift at position");
   }
 
   // Returns true when the command should end.

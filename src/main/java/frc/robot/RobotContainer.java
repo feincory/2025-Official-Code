@@ -183,6 +183,24 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
+    m_drivercontroller
+        .button(11)
+        .onTrue(new InstantCommand(m_coralground::pickupos)); // place coral on reef
+
+    m_drivercontroller
+        .button(10)
+        .onFalse(new InstantCommand(m_coralground::shootpos)); // run to ground
+
+    m_drivercontroller
+        .button(13)
+        .onTrue(new InstantCommand(m_coralground::runspinner))
+        .onFalse(new InstantCommand(m_coralground::stopspinner));
+
+    m_drivercontroller
+        .button(15)
+        .onTrue(new InstantCommand(m_coralground::homingroutine))
+        .onFalse(new InstantCommand(m_coralground::stop));
+
     // coral intake button binding
     controller
         .rightBumper()
@@ -336,23 +354,6 @@ public class RobotContainer {
 
     m_drivercontroller.button(10).onTrue(new InstantCommand(m_coralground::storagepos));
 
-    m_drivercontroller
-        .button(11)
-        .onTrue(new InstantCommand(m_coralground::pickupos)); // place coral on reef
-
-    m_drivercontroller
-        .button(10)
-        .onFalse(new InstantCommand(m_coralground::shootpos)); // run to ground
-
-    m_drivercontroller
-        .button(13)
-        .onTrue(new InstantCommand(m_coralground::runspinner))
-        .onFalse(new InstantCommand(m_coralground::stopspinner));
-
-    m_drivercontroller
-        .button(15)
-        .onTrue(new InstantCommand(m_coralground::homingroutine))
-        .onFalse(new InstantCommand(m_coralground::stop));
     // controller
     //     .leftStick()
     //     .onTrue(new InstantCommand(m_FerrisWheel::placeposition))
@@ -364,6 +365,12 @@ public class RobotContainer {
 
     testcontroller.start().onTrue(new InstantCommand(() -> moveToPosition(3)));
     testcontroller.back().onTrue(new InstantCommand(() -> moveToPosition(7)));
+    testcontroller.povUp().onTrue(new InstantCommand(() -> moveToPosition(9)));
+    testcontroller.povDown().onTrue(new InstantCommand(() -> moveToPosition(4)));
+    testcontroller.a().onTrue(new InstantCommand(() -> moveToPosition(1)));
+    testcontroller.x().onTrue(new InstantCommand(() -> moveToPosition(2)));
+    testcontroller.b().onTrue(new InstantCommand(() -> moveToPosition(3)));
+    testcontroller.y().onTrue(new InstantCommand(() -> moveToPosition(4)));
   }
 
   private void moveToPosition(int targetKey) {

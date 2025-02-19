@@ -36,9 +36,9 @@ public final class Constants {
   }
 
   // ferris wheel PIDs
-  public static double kfPc = 22; //
+  public static double kfPc = 30; //
   public static double kfIc = 0; //
-  public static double kfDc = 3;
+  public static double kfDc = 2;
   public static double kfGc = 0; // Gravity
 
   // Algae Elevator constances

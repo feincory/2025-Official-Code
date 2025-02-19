@@ -63,8 +63,8 @@ public class FerrisWheel extends SubsystemBase {
     fx_cfg.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .5;
     fx_cfg.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = .1;
     fx_cfg.Slot0.GravityType = GravityTypeValue.Elevator_Static;
-    fx_cfg.Slot0.kS = 0;
-    fx_cfg.Slot0.kV = 0;
+    fx_cfg.Slot0.kS = 0.05;
+    fx_cfg.Slot0.kV = 0.05;
     fx_cfg.Slot0.kA = 0;
     fx_cfg.Slot0.kP = kfPc;
     fx_cfg.Slot0.kD = kfDc;
@@ -81,7 +81,7 @@ public class FerrisWheel extends SubsystemBase {
 
     // Configure MotionMagicExpo settings
     var motionMagicConfigs = fx_cfg.MotionMagic;
-    motionMagicConfigs.MotionMagicCruiseVelocity = 1;
+    motionMagicConfigs.MotionMagicCruiseVelocity = 0;
     motionMagicConfigs.MotionMagicExpo_kV = .001;
     motionMagicConfigs.MotionMagicExpo_kA = .001;
 

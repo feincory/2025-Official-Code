@@ -13,7 +13,7 @@ public class FerrisWheelSetPos extends Command {
   private final FerrisWheel ferrisWheel;
 
   private final double targetPosition;
-  private static final double POSITION_TOLERANCE = .015; // Adjust tolerance as needed
+  private static final double POSITION_TOLERANCE = .05; // Adjust tolerance as needed
 
   public FerrisWheelSetPos(FerrisWheel ferrisWheel, double targetPosition) {
     // Use addRequirements() here to declare subsystem dependencies.
@@ -36,7 +36,7 @@ public class FerrisWheelSetPos extends Command {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    System.out.println("ferris wheel vertical");
+    // System.out.println("ferris wheel vertical");
   }
 
   // Returns true when the command should end.

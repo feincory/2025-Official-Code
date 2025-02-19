@@ -1,24 +1,6 @@
 package frc.robot.util;
 
-import static frc.robot.Constants.elevatorL2Algaepos;
-import static frc.robot.Constants.elevatorL2pos;
-import static frc.robot.Constants.elevatorL3Algaepos;
-import static frc.robot.Constants.elevatorL3pos;
-import static frc.robot.Constants.elevatorL4pos;
-import static frc.robot.Constants.elevatorRetreiveAlgaepos;
-import static frc.robot.Constants.elevatorRetreivepos;
-import static frc.robot.Constants.elevatorclimb;
-import static frc.robot.Constants.elevatoridlepos;
-import static frc.robot.Constants.elevatornetpos;
-import static frc.robot.Constants.elevatorprocessor;
-import static frc.robot.Constants.elevatorstow;
-import static frc.robot.Constants.ferrisAlgaeNet;
-import static frc.robot.Constants.ferrisAlgaeReefPic;
-import static frc.robot.Constants.ferrisalageretreive;
-import static frc.robot.Constants.ferrisalgaeprocessor;
-import static frc.robot.Constants.ferriscoralplace;
-import static frc.robot.Constants.ferriscoralretreive;
-import static frc.robot.Constants.ferriswheelvert;
+import static frc.robot.Constants.*;
 
 import edu.wpi.first.wpilibj2.command.*;
 import frc.robot.commands.*;
@@ -37,8 +19,6 @@ public class TransitionMatrix {
   private static final Map<Integer, Double> elevatorPositions = new HashMap<>();
   private static final Map<Integer, Double> ferrisWheelPositions = new HashMap<>();
   private static final Map<String, MovementType> movementRules = new HashMap<>();
-  private static final Map<Integer, Command> entrySequences = new HashMap<>();
-  private static final Map<Integer, Command> exitSequences = new HashMap<>();
   private static final Map<Integer, Integer> intermediatePositions = new HashMap<>();
 
   static {
@@ -54,6 +34,7 @@ public class TransitionMatrix {
     elevatorPositions.put(8, elevatorprocessor);
     elevatorPositions.put(9, elevatornetpos);
     elevatorPositions.put(10, elevatorclimb);
+    elevatorPositions.put(11, elevatoridlepos);
 
     // Define ferris wheel positions for each index
     ferrisWheelPositions.put(0, ferriswheelvert);
@@ -67,32 +48,32 @@ public class TransitionMatrix {
     ferrisWheelPositions.put(8, ferrisalgaeprocessor);
     ferrisWheelPositions.put(9, ferrisAlgaeNet);
     ferrisWheelPositions.put(10, ferriswheelvert);
+    ferrisWheelPositions.put(11, ferriswheelvert);
 
     // Define movement types
-    movementRules.put("0-1", MovementType.PARALLEL);
-    movementRules.put("1-2", MovementType.SEQUENTIAL_ELEVATOR_FIRST);
-    movementRules.put("2-3", MovementType.SEQUENTIAL_FERRIS_FIRST);
-    movementRules.put("3-4", MovementType.PARALLEL);
+    movementRules.put("0-1", MovementType.SEQUENTIAL_ELEVATOR_FIRST);
 
-    // Define entry sequences (special movements before reaching target)
-    entrySequences.put(
-        4,
-        new SequentialCommandGroup(
-            new Elevatorsetpos(e, elevatoridlepos), // Move elevator to safe position first
-            new FerrisWheelSetPos(null, ferriswheelvert) // Rotate to halfway position
-            ));
+    movementRules.put("1-11", MovementType.SEQUENTIAL_FERRIS_FIRST);
+    movementRules.put("11-2", MovementType.SEQUENTIAL_FERRIS_FIRST);
 
-    // Manually define the reverse of each entry sequence as an exit sequence
-    exitSequences.put(
-        4,
-        new SequentialCommandGroup(
-            new Elevatorsetpos(null, elevatoridlepos),
-            new FerrisWheelSetPos(null, ferriswheelvert) // Reverse rotation
-            // Lower elevator back to previous state
-            ));
+    movementRules.put("2-11", MovementType.SEQUENTIAL_ELEVATOR_FIRST);
+    movementRules.put("11-1", MovementType.SEQUENTIAL_ELEVATOR_FIRST);
 
-    // Define intermediate positions for transitions
-    intermediatePositions.put(5, 2); // If going to position 5, first move to position 2
+    movementRules.put("1-11", MovementType.SEQUENTIAL_FERRIS_FIRST);
+    movementRules.put("11-3", MovementType.SEQUENTIAL_FERRIS_FIRST);
+
+    movementRules.put("3-11", MovementType.SEQUENTIAL_ELEVATOR_FIRST);
+    movementRules.put("11-1", MovementType.SEQUENTIAL_ELEVATOR_FIRST);
+
+    movementRules.put("1-4", MovementType.PARALLEL);
+    movementRules.put("4-1", MovementType.PARALLEL);
+    movementRules.put("4-1", MovementType.PARALLEL);
+
+    // If going to position 2, first move to position 2
+
+    intermediatePositions.put(1, 11);
+    intermediatePositions.put(2, 11);
+    intermediatePositions.put(3, 11);
   }
 
   public static double getElevatorPosition(int key) {
@@ -115,19 +96,52 @@ public class TransitionMatrix {
     return intermediatePositions.getOrDefault(targetKey, targetKey);
   }
 
-  public static boolean hasEntrySequence(int key) {
-    return entrySequences.containsKey(key);
-  }
-
-  public static Command getEntrySequence(int key, Elevator elevator, FerrisWheel ferrisWheel) {
-    return entrySequences.getOrDefault(key, null);
-  }
-
-  public static boolean hasExitSequence(int key) {
-    return exitSequences.containsKey(key);
-  }
-
+  // EXIT SEQUENCES: Reverse of entry sequence for safely leaving a position
   public static Command getExitSequence(int key, Elevator elevator, FerrisWheel ferrisWheel) {
-    return exitSequences.getOrDefault(key, null);
+    Double elevatorTarget = getElevatorPosition(key);
+    Double ferrisWheelTarget = getFerrisWheelPosition(key);
+    System.out.println("Exit sequence for " + key);
+    if (key == 3) { // Example: Leaving position 4 requires reversing the movements
+      return new SequentialCommandGroup(
+          new FerrisWheelSetPos(ferrisWheel, ferriswheelvert) // Reverse rotation
+          // new Elevatorsetpos(elevator, elevatorTarget) // Lower elevator back to previous state
+          );
+    }
+    if (key == 1) {
+      // System.out.print("Exiting position 1");
+      return new SequentialCommandGroup(
+          new FerrisWheelSetPos(ferrisWheel, ferriswheelvert), // Reverse rotation
+          new Elevatorsetpos(elevator, elevatorTarget) // Lower elevator back to previous state
+          );
+    }
+    if (key == 2) { // Example: Moving into position 4 requires special steps
+      return new SequentialCommandGroup(
+          new Elevatorsetpos(elevator, elevatorTarget), // Move elevator to safe position first
+          new FerrisWheelSetPos(ferrisWheel, ferrisWheelTarget) // Rotate to halfway position
+          );
+    }
+
+    return null; // No special exit sequence required
+  }
+  // ENTRY SEQUENCES: Define movements needed to safely reach a target position
+  public static Command getEntrySequence(int key, Elevator elevator, FerrisWheel ferrisWheel) {
+    Double elevatorTarget = getElevatorPosition(key);
+    Double ferrisWheelTarget = getFerrisWheelPosition(key);
+
+    if (key == 1) {
+      // System.out.print("Entry for 1");
+      return new SequentialCommandGroup(
+          // new Elevatorsetpos(elevator, elevatorTarget), // Move elevator to safe position first
+          new FerrisWheelSetPos(ferrisWheel, ferrisWheelTarget) // Rotate to halfway position
+          );
+    }
+    if (key == 2) { // Example: Moving into position 4 requires special steps
+      return new SequentialCommandGroup(
+          new FerrisWheelSetPos(ferrisWheel, ferrisWheelTarget), // Rotate to halfway position
+          new Elevatorsetpos(elevator, elevatorTarget) // Move elevator to safe position first
+          );
+    }
+
+    return null; // No special entry sequence required
   }
 }
