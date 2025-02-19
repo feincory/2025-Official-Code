@@ -81,8 +81,8 @@ public class FerrisWheel extends SubsystemBase {
     // Configure MotionMagicExpo settings
     var motionMagicConfigs = fx_cfg.MotionMagic;
     motionMagicConfigs.MotionMagicCruiseVelocity = 1;
-    motionMagicConfigs.MotionMagicExpo_kV = .001;
-    motionMagicConfigs.MotionMagicExpo_kA = .001;
+    motionMagicConfigs.MotionMagicExpo_kV = 5;
+    motionMagicConfigs.MotionMagicExpo_kA = 2.5;
 
     m_FerrisWheel.getConfigurator().apply(fx_cfg);
     m_FerrisWheel.setNeutralMode(NeutralModeValue.Coast);

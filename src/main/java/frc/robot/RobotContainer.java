@@ -39,7 +39,6 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -48,9 +47,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.ClearElevator;
 import frc.robot.commands.DriveCommands;
-import frc.robot.commands.Elevatorsetpos;
-import frc.robot.commands.FerrisWheelSetPos;
 import frc.robot.commands.HomeLiftCommand;
+import frc.robot.commands.MoveToPositionCommand;
 import frc.robot.commands.SetFerrisAndElevator;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlgaeIntake;
@@ -86,6 +84,7 @@ public class RobotContainer {
   private final CommandXboxController testcontroller = new CommandXboxController(2);
   private final CommandXboxController controller = new CommandXboxController(1);
   public final CommandJoystick m_drivercontroller = new CommandJoystick(0);
+  private int currentKey = 0; // Track the last known positio
 
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -179,6 +178,26 @@ public class RobotContainer {
                             new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
                     drive)
                 .ignoringDisable(true));
+
+    m_drivercontroller.button(10).onTrue(new InstantCommand(m_coralground::storagepos));
+
+    m_drivercontroller
+        .button(11)
+        .onTrue(new InstantCommand(m_coralground::pickupos)); // place coral on reef
+
+    m_drivercontroller
+        .button(10)
+        .onFalse(new InstantCommand(m_coralground::shootpos)); // run to ground
+
+    m_drivercontroller
+        .button(13)
+        .onTrue(new InstantCommand(m_coralground::runspinner))
+        .onFalse(new InstantCommand(m_coralground::stopspinner));
+
+    m_drivercontroller
+        .button(15)
+        .onTrue(new InstantCommand(m_coralground::homingroutine))
+        .onFalse(new InstantCommand(m_coralground::stop));
 
     // coral intake button binding
     controller
@@ -302,54 +321,35 @@ public class RobotContainer {
                 m_FerrisWheel,
                 ferrisAlgaeNet));
 
-    testcontroller
-        .leftStick()
-        .onTrue(
-            new ParallelRaceGroup(
-                new FerrisWheelSetPos(m_FerrisWheel, ferriswheelvert),
-                new Elevatorsetpos(m_Elevator, -5)));
+    // testcontroller
+    //     .leftStick()
+    //     .onTrue(
+    //         new ParallelRaceGroup(
+    //             new FerrisWheelSetPos(m_FerrisWheel, ferriswheelvert),
+    //             new Elevatorsetpos(m_Elevator, -5)));
 
-    testcontroller
-        .rightStick()
-        .onTrue(
-            new ParallelRaceGroup(
-                new FerrisWheelSetPos(m_FerrisWheel, ferriswheelvert),
-                new Elevatorsetpos(m_Elevator, -25)));
+    // testcontroller
+    //     .rightStick()
+    //     .onTrue(
+    //         new ParallelRaceGroup(
+    //             new FerrisWheelSetPos(m_FerrisWheel, ferriswheelvert),
+    //             new Elevatorsetpos(m_Elevator, -25)));
 
-    // ferris wheel testing buttons
-    testcontroller
-        .povRight()
-        .onTrue(
-            new ParallelRaceGroup(
-                new FerrisWheelSetPos(m_FerrisWheel, ferrisAlgaeReefPic),
-                new Elevatorsetpos(m_Elevator, -25)));
+    // // ferris wheel testing buttons
+    // testcontroller
+    //     .povRight()
+    //     .onTrue(
+    //         new ParallelRaceGroup(
+    //             new FerrisWheelSetPos(m_FerrisWheel, ferrisAlgaeReefPic),
+    //             new Elevatorsetpos(m_Elevator, -25)));
 
-    testcontroller
-        .povLeft()
-        .onTrue(
-            new ParallelRaceGroup(
-                new FerrisWheelSetPos(m_FerrisWheel, ferriscoralplace),
-                new Elevatorsetpos(m_Elevator, -25)));
+    // testcontroller
+    //     .povLeft()
+    //     .onTrue(
+    //         new ParallelRaceGroup(
+    //             new FerrisWheelSetPos(m_FerrisWheel, ferriscoralplace),
+    //             new Elevatorsetpos(m_Elevator, -25)));
 
-    m_drivercontroller.button(10).onTrue(new InstantCommand(m_coralground::storagepos));
-
-    m_drivercontroller
-        .button(11)
-        .onTrue(new InstantCommand(m_coralground::pickupos)); // place coral on reef
-
-    m_drivercontroller
-        .button(10)
-        .onFalse(new InstantCommand(m_coralground::shootpos)); // run to ground
-
-    m_drivercontroller
-        .button(13)
-        .onTrue(new InstantCommand(m_coralground::runspinner))
-        .onFalse(new InstantCommand(m_coralground::stopspinner));
-
-    m_drivercontroller
-        .button(15)
-        .onTrue(new InstantCommand(m_coralground::homingroutine))
-        .onFalse(new InstantCommand(m_coralground::stop));
     // controller
     //     .leftStick()
     //     .onTrue(new InstantCommand(m_FerrisWheel::placeposition))
@@ -359,8 +359,21 @@ public class RobotContainer {
     //     .onTrue(new InstantCommand(m_FerrisWheel::retreiveposition))
     //     .onFalse(new InstantCommand(m_FerrisWheel::ferrisstop));
 
+    testcontroller.start().onTrue(new InstantCommand(() -> moveToPosition(3)));
+    testcontroller.back().onTrue(new InstantCommand(() -> moveToPosition(7)));
+    testcontroller.povUp().onTrue(new InstantCommand(() -> moveToPosition(9)));
+    testcontroller.povDown().onTrue(new InstantCommand(() -> moveToPosition(4)));
+    testcontroller.a().onTrue(new InstantCommand(() -> moveToPosition(1)));
+    testcontroller.x().onTrue(new InstantCommand(() -> moveToPosition(2)));
+    testcontroller.b().onTrue(new InstantCommand(() -> moveToPosition(3)));
+    testcontroller.y().onTrue(new InstantCommand(() -> moveToPosition(4)));
   }
 
+  private void moveToPosition(int targetKey) {
+    new MoveToPositionCommand(m_Elevator, m_FerrisWheel, currentKey, targetKey)
+        .andThen(() -> currentKey = targetKey) // ✅ Update last position AFTER movement
+        .schedule();
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
