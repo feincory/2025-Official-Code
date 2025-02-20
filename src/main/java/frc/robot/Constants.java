@@ -36,7 +36,7 @@ public final class Constants {
   }
 
   // ferris wheel PIDs
-  public static double kfPc = 50; //
+  public static double kfPc = 40; //
   public static double kfIc = 0; //
   public static double kfDc = 3;
   public static double kfGc = 0; // Gravity
@@ -66,6 +66,6 @@ public final class Constants {
   public static double ferriscoralretreive = .620;
 
   // climb
-  public static double elevatorstow = -5;
+  public static double elevatorstow = -3;
   public static double elevatorclimb = -1;
 }

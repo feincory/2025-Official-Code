@@ -32,10 +32,13 @@ import static frc.robot.Constants.ferriscoralretreive;
 import static frc.robot.Constants.ferriswheelvert;
 
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -80,12 +83,14 @@ public class RobotContainer {
   public final AlgaeIntake m_AlgaeIntake = new AlgaeIntake();
   public final FerrisWheel m_FerrisWheel = new FerrisWheel();
   public final CoralGround m_coralground = new CoralGround();
+
   // Controller
   private final CommandXboxController testcontroller = new CommandXboxController(2);
   private final CommandXboxController controller = new CommandXboxController(1);
   public final CommandJoystick m_drivercontroller = new CommandJoystick(0);
   private int currentKey = 0; // Track the last known positio
 
+    private final SendableChooser<Command> AutonChoice;
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
 
@@ -145,6 +150,21 @@ public class RobotContainer {
         "Drive SysId (Dynamic Forward)", drive.sysIdDynamic(SysIdRoutine.Direction.kForward));
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
+
+        
+    // Register Named Commands
+    NamedCommands.registerCommand("Coral L4", new InstantCommand(() -> moveToPosition(4)));
+    NamedCommands.registerCommand("Coral Retreive", new InstantCommand(() -> moveToPosition(1)));
+
+        // Build an auto chooser. This will use Commands.none() as the default option.
+        AutonChoice = AutoBuilder.buildAutoChooser();
+
+    // Another option that allows you to specify the default auto by its name
+    // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
+
+    SmartDashboard.putData("Auto Chooser", AutonChoice);
+  
+
 
     // Configure the button bindings
     configureButtonBindings();
@@ -359,14 +379,17 @@ public class RobotContainer {
     //     .onTrue(new InstantCommand(m_FerrisWheel::retreiveposition))
     //     .onFalse(new InstantCommand(m_FerrisWheel::ferrisstop));
 
-    testcontroller.start().onTrue(new InstantCommand(() -> moveToPosition(3)));
-    testcontroller.back().onTrue(new InstantCommand(() -> moveToPosition(7)));
+    testcontroller.start().onTrue(new InstantCommand(() -> moveToPosition(0)));
+    testcontroller.back().onTrue(new InstantCommand(() -> moveToPosition(8)));
+    testcontroller.povLeft().onTrue(new InstantCommand(() -> moveToPosition(6)));
+    testcontroller.povRight().onTrue(new InstantCommand(() -> moveToPosition(7)));
     testcontroller.povUp().onTrue(new InstantCommand(() -> moveToPosition(9)));
-    testcontroller.povDown().onTrue(new InstantCommand(() -> moveToPosition(4)));
+    testcontroller.povDown().onTrue(new InstantCommand(() -> moveToPosition(5)));
     testcontroller.a().onTrue(new InstantCommand(() -> moveToPosition(1)));
     testcontroller.x().onTrue(new InstantCommand(() -> moveToPosition(2)));
     testcontroller.b().onTrue(new InstantCommand(() -> moveToPosition(3)));
     testcontroller.y().onTrue(new InstantCommand(() -> moveToPosition(4)));
+    // testcontroller.start().onTrue(new InstantCommand(() -> moveToPosition(11)));
   }
 
   private void moveToPosition(int targetKey) {
@@ -380,6 +403,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return autoChooser.get();
+    return AutonChoice.getSelected();
+    //return autoChooser.get();
   }
 }
