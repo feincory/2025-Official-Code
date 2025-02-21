@@ -9,8 +9,6 @@ public enum MovementType {
   EF,
   FEF,
   EFE,
-  FEFE,
-  EFEF,
   EIFEF,
   FEIFE,
   EIFE,

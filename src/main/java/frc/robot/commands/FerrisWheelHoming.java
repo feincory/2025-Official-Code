@@ -11,12 +11,12 @@ import frc.robot.subsystems.FerrisWheel;
 public class FerrisWheelHoming extends Command {
 
   /** Creates a new FerrisWheelHoming. */
-  private final FerrisWheel m_FerrisWheel;
+  // private final FerrisWheel m_FerrisWheel;
 
   public FerrisWheelHoming(FerrisWheel FerrisWheel) {
 
     // Use addRequirements() here to declare subsystem dependencies.
-    this.m_FerrisWheel = FerrisWheel;
+    // this.m_FerrisWheel = FerrisWheel;
   }
 
   // Called when the command is initially scheduled.

@@ -5,27 +5,27 @@
     "data": {
       "commands": [
         {
-          "type": "path",
+          "type": "named",
           "data": {
-            "pathName": "Test Auto"
+            "name": "Coral L4"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": " Coral L4"
+            "pathName": "TestPath"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 3.0
+            "waitTime": 1.0
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Coral Retreive"
+            "pathName": "Reef to Human"
           }
         }
       ]

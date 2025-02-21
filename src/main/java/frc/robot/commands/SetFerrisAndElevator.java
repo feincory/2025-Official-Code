@@ -9,9 +9,9 @@ import static frc.robot.Constants.elevatoridlepos;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Elevator.*;
+// import frc.robot.subsystems.Elevator.*;
 import frc.robot.subsystems.FerrisWheel;
-import java.util.function.BooleanSupplier;
+// import java.util.function.BooleanSupplier;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -24,7 +24,7 @@ public class SetFerrisAndElevator extends SequentialCommandGroup {
       Elevator m_Elevator, double elevatortarget, FerrisWheel m_FerrisWheel, double ferristarget) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    BooleanSupplier conditiontest = () -> true;
+    // BooleanSupplier conditiontest = () -> true;
 
     addCommands(
         new ConditionalCommand(

@@ -8,6 +8,8 @@ import static edu.wpi.first.units.Units.Rotations;
 import static frc.robot.Constants.*;
 import static frc.robot.subsystems.Elevator.m_elevatorlowered;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.ctre.phoenix6.StatusSignal;
 import com.ctre.phoenix6.configs.CANcoderConfiguration;
 import com.ctre.phoenix6.configs.TalonFXConfiguration;
@@ -29,6 +31,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 public class FerrisWheel extends SubsystemBase {
   /** Creates a new FerrisWheel. */
   private final TalonFX m_FerrisWheel = new TalonFX(20, "CANIVORE");
+
+  TalonSRX m_coral = new TalonSRX(26);
+  TalonSRX m_Algae = new TalonSRX(25);
 
   private final CANcoder m_cc = new CANcoder(35, "CANIVORE");
 
@@ -60,13 +65,13 @@ public class FerrisWheel extends SubsystemBase {
     fx_cfg.Feedback.SensorToMechanismRatio = 1.0;
     fx_cfg.Feedback.RotorToSensorRatio = 83.740234375;
     fx_cfg.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .5;
-    fx_cfg.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = .1;
+    fx_cfg.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = .05;
     fx_cfg.Slot0.GravityType = GravityTypeValue.Elevator_Static;
     fx_cfg.Slot0.kS = 0;
     fx_cfg.Slot0.kV = 0;
     fx_cfg.Slot0.kA = 0;
-    fx_cfg.Slot0.kP = kfPc;
-    fx_cfg.Slot0.kD = kfDc;
+    fx_cfg.Slot0.kP = 50;
+    fx_cfg.Slot0.kD = 1.5;
     fx_cfg.Slot0.kI = kfIc;
     fx_cfg.Slot0.kG = kfGc;
     fx_cfg.Voltage.PeakForwardVoltage = 12;
@@ -80,9 +85,9 @@ public class FerrisWheel extends SubsystemBase {
 
     // Configure MotionMagicExpo settings
     var motionMagicConfigs = fx_cfg.MotionMagic;
-    motionMagicConfigs.MotionMagicCruiseVelocity = 2;
-    motionMagicConfigs.MotionMagicExpo_kV = 6;
-    motionMagicConfigs.MotionMagicExpo_kA = 4;
+    motionMagicConfigs.MotionMagicCruiseVelocity = 0; // was 2
+    motionMagicConfigs.MotionMagicExpo_kV = 2.5; // was 6
+    motionMagicConfigs.MotionMagicExpo_kA = 2.5; // 4
 
     m_FerrisWheel.getConfigurator().apply(fx_cfg);
     m_FerrisWheel.setNeutralMode(NeutralModeValue.Coast);
@@ -105,10 +110,13 @@ public class FerrisWheel extends SubsystemBase {
 
     getpostion();
     outputferris();
-
     // ferriswheelpos = m_cc.getPosition();
 
   }
+
+  // public StatusSignal<Angle> getmotoroutSignal() {
+  //   return m_FerrisWheel.getBridgeOutput();
+  // }
 
   public void placeposition() {
     if (m_elevatorlowered == false) {}
@@ -123,6 +131,15 @@ public class FerrisWheel extends SubsystemBase {
   public void setposition(double position) {
     final MotionMagicExpoVoltage m_request = new MotionMagicExpoVoltage(0);
     m_FerrisWheel.setControl(m_request.withPosition(position));
+    StatusSignal<Double> ferrisoutput = m_FerrisWheel.getDutyCycle();
+    if (ferrisoutput.getValue() > 0) { // ferris wheel moves CC from climb side
+      m_Algae.set(ControlMode.PercentOutput, ((Math.abs(ferrisoutput.getValue()) * -.5) - .2));
+
+    } else {
+      // ferris wheel moves CCW from climb side
+      m_Algae.set(ControlMode.PercentOutput, ((Math.abs(ferrisoutput.getValue()) * -.3) - .2));
+      m_coral.set(ControlMode.PercentOutput, (ferrisoutput.getValue() * -1.25));
+    }
   }
 
   public void retreiveposition() {
@@ -159,5 +176,35 @@ public class FerrisWheel extends SubsystemBase {
     ShuffleboardTab ferristab = Shuffleboard.getTab("Ferris Wheel");
     Shuffleboard.getTab("Ferris Wheel").add("position", getpostion());
     Shuffleboard.getTab("Ferris Wheel").add("Ferris Wheel Clear", outputferris());
+  }
+
+  // Coral Intake
+  public void coralin() {
+    m_coral.set(ControlMode.PercentOutput, .6);
+  }
+
+  public void coralstop() {
+    m_coral.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void coralout() {
+    m_coral.set(ControlMode.PercentOutput, -.7);
+  }
+
+  // Algae Intake
+  public void algaein() {
+    m_Algae.set(ControlMode.PercentOutput, -.75);
+  }
+
+  public void algaehold() {
+    m_Algae.set(ControlMode.PercentOutput, -.2);
+  }
+
+  public void algaestop() {
+    m_Algae.set(ControlMode.PercentOutput, 0);
+  }
+
+  public void algaeout() {
+    m_Algae.set(ControlMode.PercentOutput, 1);
   }
 }

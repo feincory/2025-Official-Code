@@ -28,7 +28,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
 
   private static final Map<Integer, Double> ferrisWheelPositions =
       Map.ofEntries(
-          Map.entry(0, ferriswheelvert),
+          Map.entry(0, .540), // was vert
           Map.entry(1, ferriscoralretreive),
           Map.entry(2, ferriscoralplace),
           Map.entry(3, ferriscoralplace),
@@ -118,8 +118,8 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("5-4", MovementType.EIFE),
           Map.entry("5-6", MovementType.EF),
           Map.entry("5-7", MovementType.EF),
-          Map.entry("5-8", MovementType.F),
-          Map.entry("5-9", MovementType.PARALLEL),
+          Map.entry("5-8", MovementType.PARALLEL),
+          Map.entry("5-9", MovementType.EIFE),
           Map.entry("5-10", MovementType.EIFE),
           Map.entry("5-11", MovementType.EFE),
           Map.entry("6-0", MovementType.EIFE),
@@ -149,14 +149,14 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("8-2", MovementType.EIFE),
           Map.entry("8-3", MovementType.EIFE),
           Map.entry("8-4", MovementType.EIFE), // maybe parallel
-          Map.entry("8-5", MovementType.F),
+          Map.entry("8-5", MovementType.FE),
           Map.entry("8-6", MovementType.EF),
           Map.entry("8-7", MovementType.EF),
           Map.entry("8-9", MovementType.PARALLEL),
           Map.entry("8-10", MovementType.EIFE),
           Map.entry("8-11", MovementType.EIFE),
-          Map.entry("9-0", MovementType.PARALLEL),
-          Map.entry("9-1", MovementType.FEIFE),
+          Map.entry("9-0", MovementType.EIFE),
+          Map.entry("9-1", MovementType.PARALLEL),
           // aint sure theres another way to pass through smoother
           Map.entry("9-2", MovementType.PARALLEL),
           Map.entry("9-3", MovementType.PARALLEL),
@@ -165,6 +165,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("9-6", MovementType.PARALLEL),
           Map.entry("9-7", MovementType.PARALLEL),
           Map.entry("9-8", MovementType.PARALLEL),
+          Map.entry("9-9", MovementType.PARALLEL),
           Map.entry("9-10", MovementType.PARALLEL),
           Map.entry("9-11", MovementType.PARALLEL),
           // find out whats the climb position
@@ -195,7 +196,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
       Elevator elevator, FerrisWheel ferrisWheel, int currentKey, int targetKey) {
 
     String transitionKey = currentKey + "-" + targetKey;
-    MovementType movementType = movementRules.getOrDefault(transitionKey, MovementType.FEFE);
+    MovementType movementType = movementRules.getOrDefault(transitionKey, MovementType.EIFE);
     double elevatorTarget = elevatorPositions.getOrDefault(targetKey, elevatorstow);
     double ferrisTarget = ferrisWheelPositions.getOrDefault(targetKey, ferriswheelvert);
 
@@ -227,18 +228,6 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           new Elevatorsetpos(elevator, elevatorTarget),
           new FerrisWheelSetPos(ferrisWheel, ferrisTarget),
           new Elevatorsetpos(elevator, elevatorTarget));
-    } else if (movementType == MovementType.FEFE) {
-      addCommands(
-          new FerrisWheelSetPos(ferrisWheel, ferriswheelvert),
-          new Elevatorsetpos(elevator, elevatorTarget),
-          new FerrisWheelSetPos(ferrisWheel, ferrisTarget),
-          new Elevatorsetpos(elevator, elevatorTarget));
-    } else if (movementType == MovementType.EFEF) {
-      addCommands(
-          new Elevatorsetpos(elevator, elevatorTarget),
-          new FerrisWheelSetPos(ferrisWheel, ferriswheelvert),
-          new Elevatorsetpos(elevator, elevatorTarget),
-          new FerrisWheelSetPos(ferrisWheel, ferrisTarget));
     } else if (movementType == MovementType.EIFEF) {
       addCommands(
           new Elevatorsetpos(elevator, elevatoridlepos),
@@ -257,6 +246,11 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           new Elevatorsetpos(elevator, elevatoridlepos),
           new FerrisWheelSetPos(ferrisWheel, ferrisTarget),
           new Elevatorsetpos(elevator, elevatorTarget));
+    } else if (movementType == MovementType.PARALLEL) {
+      addCommands(
+          new ParallelCommandGroup(
+              new Elevatorsetpos(elevator, elevatorTarget),
+              new FerrisWheelSetPos(ferrisWheel, ferrisTarget)));
     } else { // DEFAULT
       addCommands(
           new Elevatorsetpos(elevator, elevatoridlepos),

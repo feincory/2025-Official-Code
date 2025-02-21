@@ -15,7 +15,7 @@ public class ClearElevator extends Command {
 
   // private final DigitalInput homeSwitch;
   // private static final double HOMING_SPEED = 0.05; // Slow descent
-  private static final double clearrotation = -5;
+  // private static final double clearrotation = -5;
   private static final double TIMEOUT = 2.5; // Stop after 3 seconds
 
   private Timer timer = new Timer();

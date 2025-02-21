@@ -12,7 +12,7 @@ public class FerrisWheelVertical extends Command {
   /** Creates a new FerrisWheelVertical. */
   private final FerrisWheel ferrisWheel;
 
-  private double currentposition;
+  // private double currentposition;
 
   private final double targetPosition = .524;
   private static final double POSITION_TOLERANCE = .015; // Adjust tolerance as needed
