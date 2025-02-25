@@ -55,12 +55,6 @@
         {
           "type": "path",
           "data": {
-            "pathName": "R6-H1"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
             "pathName": "H1-R7"
           }
         },
