@@ -13,19 +13,67 @@
         {
           "type": "path",
           "data": {
-            "pathName": "TestPath"
+            "pathName": "BOTTOM-R5"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Outtake"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 1.0
+            "waitTime": 0.5
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Reef to Human"
+            "pathName": "R5-H1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "H1-R6"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Outtake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "R6-H1"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "H1-R7"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Outtake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.5
           }
         }
       ]

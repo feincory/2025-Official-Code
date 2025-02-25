@@ -69,7 +69,7 @@ public class RobotContainer {
   public final CoralGround m_coralground = new CoralGround();
 
   // Controller
-  // private final CommandXboxController testcontroller = new CommandXboxController(2);
+  private final CommandXboxController testcontroller = new CommandXboxController(2);
   private final CommandXboxController controller = new CommandXboxController(1);
   public final CommandJoystick m_drivercontroller = new CommandJoystick(0);
   private int currentKey = 0; // Track the last known positio
@@ -81,6 +81,13 @@ public class RobotContainer {
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
 
+    // Register Named Commands
+    NamedCommands.registerCommand("Coral L4", new InstantCommand(() -> moveToPosition(4)));
+    NamedCommands.registerCommand("Coral Retreive", new InstantCommand(() -> moveToPosition(1)));
+    NamedCommands.registerCommand("Coral Outtake", new InstantCommand(m_FerrisWheel::coralout));
+    // NamedCommands.registerCommand("Coral Retreive", new moveToPosition(1));
+    // NamedCommands.registerCommand("Coral Stop", new InstantCommand(m_FerrisWheel::coralstop));
+    // Build an auto chooser. This will use Commands.none() as the default option.
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
@@ -135,13 +142,6 @@ public class RobotContainer {
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
-    // Register Named Commands
-    NamedCommands.registerCommand("Coral L4", new InstantCommand(() -> moveToPosition(4)));
-    NamedCommands.registerCommand("Coral Retreive", new RunCommand(() -> moveToPosition(1)));
-    NamedCommands.registerCommand("Coral Outtake", new InstantCommand(m_FerrisWheel::coralout));
-    // NamedCommands.registerCommand("Coral Retreive", new moveToPosition(1));
-    // NamedCommands.registerCommand("Coral Stop", new InstantCommand(m_FerrisWheel::coralstop));
-    // Build an auto chooser. This will use Commands.none() as the default option.
     AutonChoice = AutoBuilder.buildAutoChooser();
 
     // Another option that allows you to specify the default auto by its name
@@ -179,6 +179,17 @@ public class RobotContainer {
     // Switch to X pattern when X button is pressed
     m_drivercontroller.button(16).onTrue(Commands.runOnce(drive::stopWithX, drive));
 
+    // In your RobotContainer class, within a method like configureButtonBindings():
+
+    // Bind the command to run while the button is held down:
+    testcontroller
+        .a()
+        .onTrue(
+            DriveCommands.AutoLineUp(
+                drive,
+                () -> m_drivercontroller.getRawAxis(1),
+                () -> -m_drivercontroller.getRawAxis(0),
+                () -> -m_drivercontroller.getRawAxis(3)));
     // Reset gyro to 0° when B button is pressed
     m_drivercontroller
         .button(14)

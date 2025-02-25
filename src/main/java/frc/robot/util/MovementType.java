@@ -12,4 +12,6 @@ public enum MovementType {
   EIFEF,
   FEIFE,
   EIFE,
+  ECFE,
+  FECE,
 }

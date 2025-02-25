@@ -12,20 +12,20 @@
         "y": 2.088573086521641
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "BOTTOM"
     },
     {
       "anchor": {
-        "x": 5.162820512820513,
-        "y": 2.776217948717948
+        "x": 5.369230769230769,
+        "y": 2.931025641025641
       },
       "prevControl": {
-        "x": 6.20816625234185,
-        "y": 2.396660122623212
+        "x": 6.414576508752106,
+        "y": 2.5514678149309047
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Reef 6"
+      "linkedName": "R5"
     }
   ],
   "rotationTargets": [],
@@ -33,10 +33,10 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 1.0,
-    "maxAcceleration": 1.0,
-    "maxAngularVelocity": 100.0,
-    "maxAngularAcceleration": 100.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
+    "maxAngularVelocity": 200.0,
+    "maxAngularAcceleration": 200.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },

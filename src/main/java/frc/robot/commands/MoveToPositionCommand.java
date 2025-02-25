@@ -68,7 +68,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("0-10", MovementType.PARALLEL),
           Map.entry("0-11", MovementType.EF),
           Map.entry("1-0", MovementType.FE),
-          Map.entry("1-2", MovementType.FEIFE),
+          Map.entry("1-2", MovementType.FECE),
           Map.entry("1-3", MovementType.PARALLEL),
           Map.entry("1-4", MovementType.PARALLEL),
           Map.entry("1-5", MovementType.FEIFE),
@@ -79,7 +79,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("1-10", MovementType.FE),
           Map.entry("1-11", MovementType.FE),
           Map.entry("2-0", MovementType.EIFE),
-          Map.entry("2-1", MovementType.EIFEF),
+          Map.entry("2-1", MovementType.ECFE),
           Map.entry("2-3", MovementType.E),
           Map.entry("2-4", MovementType.E),
           Map.entry("2-5", MovementType.EIFE),
@@ -90,7 +90,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("2-10", MovementType.EIFE),
           Map.entry("2-11", MovementType.EF),
           Map.entry("3-0", MovementType.EIFE),
-          Map.entry("3-1", MovementType.FEF),
+          Map.entry("3-1", MovementType.PARALLEL),
           Map.entry("3-2", MovementType.E),
           Map.entry("3-4", MovementType.E),
           Map.entry("3-5", MovementType.FEIFE),
@@ -251,6 +251,19 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           new ParallelCommandGroup(
               new Elevatorsetpos(elevator, elevatorTarget),
               new FerrisWheelSetPos(ferrisWheel, ferrisTarget)));
+    } else if (movementType == MovementType.FECE) {
+      addCommands(
+          new ParallelCommandGroup(
+              new FerrisWheelSetPos(ferrisWheel, ferrisTarget),
+              new Elevatorsetpos(elevator, elevatorL3pos)),
+          new Elevatorsetpos(elevator, elevatorTarget));
+    } else if (movementType == MovementType.ECFE) {
+      addCommands(
+          new Elevatorsetpos(elevator, elevatorL3pos),
+          new ParallelCommandGroup(
+              new FerrisWheelSetPos(ferrisWheel, ferrisTarget),
+              new Elevatorsetpos(elevator, elevatorTarget)));
+
     } else { // DEFAULT
       addCommands(
           new Elevatorsetpos(elevator, elevatoridlepos),

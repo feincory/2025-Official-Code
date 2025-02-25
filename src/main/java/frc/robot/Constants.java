@@ -46,7 +46,7 @@ public final class Constants {
   public static double elevatoridlepos = -15.5;
   public static double elevatoridleposL2 = -15.5;
   public static double elevatorL2Algaepos = -10.73;
-  public static double elevatorL3Algaepos = -19;
+  public static double elevatorL3Algaepos = -17;
   public static double elevatornetpos = -27;
   public static double ferrisalageretreive = .918;
   public static double ferrisAlgaeReefPic = .814;
@@ -68,4 +68,8 @@ public final class Constants {
   // climb
   public static double elevatorstow = -1;
   public static double elevatorclimb = -1;
+
+  // Double set position for Algae L2 Movement
+  // public static double elevatorL2combopos = -6.9;
+
 }

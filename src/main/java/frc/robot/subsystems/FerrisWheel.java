@@ -86,8 +86,8 @@ public class FerrisWheel extends SubsystemBase {
     // Configure MotionMagicExpo settings
     var motionMagicConfigs = fx_cfg.MotionMagic;
     motionMagicConfigs.MotionMagicCruiseVelocity = 0; // was 2
-    motionMagicConfigs.MotionMagicExpo_kV = 2.5; // was 6
-    motionMagicConfigs.MotionMagicExpo_kA = 2.5; // 4
+    motionMagicConfigs.MotionMagicExpo_kV = 2; // was 6
+    motionMagicConfigs.MotionMagicExpo_kA = 2.25; // 4
 
     m_FerrisWheel.getConfigurator().apply(fx_cfg);
     m_FerrisWheel.setNeutralMode(NeutralModeValue.Coast);
@@ -189,6 +189,10 @@ public class FerrisWheel extends SubsystemBase {
 
   public void coralout() {
     m_coral.set(ControlMode.PercentOutput, -.7);
+  }
+
+  public void coralhold() {
+    m_coral.set(ControlMode.PercentOutput, -.2);
   }
 
   // Algae Intake
