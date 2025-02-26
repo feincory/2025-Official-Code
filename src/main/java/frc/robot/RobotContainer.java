@@ -13,6 +13,9 @@
 
 package frc.robot;
 
+import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
+import static frc.robot.subsystems.vision.VisionConstants.camera1Name;
+
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -50,6 +53,8 @@ import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
+import frc.robot.subsystems.vision.Vision;
+import frc.robot.subsystems.vision.VisionIOLimelight;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -67,7 +72,7 @@ public class RobotContainer {
   public final AlgaeIntake m_AlgaeIntake = new AlgaeIntake();
   public final FerrisWheel m_FerrisWheel = new FerrisWheel();
   public final CoralGround m_coralground = new CoralGround();
-
+  private final Vision vision;
   // Controller
   private final CommandXboxController testcontroller = new CommandXboxController(2);
   private final CommandXboxController controller = new CommandXboxController(1);
@@ -98,6 +103,12 @@ public class RobotContainer {
                 new ModuleIOTalonFX(TunerConstants.FrontRight),
                 new ModuleIOTalonFX(TunerConstants.BackLeft),
                 new ModuleIOTalonFX(TunerConstants.BackRight));
+        vision =
+            new Vision(
+                drive::addVisionMeasurement,
+                new VisionIOLimelight(camera0Name, drive::getRotation),
+                new VisionIOLimelight(camera1Name, drive::getRotation));
+
         break;
 
       case SIM:
@@ -109,6 +120,7 @@ public class RobotContainer {
                 new ModuleIOSim(TunerConstants.FrontRight),
                 new ModuleIOSim(TunerConstants.BackLeft),
                 new ModuleIOSim(TunerConstants.BackRight));
+        vision = null;
         break;
 
       default:
@@ -120,6 +132,8 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {},
                 new ModuleIO() {});
+
+        vision = null;
         break;
     }
 
@@ -157,7 +171,6 @@ public class RobotContainer {
 
   public void createautoDashboards() {
     ShuffleboardTab autotab = Shuffleboard.getTab("Auto");
-
     autotab.add("Auto Chooser", AutonChoice).withSize(1, 1).withPosition(4, 0);
   }
 
@@ -179,17 +192,16 @@ public class RobotContainer {
     // Switch to X pattern when X button is pressed
     m_drivercontroller.button(16).onTrue(Commands.runOnce(drive::stopWithX, drive));
 
-    // In your RobotContainer class, within a method like configureButtonBindings():
-
     // Bind the command to run while the button is held down:
     testcontroller
         .a()
         .onTrue(
             DriveCommands.AutoLineUp(
                 drive,
-                () -> m_drivercontroller.getRawAxis(1),
-                () -> -m_drivercontroller.getRawAxis(0),
-                () -> -m_drivercontroller.getRawAxis(3)));
+                () -> (((vision.getTargetY(0).getDegrees() - 4)) * .5),
+                () -> ((vision.getTargetX(0).getDegrees() + 2.05) * -2.5),
+                () -> -m_drivercontroller.getRawAxis(3)))
+        .onFalse(Commands.runOnce(drive::stop, drive));
     // Reset gyro to 0° when B button is pressed
     m_drivercontroller
         .button(14)
