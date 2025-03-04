@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "Pose TESt Path"
+            "pathName": "Pose Test Path"
           }
         }
       ]
     }
   },
-  "resetOdom": true,
+  "resetOdom": false,
   "folder": null,
   "choreoAuto": false
 }

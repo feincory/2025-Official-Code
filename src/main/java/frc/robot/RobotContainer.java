@@ -74,7 +74,7 @@ public class RobotContainer {
   public final CoralGround m_coralground = new CoralGround();
   private final Vision vision;
   // Controller
-  private final CommandXboxController testcontroller = new CommandXboxController(2);
+  // private final CommandXboxController testcontroller = new CommandXboxController(2);
   private final CommandXboxController controller = new CommandXboxController(1);
   public final CommandJoystick m_drivercontroller = new CommandJoystick(0);
   private int currentKey = 0; // Track the last known positio
@@ -192,16 +192,16 @@ public class RobotContainer {
     // Switch to X pattern when X button is pressed
     m_drivercontroller.button(16).onTrue(Commands.runOnce(drive::stopWithX, drive));
 
-    // Bind the command to run while the button is held down:
-    testcontroller
-        .a()
-        .onTrue(
-            DriveCommands.AutoLineUp(
-                drive,
-                () -> (((vision.getTargetY(0).getDegrees() - 4)) * .5),
-                () -> ((vision.getTargetX(0).getDegrees() + 2.05) * -2.5),
-                () -> -m_drivercontroller.getRawAxis(3)))
-        .onFalse(Commands.runOnce(drive::stop, drive));
+    // // Bind the command to run while the button is held down:
+    // testcontroller
+    //     .a()
+    //     .onTrue(
+    //         DriveCommands.AutoLineUp(
+    //             drive,
+    //             () -> (((vision.getTargetY(0).getDegrees() - 4)) * .5),
+    //             () -> ((vision.getTargetX(0).getDegrees() + 2.05) * -2.5),
+    //             () -> -m_drivercontroller.getRawAxis(3)))
+    //     .onFalse(Commands.runOnce(drive::stop, drive));
     // Reset gyro to 0° when B button is pressed
     m_drivercontroller
         .button(14)
