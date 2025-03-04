@@ -5,75 +5,81 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "Coral L4"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "BOTTOM-R5"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Coral Outtake"
+            "pathName": "NW1H"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.35
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "R5-H1"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "H1-R6"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Coral Outtake"
+            "pathName": "NW1_R"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.35
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "H1-R7"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Coral Outtake"
+            "pathName": "R_SW2H"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.35
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "SW2_R"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.35
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "R_SW1H"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.35
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SW1H_SWAH"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.35
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "SWA_AN"
           }
         }
       ]

@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.10225,
-        "y": 7.593500000000001
+        "x": 6.999871794871795,
+        "y": 4.344935897435898
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.215,
-        "y": 7.281499999999999
+        "x": 6.690256410256411,
+        "y": 4.365576923076922
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 3.9195000000000007,
-        "y": 5.253499999999999
+        "x": 6.060705128205128,
+        "y": 3.9630769230769234
       },
       "prevControl": {
-        "x": 4.709250000000001,
-        "y": 5.779999999999999
+        "x": 6.452884615384615,
+        "y": 4.004358974358975
       },
       "nextControl": null,
       "isLocked": false,
@@ -31,20 +31,7 @@
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "Coral L4",
-      "waypointRelativePos": 0.46352357320099924,
-      "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "Coral Outtake",
-      "waypointRelativePos": 1.0,
-      "endWaypointRelativePos": null,
-      "command": null
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
     "maxVelocity": 1.5,
     "maxAcceleration": 1.5,
@@ -55,7 +42,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 122.19573393471327
+    "rotation": 0.0
   },
   "reversed": false,
   "folder": null,
