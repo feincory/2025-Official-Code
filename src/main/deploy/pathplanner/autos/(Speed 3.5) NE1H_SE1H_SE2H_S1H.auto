@@ -5,75 +5,63 @@
     "data": {
       "commands": [
         {
-          "type": "named",
-          "data": {
-            "name": "Coral L4"
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "BOTTOM-R5"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Coral Outtake"
+            "pathName": "NE1H"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.035
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "R5-H1"
+            "pathName": "NE1_R"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "H1-R6"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "Coral Outtake"
+            "pathName": "R_SE1H"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.035
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "H1-R7"
+            "pathName": "SE1_R"
           }
         },
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Coral Outtake"
+            "pathName": "R_SE2H"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.035
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "SE2_R"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "R_S1H"
           }
         }
       ]

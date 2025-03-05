@@ -85,14 +85,10 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
-
-    // Register Named Commands
-    NamedCommands.registerCommand("Coral L4", new InstantCommand(() -> moveToPosition(4)));
     NamedCommands.registerCommand("Coral Retreive", new InstantCommand(() -> moveToPosition(1)));
     NamedCommands.registerCommand("Coral Outtake", new InstantCommand(m_FerrisWheel::coralout));
-    // NamedCommands.registerCommand("Coral Retreive", new moveToPosition(1));
-    // NamedCommands.registerCommand("Coral Stop", new InstantCommand(m_FerrisWheel::coralstop));
-    // Build an auto chooser. This will use Commands.none() as the default option.
+    NamedCommands.registerCommand("Coral L4", new InstantCommand(() -> moveToPosition(4)));
+    NamedCommands.registerCommand("Coral Intake", new InstantCommand(m_FerrisWheel::coralin));
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
@@ -309,6 +305,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    new InstantCommand(m_coralground::initstoragepos);
     return AutonChoice.getSelected();
     // return autoChooser.get();
   }

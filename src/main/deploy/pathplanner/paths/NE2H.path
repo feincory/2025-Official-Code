@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.073,
-        "y": 7.4765
+        "x": 7.045950704225351,
+        "y": 4.549383802816901
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.692750000000001,
-        "y": 7.07675
+        "x": 6.670398341995502,
+        "y": 4.340209442707057
       },
       "isLocked": false,
       "linkedName": null
     },
     {
       "anchor": {
-        "x": 5.3625,
-        "y": 5.1754999999999995
+        "x": 5.108732876712329,
+        "y": 2.7403039383561647
       },
       "prevControl": {
-        "x": 5.9670000000000005,
-        "y": 5.585000000000001
+        "x": 7.433028651360218,
+        "y": 3.6615187270885596
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "NW2"
+      "linkedName": "NE2"
     }
   ],
   "rotationTargets": [],
@@ -34,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "Coral L4",
-      "waypointRelativePos": 0.5171215880893091,
+      "waypointRelativePos": 0.7253731343283579,
       "endWaypointRelativePos": null,
       "command": null
     },
@@ -55,7 +55,7 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.03624346792633
+    "rotation": -61.189206257026974
   },
   "reversed": false,
   "folder": null,

@@ -5,15 +5,15 @@
     "data": {
       "commands": [
         {
-          "type": "named",
+          "type": "path",
           "data": {
-            "name": "Coral L4"
+            "pathName": "NW1H"
           }
         },
         {
-          "type": "path",
+          "type": "wait",
           "data": {
-            "pathName": "BOTTOM-R5"
+            "waitTime": 0.35
           }
         },
         {
@@ -25,19 +25,31 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.35
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "R5-H1"
+            "pathName": "NW1_R"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "H1-R6"
+            "pathName": "R_SW2H"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.35
           }
         },
         {
@@ -49,13 +61,31 @@
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.5
+            "waitTime": 0.35
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "H1-R7"
+            "pathName": "SW2_R"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 1.0
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "R_SW1H"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.35
           }
         },
         {
@@ -65,15 +95,9 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.5
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": null
+            "pathName": "SW1H-BACK"
           }
         }
       ]

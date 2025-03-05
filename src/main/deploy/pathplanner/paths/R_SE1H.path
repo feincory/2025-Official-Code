@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.073,
-        "y": 7.4765
+        "x": 1.7880565068493148,
+        "y": 0.7118364726027392
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.692750000000001,
-        "y": 7.07675
+        "x": 2.559451657769593,
+        "y": 1.497266309420909
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Retrieve E"
     },
     {
       "anchor": {
-        "x": 5.3625,
-        "y": 5.1754999999999995
+        "x": 3.9988556338028163,
+        "y": 2.678609154929576
       },
       "prevControl": {
-        "x": 5.9670000000000005,
-        "y": 5.585000000000001
+        "x": 3.1902507682367403,
+        "y": 1.9217952829173943
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "NW2"
+      "linkedName": "SE1"
     }
   ],
   "rotationTargets": [],
@@ -34,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "Coral L4",
-      "waypointRelativePos": 0.5171215880893091,
+      "waypointRelativePos": 0.5044776119402968,
       "endWaypointRelativePos": null,
       "command": null
     },
@@ -55,13 +55,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.03624346792633
+    "rotation": -118.1785901099591
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -128.2901631922431
   },
   "useDefaultConstraints": true
 }

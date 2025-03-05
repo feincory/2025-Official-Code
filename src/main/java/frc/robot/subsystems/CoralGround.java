@@ -92,6 +92,13 @@ public class CoralGround extends SubsystemBase {
     encoder.setPosition(0);
   }
 
+  public void initstoragepos() {
+    // This method will be called once per scheduler run
+    closedLoopController.setReference(
+        .25, ControlType.kMAXMotionPositionControl, ClosedLoopSlot.kSlot0);
+    spinner.set(0);
+  }
+
   public void storagepos() {
     // This method will be called once per scheduler run
     if (coralgroundhomed) {

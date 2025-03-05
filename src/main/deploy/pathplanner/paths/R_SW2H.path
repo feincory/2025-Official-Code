@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.073,
-        "y": 7.4765
+        "x": 1.5226281805271373,
+        "y": 7.195761443603247
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.692750000000001,
-        "y": 7.07675
+        "x": 2.169989128753595,
+        "y": 6.411594242128161
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Retrieve"
     },
     {
       "anchor": {
-        "x": 5.3625,
-        "y": 5.1754999999999995
+        "x": 3.761194289055621,
+        "y": 5.217885740314048
       },
       "prevControl": {
-        "x": 5.9670000000000005,
-        "y": 5.585000000000001
+        "x": 3.3532347302729395,
+        "y": 5.6425774949460505
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "NW2"
+      "linkedName": "SW2"
     }
   ],
   "rotationTargets": [],
@@ -34,15 +34,14 @@
   "eventMarkers": [
     {
       "name": "Coral L4",
-      "waypointRelativePos": 0.5171215880893091,
+      "waypointRelativePos": 0.2281284606865994,
       "endWaypointRelativePos": null,
-      "command": null
-    },
-    {
-      "name": "Coral Outtake",
-      "waypointRelativePos": 1.0,
-      "endWaypointRelativePos": null,
-      "command": null
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Coral L4"
+        }
+      }
     }
   ],
   "globalConstraints": {
@@ -55,13 +54,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 59.03624346792633
+    "rotation": 120.96375653207346
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 125.83765295427834
   },
   "useDefaultConstraints": true
 }
