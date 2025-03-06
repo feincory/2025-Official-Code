@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.31375,
-        "y": 5.0584999999999996
+        "x": 4.118800112271111,
+        "y": 2.659367179444433
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.819455128205128,
-        "y": 5.450679487179488
+        "x": 3.8088557636628217,
+        "y": 2.3713614530995004
       },
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "SE1"
     },
     {
       "anchor": {
-        "x": 5.935145547945206,
-        "y": 3.9423587328767122
+        "x": 1.5415517740997982,
+        "y": 0.745246343789421
       },
       "prevControl": {
-        "x": 5.687453240252898,
-        "y": 3.4779356559536354
+        "x": 2.0781747544341984,
+        "y": 1.1789867942658896
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "n1"
+      "linkedName": "Retrieve East"
     }
   ],
   "rotationTargets": [],
@@ -33,13 +33,24 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "Trigger1",
-      "waypointRelativePos": 0.3388704318936881,
+      "name": "Coral Retreive",
+      "waypointRelativePos": 0.39402985074626895,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "Coral L4"
+          "name": "Coral Retreive"
+        }
+      }
+    },
+    {
+      "name": "Coral Intake",
+      "waypointRelativePos": 0.8748615725359895,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Coral Intake"
         }
       }
     }
@@ -54,13 +65,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -128.2901631922431
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.74356283647073
+    "rotation": -119.63391478717662
   },
   "useDefaultConstraints": true
 }

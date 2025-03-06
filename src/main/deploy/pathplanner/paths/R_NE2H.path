@@ -3,16 +3,16 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.7880565068493148,
-        "y": 0.7118364726027392
+        "x": 1.5415517740997982,
+        "y": 0.745246343789421
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.4215582073469992,
-        "y": 1.3785342439372412
+        "x": 2.1750534745974823,
+        "y": 1.4119441151239234
       },
       "isLocked": false,
-      "linkedName": "Retrieve E"
+      "linkedName": "Retrieve East"
     },
     {
       "anchor": {
@@ -46,10 +46,10 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.25,
+    "maxVelocity": 3.5,
     "maxAcceleration": 2.75,
-    "maxAngularVelocity": 300.0,
-    "maxAngularAcceleration": 300.0,
+    "maxAngularVelocity": 325.0,
+    "maxAngularAcceleration": 325.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },

@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.9988556338028163,
-        "y": 2.678609154929576
+        "x": 4.118800112271111,
+        "y": 2.659367179444433
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.1828545240104993,
-        "y": 1.889671575957077
+        "x": 3.302799002478794,
+        "y": 1.870429600471934
       },
       "isLocked": false,
       "linkedName": "SE1"
     },
     {
       "anchor": {
-        "x": 1.7880565068493148,
-        "y": 0.7118364726027392
+        "x": 1.5415517740997982,
+        "y": 0.745246343789421
       },
       "prevControl": {
-        "x": 2.682898561847636,
-        "y": 1.5615279070181394
+        "x": 2.436393829098119,
+        "y": 1.5949377782048217
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Retrieve E"
+      "linkedName": "Retrieve East"
     }
   ],
   "rotationTargets": [],
@@ -40,10 +40,10 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.25,
+    "maxVelocity": 3.5,
     "maxAcceleration": 2.75,
-    "maxAngularVelocity": 300.0,
-    "maxAngularAcceleration": 300.0,
+    "maxAngularVelocity": 325.0,
+    "maxAngularAcceleration": 325.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
@@ -55,7 +55,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -118.1785901099591
+    "rotation": -119.63391478717662
   },
   "useDefaultConstraints": true
 }

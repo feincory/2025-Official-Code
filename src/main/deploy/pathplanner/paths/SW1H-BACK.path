@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5237034811942367,
-        "y": 5.063237486000854
+        "x": 3.5567307799092465,
+        "y": 5.074525507658589
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.273206405765592,
-        "y": 5.363826485030268
+        "x": 3.3062337044806016,
+        "y": 5.3751145066880035
       },
       "isLocked": false,
       "linkedName": "SW1"
     },
     {
       "anchor": {
-        "x": 2.7900759437243567,
-        "y": 6.015398904926285
+        "x": 1.5226281805271373,
+        "y": 7.195761443603247
       },
       "prevControl": {
-        "x": 3.048899913922004,
-        "y": 5.660440317226656
+        "x": 1.7814521507247838,
+        "y": 6.840802855903617
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": null
+      "linkedName": "Retrieve West"
     }
   ],
   "rotationTargets": [],
@@ -34,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "Coral Retreive",
-      "waypointRelativePos": 0.6688815060908064,
+      "waypointRelativePos": 0.2923588039867126,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -45,16 +45,16 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.25,
+    "maxVelocity": 3.5,
     "maxAcceleration": 2.75,
-    "maxAngularVelocity": 300.0,
-    "maxAngularAcceleration": 300.0,
+    "maxAngularVelocity": 325.0,
+    "maxAngularAcceleration": 325.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 125.14967148663438
+    "rotation": 125.83765295427834
   },
   "reversed": false,
   "folder": null,

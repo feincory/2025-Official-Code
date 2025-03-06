@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.7413955479452055,
-        "y": 2.8004066780821915
+        "x": 3.8325886290703357,
+        "y": 2.8002736883382444
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.7413955479491587,
-        "y": 2.3045590753382728
+        "x": 3.832588629074289,
+        "y": 2.3044260855943257
       },
       "isLocked": false,
       "linkedName": "SE2"
@@ -33,10 +33,10 @@
   "pointTowardsZones": [],
   "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 3.25,
+    "maxVelocity": 3.5,
     "maxAcceleration": 2.75,
-    "maxAngularVelocity": 300.0,
-    "maxAngularAcceleration": 300.0,
+    "maxAngularVelocity": 325.0,
+    "maxAngularAcceleration": 325.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
@@ -48,7 +48,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -119.05460409907717
+    "rotation": -119.7766769537855
   },
   "useDefaultConstraints": true
 }

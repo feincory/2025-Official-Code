@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.5567307799092465,
-        "y": 5.074525507658589
+        "x": 3.8325886290703357,
+        "y": 2.8002736883382444
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.3331239821592673,
-        "y": 5.1863289065335785
+        "x": 3.3794400592747444,
+        "y": 2.0798733739323962
       },
       "isLocked": false,
-      "linkedName": "SW1"
+      "linkedName": "SE2"
     },
     {
       "anchor": {
-        "x": 3.7295774647887314,
-        "y": 5.172975352112676
+        "x": 1.5415517740997982,
+        "y": 0.745246343789421
       },
       "prevControl": {
-        "x": 3.091813380281689,
-        "y": 5.782394366197183
+        "x": 1.882128697176721,
+        "y": 1.354156600199678
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "SWA"
+      "linkedName": "Retrieve East"
     }
   ],
   "rotationTargets": [],
@@ -33,45 +33,45 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "Algae L3",
-      "waypointRelativePos": 0.2059701492537321,
+      "name": "Coral Retreive",
+      "waypointRelativePos": 0.3255813953488386,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "Algae L3"
+          "name": "Coral Retreive"
         }
       }
     },
     {
-      "name": "Algae Intake",
-      "waypointRelativePos": 1.0,
+      "name": "Coral Intake",
+      "waypointRelativePos": 0.7641196013289002,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "Algae Intake"
+          "name": "Coral Intake"
         }
       }
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 2.75,
-    "maxAngularVelocity": 325.0,
-    "maxAngularAcceleration": 325.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 1.0,
+    "maxAngularVelocity": 300.0,
+    "maxAngularAcceleration": 300.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 119.8590161649231
+    "rotation": -128.2901631922431
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 121.27427119660739
+    "rotation": -119.7766769537855
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

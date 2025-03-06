@@ -3,40 +3,63 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.394220890410959,
-        "y": 2.8755351027397262
+        "x": 5.470932223620725,
+        "y": 3.0145992376018445
       },
       "prevControl": null,
       "nextControl": {
-        "x": 4.69869372405958,
-        "y": 2.4160727329732192
+        "x": 4.639926917327429,
+        "y": 2.1472440888672475
       },
       "isLocked": false,
       "linkedName": "NE1"
     },
     {
       "anchor": {
-        "x": 1.7880565068493148,
-        "y": 0.7118364726027392
+        "x": 1.5415517740997982,
+        "y": 0.745246343789421
       },
       "prevControl": {
-        "x": 4.019583591119705,
-        "y": 2.059872135722597
+        "x": 2.5632388569940714,
+        "y": 2.221358589135399
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "Retrieve E"
+      "linkedName": "Retrieve East"
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [],
+  "eventMarkers": [
+    {
+      "name": "Coral Retreive",
+      "waypointRelativePos": 0.2613510520487296,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Coral Retreive"
+        }
+      }
+    },
+    {
+      "name": "Coral Intake",
+      "waypointRelativePos": 0.8261351052048721,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Coral Intake"
+        }
+      }
+    }
+  ],
   "globalConstraints": {
-    "maxVelocity": 3.25,
+    "maxVelocity": 3.5,
     "maxAcceleration": 2.75,
-    "maxAngularVelocity": 300.0,
-    "maxAngularAcceleration": 300.0,
+    "maxAngularVelocity": 325.0,
+    "maxAngularAcceleration": 325.0,
     "nominalVoltage": 12.0,
     "unlimited": false
   },
@@ -48,7 +71,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -57.99461679191645
+    "rotation": -58.92834193915359
   },
   "useDefaultConstraints": true
 }
