@@ -22,10 +22,6 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
@@ -79,7 +75,7 @@ public class RobotContainer {
   public final CommandJoystick m_drivercontroller = new CommandJoystick(0);
   private int currentKey = 0; // Track the last known positio
 
-  private final SendableChooser<Command> AutonChoice;
+  // private final SendableChooser<Command> AutonChoice;
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
 
@@ -154,22 +150,22 @@ public class RobotContainer {
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
-    AutonChoice = AutoBuilder.buildAutoChooser();
+    // AutonChoice = AutoBuilder.buildAutoChooser();
 
     // Another option that allows you to specify the default auto by its name
     // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
 
-    SmartDashboard.putData("Auto Chooser", AutonChoice);
+    // SmartDashboard.putData("Auto Chooser", AutonChoice);
 
     // Configure the button bindings
     configureButtonBindings();
 
-    createautoDashboards();
+    // createautoDashboards();
   }
 
   public void createautoDashboards() {
-    ShuffleboardTab autotab = Shuffleboard.getTab("Auto");
-    autotab.add("Auto Chooser", AutonChoice).withSize(1, 1).withPosition(4, 0);
+    // ShuffleboardTab autotab = Shuffleboard.getTab("Auto");
+    // autotab.add("Auto Chooser", AutonChoice).withSize(1, 1).withPosition(4, 0);
   }
 
   /**
@@ -230,8 +226,8 @@ public class RobotContainer {
 
     m_drivercontroller
         .button(13)
-        .onTrue(new InstantCommand(m_FerrisWheel::coralout))
-        .onFalse(new InstantCommand(m_FerrisWheel::coralstop));
+        .onTrue(new InstantCommand(m_FerrisWheel::coraloutslow))
+        .onFalse(new InstantCommand(m_FerrisWheel::coralhold));
 
     m_drivercontroller // coral ground pickup homing
         .button(15)
@@ -241,12 +237,12 @@ public class RobotContainer {
     // coral intake button binding
     controller
         .rightBumper()
-        .onTrue(new InstantCommand(m_FerrisWheel::coralout))
-        .onFalse(new InstantCommand(m_FerrisWheel::coralstop));
+        .onTrue(new InstantCommand(m_FerrisWheel::coraloutslow))
+        .onFalse(new InstantCommand(m_FerrisWheel::coralhold));
     controller
         .leftBumper()
         .onTrue(new InstantCommand(m_FerrisWheel::coralin))
-        .onFalse(new InstantCommand(m_FerrisWheel::coralstop));
+        .onFalse(new InstantCommand(m_FerrisWheel::coralhold));
 
     // algae intake button binding
     controller
@@ -301,6 +297,11 @@ public class RobotContainer {
     // Update currentKey right after scheduling the command
     currentKey = targetKey;
   }
+
+  public void setcoralgrouninit() {
+    new InstantCommand(m_coralground::initstoragepos);
+    // Update currentKey right after scheduling the command
+  }
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *
@@ -308,7 +309,7 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     new InstantCommand(m_coralground::initstoragepos);
-    return AutonChoice.getSelected();
-    // return autoChooser.get();
+    // return AutonChoice.getSelected();
+    return autoChooser.get();
   }
 }

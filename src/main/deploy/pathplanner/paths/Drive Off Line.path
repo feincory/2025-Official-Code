@@ -3,50 +3,38 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.075,
-        "y": 2.6740164881902193
+        "x": 7.108709016393442,
+        "y": 7.303637295081967
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.325,
-        "y": 2.6740164881902193
+        "x": 6.859344341435759,
+        "y": 7.321449057578943
       },
       "isLocked": false,
-      "linkedName": "CAGE4"
+      "linkedName": null
     },
     {
       "anchor": {
-        "x": 7.25,
-        "y": 2.666
+        "x": 6.257581967213115,
+        "y": 7.36357581967213
       },
       "prevControl": {
-        "x": 7.5,
-        "y": 2.666
+        "x": 6.617213114754098,
+        "y": 7.339600409836065
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "CAGE4PUSHOFF"
+      "linkedName": null
     }
   ],
   "rotationTargets": [],
   "constraintZones": [],
   "pointTowardsZones": [],
-  "eventMarkers": [
-    {
-      "name": "Coral L4",
-      "waypointRelativePos": 0.05980066445182647,
-      "endWaypointRelativePos": null,
-      "command": {
-        "type": "named",
-        "data": {
-          "name": "Coral L4"
-        }
-      }
-    }
-  ],
+  "eventMarkers": [],
   "globalConstraints": {
-    "maxVelocity": 0.5,
-    "maxAcceleration": 0.25,
+    "maxVelocity": 3.5,
+    "maxAcceleration": 2.75,
     "maxAngularVelocity": 325.0,
     "maxAngularAcceleration": 325.0,
     "nominalVoltage": 12.0,
@@ -62,5 +50,5 @@
     "velocity": 0,
     "rotation": 0.0
   },
-  "useDefaultConstraints": false
+  "useDefaultConstraints": true
 }

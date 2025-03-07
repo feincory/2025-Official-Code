@@ -191,8 +191,12 @@ public class FerrisWheel extends SubsystemBase {
     m_coral.set(ControlMode.PercentOutput, -.7);
   }
 
+  public void coraloutslow() {
+    m_coral.set(ControlMode.PercentOutput, -.25);
+  }
+
   public void coralhold() {
-    m_coral.set(ControlMode.PercentOutput, -.2);
+    m_coral.set(ControlMode.PercentOutput, .1);
   }
 
   // Algae Intake

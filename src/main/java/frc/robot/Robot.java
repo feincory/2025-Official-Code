@@ -38,6 +38,7 @@ public class Robot extends LoggedRobot {
   private RobotContainer robotContainer;
 
   public Robot() {
+
     // Record metadata
     Logger.recordMetadata("ProjectName", BuildConstants.MAVEN_NAME);
     Logger.recordMetadata("BuildDate", BuildConstants.BUILD_DATE);
@@ -131,7 +132,6 @@ public class Robot extends LoggedRobot {
   @Override
   public void autonomousInit() {
     // Schedule the InstantCommand to execute CoralGround::storagepos
-
     autonomousCommand = robotContainer.getAutonomousCommand();
 
     // schedule the autonomous command (example)
@@ -151,9 +151,11 @@ public class Robot extends LoggedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
+  robotContainer.setcoralgrouninit();
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
+    
   }
 
   /** This function is called periodically during operator control. */
