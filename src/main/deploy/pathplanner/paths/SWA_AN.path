@@ -34,12 +34,23 @@
   "eventMarkers": [
     {
       "name": "Algae Net",
-      "waypointRelativePos": 0.7731343283582095,
+      "waypointRelativePos": 0.7469066366704146,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
           "name": "Algae Net"
+        }
+      }
+    },
+    {
+      "name": "Algae Outtake",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Algae Outtake"
         }
       }
     }

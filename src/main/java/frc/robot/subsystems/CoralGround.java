@@ -38,7 +38,7 @@ public class CoralGround extends SubsystemBase {
     encoder = motor.getEncoder();
     motorConfig = new SparkMaxConfig();
     motorConfig.encoder.positionConversionFactor(1).velocityConversionFactor(1);
-    coralgroundhomed = false;
+    coralgroundhomed = true;
     motorConfig
         .closedLoop
         .feedbackSensor(FeedbackSensor.kPrimaryEncoder)

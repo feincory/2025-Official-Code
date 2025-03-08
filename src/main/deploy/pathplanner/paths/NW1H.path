@@ -3,12 +3,12 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.125,
+        "x": 7.075,
         "y": 5.421906300140595
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.299230769230769,
+        "x": 6.24923076923077,
         "y": 5.566393479627775
       },
       "isLocked": false,
@@ -40,6 +40,17 @@
         "type": "named",
         "data": {
           "name": "Coral L4"
+        }
+      }
+    },
+    {
+      "name": "Coral Outtake",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Coral Outtake"
         }
       }
     }

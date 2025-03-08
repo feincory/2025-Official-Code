@@ -133,7 +133,7 @@ public class Robot extends LoggedRobot {
   public void autonomousInit() {
     // Schedule the InstantCommand to execute CoralGround::storagepos
     autonomousCommand = robotContainer.getAutonomousCommand();
-
+    robotContainer.setcoralgrouninit().schedule();
     // schedule the autonomous command (example)
     if (autonomousCommand != null) {
       autonomousCommand.schedule();
@@ -151,11 +151,10 @@ public class Robot extends LoggedRobot {
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
     // this line or comment it out.
-  robotContainer.setcoralgrouninit();
+    robotContainer.setcoralgrouninit().schedule();
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
-    
   }
 
   /** This function is called periodically during operator control. */

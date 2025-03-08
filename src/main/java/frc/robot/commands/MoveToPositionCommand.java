@@ -28,7 +28,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
 
   private static final Map<Integer, Double> ferrisWheelPositions =
       Map.ofEntries(
-          Map.entry(0, .540), // was vert
+          Map.entry(0, .528), // was vert  WAS .540
           Map.entry(1, ferriscoralretreive),
           Map.entry(2, ferriscoralplace),
           Map.entry(3, ferriscoralplace),
@@ -79,7 +79,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("1-10", MovementType.FE),
           Map.entry("1-11", MovementType.FE),
           Map.entry("2-0", MovementType.EIFE),
-          Map.entry("2-1", MovementType.ECFE),
+          Map.entry("2-1", MovementType.EIFE),
           Map.entry("2-3", MovementType.E),
           Map.entry("2-4", MovementType.E),
           Map.entry("2-5", MovementType.EIFE),

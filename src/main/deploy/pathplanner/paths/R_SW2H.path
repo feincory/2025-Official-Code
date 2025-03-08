@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 3.831243755531513,
-        "y": 5.237724986786853
+        "x": 3.7624218971604195,
+        "y": 5.247769636629532
       },
       "prevControl": {
-        "x": 3.4232841967488317,
-        "y": 5.6624167414188555
+        "x": 3.354462338377738,
+        "y": 5.6724613912615345
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,12 +34,23 @@
   "eventMarkers": [
     {
       "name": "Coral L4",
-      "waypointRelativePos": 0.2281284606865994,
+      "waypointRelativePos": 0.33295838020247454,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
           "name": "Coral L4"
+        }
+      }
+    },
+    {
+      "name": "Coral Outtake",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Coral Outtake"
         }
       }
     }

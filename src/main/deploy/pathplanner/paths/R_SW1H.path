@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 3.5567307799092465,
-        "y": 5.074525507658589
+        "x": 3.46125,
+        "y": 5.077999999999999
       },
       "prevControl": {
-        "x": 3.148771221126565,
-        "y": 5.499217262290592
+        "x": 3.0532904412173187,
+        "y": 5.502691754632002
       },
       "nextControl": null,
       "isLocked": false,
@@ -40,6 +40,17 @@
         "type": "named",
         "data": {
           "name": "Coral L4"
+        }
+      }
+    },
+    {
+      "name": "Coral Outtake",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Coral Outtake"
         }
       }
     }

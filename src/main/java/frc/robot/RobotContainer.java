@@ -187,15 +187,16 @@ public class RobotContainer {
     m_drivercontroller.button(16).onTrue(Commands.runOnce(drive::stopWithX, drive));
 
     // // Bind the command to run while the button is held down:
-    // testcontroller
-    //     .a()
-    //     .onTrue(
-    //         DriveCommands.AutoLineUp(
-    //             drive,
-    //             () -> (((vision.getTargetY(0).getDegrees() - 4)) * .5),
-    //             () -> ((vision.getTargetX(0).getDegrees() + 2.05) * -2.5),
-    //             () -> -m_drivercontroller.getRawAxis(3)))
-    //     .onFalse(Commands.runOnce(drive::stop, drive));
+    m_drivercontroller
+        .button(10)
+        .onTrue(
+            DriveCommands.AutoLineUp(
+                drive,
+                () -> (((vision.getTargetY(0).getDegrees() - 0)) * .125),//ty is acutally ta
+                () -> ((vision.getTargetX(0).getDegrees() + 2.05) * -2.5),//tx is tx
+                () -> -m_drivercontroller.getRawAxis(3)))
+        .onFalse(Commands.runOnce(drive::stop, drive));
+
     // Reset gyro to 0° when B button is pressed
     m_drivercontroller
         .button(14)
@@ -257,12 +258,14 @@ public class RobotContainer {
     controller
         .leftStick()
         .onTrue(new InstantCommand(m_climber::climbup))
-        .onFalse(new InstantCommand(m_climber::climbstop));
+        .onFalse(new InstantCommand(m_climber::climbstop))
+        .onFalse(new InstantCommand(m_coralground::stopspinner));
 
     controller
         .rightStick()
         .onTrue(new InstantCommand(m_climber::climbdown))
-        .onFalse(new InstantCommand(m_climber::climbstop));
+        .onFalse(new InstantCommand(m_climber::climbstop))
+        .onFalse(new InstantCommand(m_coralground::stopspinner));
 
     controller.leftStick().onTrue(new InstantCommand(m_coralground::stopspinner));
 
@@ -298,8 +301,8 @@ public class RobotContainer {
     currentKey = targetKey;
   }
 
-  public void setcoralgrouninit() {
-    new InstantCommand(m_coralground::initstoragepos);
+  public Command setcoralgrouninit() {
+    return new InstantCommand(m_coralground::initstoragepos);
     // Update currentKey right after scheduling the command
   }
   /**
@@ -308,7 +311,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    new InstantCommand(m_coralground::initstoragepos);
+    // new InstantCommand(m_coralground::initstoragepos);
     // return AutonChoice.getSelected();
     return autoChooser.get();
   }

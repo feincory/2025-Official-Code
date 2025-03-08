@@ -29,11 +29,11 @@ public class CLIMBER extends SubsystemBase {
   }
 
   public void climbdown() {
-    m_climber.setControl(m_climbOutput.withOutput(-.750));
+    m_climber.setControl(m_climbOutput.withOutput(-1)); // was -.75
   }
 
   public void climbup() {
-    m_climber.setControl(m_climbOutput.withOutput(0.50));
+    m_climber.setControl(m_climbOutput.withOutput(1)); // was .5
   }
 
   public void climbstop() {

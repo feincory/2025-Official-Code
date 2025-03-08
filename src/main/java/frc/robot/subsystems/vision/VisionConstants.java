@@ -35,12 +35,12 @@ public class VisionConstants {
       new Transform3d(-0.2, 0.0, 0.2, new Rotation3d(0.0, 1.1, Math.PI));
 
   // Basic filtering thresholds
-  public static double maxAmbiguity = 0.3;
-  public static double maxZError = 0.75;
+  public static double maxAmbiguity = 0.5;
+  public static double maxZError = .75; // was .75
 
   // Standard deviation baselines, for 1 meter distance and 1 tag
   // (Adjusted automatically based on distance and # of tags)
-  public static double linearStdDevBaseline = 0.02; // Meters was .02
+  public static double linearStdDevBaseline = 0.025; // Meters was .02
   public static double angularStdDevBaseline = 0.06; // Radians
 
   // Standard deviation multipliers for each camera
@@ -52,7 +52,7 @@ public class VisionConstants {
       };
 
   // Multipliers to apply for MegaTag 2 observations
-  public static double linearStdDevMegatag2Factor = .5; // More stable than full 3D solve was .5
-  public static double angularStdDevMegatag2Factor =
+  public static double linearStdDevMegatag2Factor = .6; // More stable than full 3D solve was .5
+  public static double angularStdDevMegatag2Factor = // 10;
       Double.POSITIVE_INFINITY; // No rotation data available
 }

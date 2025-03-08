@@ -121,7 +121,7 @@ public class DriveCommands {
 
           ChassisSpeeds speeds =
               new ChassisSpeeds(
-                  linearVelocity.getX() * .3,
+                  linearVelocity.getX() * .5,
                   linearVelocity.getY() * .5,
                   omega * drive.getMaxAngularSpeedRadPerSec());
 

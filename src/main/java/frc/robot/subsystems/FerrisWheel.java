@@ -192,7 +192,7 @@ public class FerrisWheel extends SubsystemBase {
   }
 
   public void coraloutslow() {
-    m_coral.set(ControlMode.PercentOutput, -.25);
+    m_coral.set(ControlMode.PercentOutput, -.325);
   }
 
   public void coralhold() {
