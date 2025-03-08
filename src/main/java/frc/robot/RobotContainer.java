@@ -13,9 +13,6 @@
 
 package frc.robot;
 
-import static frc.robot.subsystems.vision.VisionConstants.camera0Name;
-import static frc.robot.subsystems.vision.VisionConstants.camera1Name;
-
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
@@ -27,10 +24,8 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-// import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-// import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.ClearElevator;
 import frc.robot.commands.DriveCommands;
@@ -49,8 +44,6 @@ import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
-import frc.robot.subsystems.vision.Vision;
-import frc.robot.subsystems.vision.VisionIOLimelight;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -68,7 +61,6 @@ public class RobotContainer {
   public final AlgaeIntake m_AlgaeIntake = new AlgaeIntake();
   public final FerrisWheel m_FerrisWheel = new FerrisWheel();
   public final CoralGround m_coralground = new CoralGround();
-  private final Vision vision;
   // Controller
   // private final CommandXboxController testcontroller = new CommandXboxController(2);
   private final CommandXboxController controller = new CommandXboxController(1);
@@ -87,6 +79,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Coral Intake", new InstantCommand(m_FerrisWheel::coralin));
     NamedCommands.registerCommand("Algae L2", new InstantCommand(() -> moveToPosition(6)));
     NamedCommands.registerCommand("Algae L3", new InstantCommand(() -> moveToPosition(7)));
+    // NamedCommands.registerCommand("autoalign", new InstantCommand();
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
@@ -97,11 +90,6 @@ public class RobotContainer {
                 new ModuleIOTalonFX(TunerConstants.FrontRight),
                 new ModuleIOTalonFX(TunerConstants.BackLeft),
                 new ModuleIOTalonFX(TunerConstants.BackRight));
-        vision =
-            new Vision(
-                drive::addVisionMeasurement,
-                new VisionIOLimelight(camera0Name, drive::getRotation),
-                new VisionIOLimelight(camera1Name, drive::getRotation));
 
         break;
 
@@ -114,7 +102,7 @@ public class RobotContainer {
                 new ModuleIOSim(TunerConstants.FrontRight),
                 new ModuleIOSim(TunerConstants.BackLeft),
                 new ModuleIOSim(TunerConstants.BackRight));
-        vision = null;
+
         break;
 
       default:
@@ -127,7 +115,6 @@ public class RobotContainer {
                 new ModuleIO() {},
                 new ModuleIO() {});
 
-        vision = null;
         break;
     }
 
@@ -186,16 +173,22 @@ public class RobotContainer {
     // Switch to X pattern when X button is pressed
     m_drivercontroller.button(16).onTrue(Commands.runOnce(drive::stopWithX, drive));
 
-    // // Bind the command to run while the button is held down:
-    m_drivercontroller
-        .button(10)
-        .onTrue(
-            DriveCommands.AutoLineUp(
-                drive,
-                () -> (((vision.getTargetY(0).getDegrees() - 0)) * .125),//ty is acutally ta
-                () -> ((vision.getTargetX(0).getDegrees() + 2.05) * -2.5),//tx is tx
-                () -> -m_drivercontroller.getRawAxis(3)))
-        .onFalse(Commands.runOnce(drive::stop, drive));
+    // vision.getTargetX(0).getDegrees() != 0
+    // Bind the command to run while the button is held down:
+    if (true) {
+
+      m_drivercontroller
+          .button(12)
+          .onTrue(
+              DriveCommands.AutoLineUp(
+                  drive,
+                  () ->
+                      (((LimelightHelpers.getTA("limelight-front") - 4.5))
+                          * .0125), // ty is acutally
+                  () -> (((LimelightHelpers.getTX("limelight-front") - 6.5) * -.15)), // tx is tx
+                  () -> -m_drivercontroller.getRawAxis(3)))
+          .onFalse(Commands.runOnce(drive::stop, drive));
+    }
 
     // Reset gyro to 0° when B button is pressed
     m_drivercontroller

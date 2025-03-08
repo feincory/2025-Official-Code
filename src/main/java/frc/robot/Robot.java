@@ -115,6 +115,7 @@ public class Robot extends LoggedRobot {
     // This must be called from the robot's periodic block in order for anything in
     // the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    // System.out.println("cameraIndex: " + vision.getTargetY(0).getDegrees());
 
     // Return to normal thread priority
     Threads.setCurrentThreadPriority(false, 10);
@@ -159,7 +160,10 @@ public class Robot extends LoggedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+
+    System.out.println(("tx" + LimelightHelpers.getTX("limelight-front")));
+  }
 
   /** This function is called once when test mode is enabled. */
   @Override
