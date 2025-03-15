@@ -61,12 +61,12 @@ public class Vision extends SubsystemBase {
    * @param cameraIndex The index of the camera to use.
    */
   public Rotation2d getTargetX(int cameraIndex) {
-    // System.out.println("cameraIndex: " + inputs[cameraIndex].latestTargetObservation.tx());
+    System.out.println("cameraIndex: " + inputs[cameraIndex].latestTargetObservation.tx());
     return inputs[cameraIndex].latestTargetObservation.tx();
   }
 
   public Rotation2d getTargetY(int cameraIndex) {
-    System.out.println("cameraIndex: " + inputs[cameraIndex].latestTargetObservation.ty());
+    // System.out.println("cameraIndex: " + inputs[cameraIndex].latestTargetObservation.ty());
     return inputs[cameraIndex].latestTargetObservation.ty();
   }
 

@@ -24,13 +24,14 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry(8, elevatorprocessor),
           Map.entry(9, elevatornetpos),
           Map.entry(10, elevatorclimb),
-          Map.entry(11, elevatoridlepos));
+          Map.entry(11, elevatoridlepos),
+          Map.entry(12, elevatorclimb));
 
   private static final Map<Integer, Double> ferrisWheelPositions =
       Map.ofEntries(
-          Map.entry(0, .528), // was vert  WAS .540
+          Map.entry(0, .520), // was vert  WAS .540
           Map.entry(1, ferriscoralretreive),
-          Map.entry(2, ferriscoralplace),
+          Map.entry(2, ferriscoralplaceL2),
           Map.entry(3, ferriscoralplace),
           Map.entry(4, ferriscoralplace),
           Map.entry(5, ferrisalageretreive),
@@ -39,7 +40,9 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry(8, ferrisalgaeprocessor),
           Map.entry(9, ferrisAlgaeNet),
           Map.entry(10, ferriswheelvert),
-          Map.entry(11, ferriswheelvert));
+          Map.entry(11, ferriswheelvert),
+          Map.entry(12, ferriswheelclimb));
+
   //   // Define movement rules directly in this command
   //   private static final Map<String, MovementType> movementRules =
   //       Map.of(
@@ -56,7 +59,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
   // Define movement rules directly in this command
   private static final Map<String, MovementType> movementRules =
       Map.ofEntries(
-          Map.entry("0-1", MovementType.PARALLEL),
+          Map.entry("0-1", MovementType.EF),
           Map.entry("0-2", MovementType.EIFE),
           Map.entry("0-3", MovementType.PARALLEL),
           Map.entry("0-4", MovementType.PARALLEL),
@@ -69,7 +72,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("0-11", MovementType.EF),
           Map.entry("1-0", MovementType.FE),
           Map.entry("1-2", MovementType.FECE),
-          Map.entry("1-3", MovementType.PARALLEL),
+          Map.entry("1-3", MovementType.EIFE),
           Map.entry("1-4", MovementType.PARALLEL),
           Map.entry("1-5", MovementType.FEIFE),
           Map.entry("1-6", MovementType.FEIFE),
@@ -78,6 +81,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("1-9", MovementType.FE),
           Map.entry("1-10", MovementType.FE),
           Map.entry("1-11", MovementType.FE),
+          Map.entry("1-12", MovementType.EIFE),
           Map.entry("2-0", MovementType.EIFE),
           Map.entry("2-1", MovementType.EIFE),
           Map.entry("2-3", MovementType.E),
@@ -90,7 +94,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("2-10", MovementType.EIFE),
           Map.entry("2-11", MovementType.EF),
           Map.entry("3-0", MovementType.EIFE),
-          Map.entry("3-1", MovementType.PARALLEL),
+          Map.entry("3-1", MovementType.EIFE),
           Map.entry("3-2", MovementType.E),
           Map.entry("3-4", MovementType.E),
           Map.entry("3-5", MovementType.FEIFE),

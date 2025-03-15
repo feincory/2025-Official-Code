@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.075,
-        "y": 2.6740164881902193
+        "x": 6.9,
+        "y": 2.47
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.08423076923077,
-        "y": 2.6224139240876547
+        "x": 5.8735259079865925,
+        "y": 2.8752762871977247
       },
       "isLocked": false,
       "linkedName": "CAGE4"
     },
     {
       "anchor": {
-        "x": 5.499,
-        "y": 3.0109999999999992
+        "x": 5.17,
+        "y": 2.82
       },
       "prevControl": {
-        "x": 5.728150045142998,
-        "y": 2.91104872781719
+        "x": 5.41984725253249,
+        "y": 2.828737871706886
       },
       "nextControl": null,
       "isLocked": false,
@@ -34,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "Coral L4",
-      "waypointRelativePos": 0.05980066445182647,
+      "waypointRelativePos": 0.0,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -46,7 +46,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 3.5,
-    "maxAcceleration": 2.75,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 325.0,
     "maxAngularAcceleration": 325.0,
     "nominalVoltage": 12.0,
@@ -60,7 +60,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": -27.0
   },
   "useDefaultConstraints": true
 }

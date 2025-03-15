@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 4.173,
-        "y": 2.61125
+        "x": 4.0651472533982975,
+        "y": 2.6646777544504014
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.863055651391711,
-        "y": 2.3232442736550674
+        "x": 3.7552029047900084,
+        "y": 2.3766720281054687
       },
       "isLocked": false,
       "linkedName": "SE1"
@@ -34,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "Coral Retreive",
-      "waypointRelativePos": 0.39402985074626895,
+      "waypointRelativePos": 0.12181616832780082,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -57,7 +57,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 3.5,
-    "maxAcceleration": 2.75,
+    "maxAcceleration": 3.0,
     "maxAngularVelocity": 325.0,
     "maxAngularAcceleration": 325.0,
     "nominalVoltage": 12.0,

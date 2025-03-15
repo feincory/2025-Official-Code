@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.92925,
-        "y": 2.7575
+        "x": 3.7790218111839544,
+        "y": 2.8306393083354804
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.476101430204409,
-        "y": 2.0370996855941517
+        "x": 3.325873241388363,
+        "y": 2.110238993929632
       },
       "isLocked": false,
       "linkedName": "SE2"
@@ -34,7 +34,7 @@
   "eventMarkers": [
     {
       "name": "Coral Retreive",
-      "waypointRelativePos": 0.3255813953488386,
+      "waypointRelativePos": 0.1771871539313419,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",

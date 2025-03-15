@@ -32,7 +32,7 @@ public class FerrisWheel extends SubsystemBase {
   /** Creates a new FerrisWheel. */
   private final TalonFX m_FerrisWheel = new TalonFX(20, "CANIVORE");
 
-  TalonSRX m_coral = new TalonSRX(26);
+  // TalonSRX m_coral = new TalonSRX(26);
   TalonSRX m_Algae = new TalonSRX(25);
 
   private final CANcoder m_cc = new CANcoder(35, "CANIVORE");
@@ -44,6 +44,8 @@ public class FerrisWheel extends SubsystemBase {
   private final PositionDutyCycle m_PositionDutyCycle = new PositionDutyCycle(0);
   static boolean m_fwheelclear;
   static double ferriswheelpos;
+  static boolean currentgamepiecealgae;
+  static double ferriswheelflippedvalue;
   static double coralplacepositionvalue;
   static double coralretreivepositionvalue;
   static double coralstartpositionvalue;
@@ -51,6 +53,8 @@ public class FerrisWheel extends SubsystemBase {
   public FerrisWheel() {
 
     m_fwheelclear = false;
+    currentgamepiecealgae = false;
+    ferriswheelflippedvalue = 0;
 
     /* Configure CANcoder to zero the magnet appropriately */
     CANcoderConfiguration cc_cfg = new CANcoderConfiguration();
@@ -125,21 +129,30 @@ public class FerrisWheel extends SubsystemBase {
 
   public void startingposition() {
     if (m_elevatorlowered == false) {}
-    m_FerrisWheel.setControl(m_PositionDutyCycle.withPosition(coralstartpositionvalue));
+    m_FerrisWheel.setControl(m_PositionDutyCycle.withPosition(ferriswheelvert));
   }
 
   public void setposition(double position) {
     final MotionMagicExpoVoltage m_request = new MotionMagicExpoVoltage(0);
     m_FerrisWheel.setControl(m_request.withPosition(position));
-    StatusSignal<Double> ferrisoutput = m_FerrisWheel.getDutyCycle();
-    if (ferrisoutput.getValue() > 0) { // ferris wheel moves CC from climb side
-      m_Algae.set(ControlMode.PercentOutput, ((Math.abs(ferrisoutput.getValue()) * -.5) - .2));
 
+    StatusSignal<Double> ferrisoutput = m_FerrisWheel.getDutyCycle();
+
+    if (currentgamepiecealgae == true) {
+      ferriswheelflippedvalue = (Math.abs(ferrisoutput.getValue()) + .25) * -1; // algae
     } else {
-      // ferris wheel moves CCW from climb side
-      m_Algae.set(ControlMode.PercentOutput, ((Math.abs(ferrisoutput.getValue()) * -.3) - .2));
-      m_coral.set(ControlMode.PercentOutput, (ferrisoutput.getValue() * -1.25));
+      ferriswheelflippedvalue = ((Math.abs(ferrisoutput.getValue()) + .2)); // coral
     }
+
+    m_Algae.set(ControlMode.PercentOutput, (ferriswheelflippedvalue) * .6);
+
+    // if (ferrisoutput.getValue() > 0) { // ferris wheel moves CCw from climb side
+    //   m_Algae.set(ControlMode.PercentOutput, (ferriswheelflippedvalue) * .6);
+
+    // } else {
+    //   // ferris wheel moves CC from climb side
+    //   m_Algae.set(ControlMode.PercentOutput, (ferriswheelflippedvalue) * .6);
+    // }
   }
 
   public void retreiveposition() {
@@ -180,28 +193,30 @@ public class FerrisWheel extends SubsystemBase {
 
   // Coral Intake
   public void coralin() {
-    m_coral.set(ControlMode.PercentOutput, .6);
+    m_Algae.set(ControlMode.PercentOutput, .6);
+    currentgamepiecealgae = false;
   }
 
   public void coralstop() {
-    m_coral.set(ControlMode.PercentOutput, 0);
+    m_Algae.set(ControlMode.PercentOutput, 0);
   }
 
   public void coralout() {
-    m_coral.set(ControlMode.PercentOutput, -.7);
+    m_Algae.set(ControlMode.PercentOutput, -.7);
   }
 
   public void coraloutslow() {
-    m_coral.set(ControlMode.PercentOutput, -.325);
+    m_Algae.set(ControlMode.PercentOutput, -.325);
   }
 
   public void coralhold() {
-    m_coral.set(ControlMode.PercentOutput, .1);
+    m_Algae.set(ControlMode.PercentOutput, .1);
   }
 
   // Algae Intake
   public void algaein() {
     m_Algae.set(ControlMode.PercentOutput, -.75);
+    currentgamepiecealgae = true;
   }
 
   public void algaehold() {

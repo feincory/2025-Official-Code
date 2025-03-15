@@ -20,12 +20,16 @@ import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
-import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 // import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -39,7 +43,6 @@ import frc.robot.commands.MoveToPositionCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlgaeIntake;
 import frc.robot.subsystems.CLIMBER;
-import frc.robot.subsystems.CoralGround;
 import frc.robot.subsystems.CoralIntake;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.FerrisWheel;
@@ -49,6 +52,7 @@ import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
+import frc.robot.subsystems.vision.LimelightHelpers;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIOLimelight;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
@@ -67,14 +71,14 @@ public class RobotContainer {
   public final CoralIntake m_CoralIntake = new CoralIntake();
   public final AlgaeIntake m_AlgaeIntake = new AlgaeIntake();
   public final FerrisWheel m_FerrisWheel = new FerrisWheel();
-  public final CoralGround m_coralground = new CoralGround();
+  // public final CoralGround m_coralground = new CoralGround();
   private final Vision vision;
   // Controller
   // private final CommandXboxController testcontroller = new CommandXboxController(2);
   private final CommandXboxController controller = new CommandXboxController(1);
   public final CommandJoystick m_drivercontroller = new CommandJoystick(0);
   private int currentKey = 0; // Track the last known positio
-
+  NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
   // private final SendableChooser<Command> AutonChoice;
   // Dashboard inputs
   private final LoggedDashboardChooser<Command> autoChooser;
@@ -160,14 +164,43 @@ public class RobotContainer {
     // Configure the button bindings
     configureButtonBindings();
 
-    // createautoDashboards();
+    createautoDashboards();
   }
 
   public void createautoDashboards() {
+    ShuffleboardTab Prematch = Shuffleboard.getTab("Pre-Match");
+    Prematch.add(
+            "Reset Pose",
+            Commands.runOnce(
+                    () ->
+                        drive.setVisionPose(
+                            new Pose2d(
+                                LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
+                                    .getTranslation(),
+                                new Rotation2d(
+                                    LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
+                                        .getRotation()
+                                        .getDegrees()))),
+                    drive)
+                .ignoringDisable(true))
+        .withWidget(BuiltInWidgets.kCommand);
+
+    // ShuffleboardTab Prematch = Shuffleboard.getTab("Pre-Match");
+    // Prematch.add(
+    //         "Reset Pose",
+    //         Commands.runOnce(
+    //                 () ->
+    //                     drive.setVisionPose(
+    //                         LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")),
+    //                 drive)
+    //             .ignoringDisable(true))
+    //     .withWidget(BuiltInWidgets.kCommand);
     // ShuffleboardTab autotab = Shuffleboard.getTab("Auto");
     // autotab.add("Auto Chooser", AutonChoice).withSize(1, 1).withPosition(4, 0);
   }
 
+  // new
+  // InstantCommand(drive.setVisionPose(LimelightHelpers.getBotPose2d_wpiBlue("limelight-front"))))
   /**
    * Use this method to define your button->command mappings. Buttons can be created by
    * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -187,14 +220,35 @@ public class RobotContainer {
     m_drivercontroller.button(16).onTrue(Commands.runOnce(drive::stopWithX, drive));
 
     // // Bind the command to run while the button is held down:
+    // m_drivercontroller
+    //     .button(12)
+    //     .onTrue(
+    //         DriveCommands.AutoLineUp(
+    //             drive,
+    //             () -> (((vision.getTargetY(0).getDegrees() - 0)) * 0), // ty is acutally ta
+    //             () -> ((vision.getTargetX(0).getDegrees() + 2.05) * 0), // tx is tx
+    //             () -> -m_drivercontroller.getRawAxis(3)))
+    //     .onFalse(Commands.runOnce(drive::stop, drive));
+
+    // // Bind the command to run while the button is held down:
     m_drivercontroller
-        .button(10)
-        .onTrue(
-            DriveCommands.AutoLineUp(
-                drive,
-                () -> (((vision.getTargetY(0).getDegrees() - 0)) * .125),//ty is acutally ta
-                () -> ((vision.getTargetX(0).getDegrees() + 2.05) * -2.5),//tx is tx
-                () -> -m_drivercontroller.getRawAxis(3)))
+        .button(19)
+        .onTrue(DriveCommands.reeflineup(drive, () -> 0, () -> -.5, () -> 0))
+        .onFalse(Commands.runOnce(drive::stop, drive));
+
+    m_drivercontroller
+        .button(20)
+        .onTrue(DriveCommands.reeflineup(drive, () -> 0, () -> .5, () -> 0))
+        .onFalse(Commands.runOnce(drive::stop, drive));
+
+    m_drivercontroller
+        .button(22)
+        .onTrue(DriveCommands.reeflineup(drive, () -> -.5, () -> 0, () -> 0))
+        .onFalse(Commands.runOnce(drive::stop, drive));
+
+    m_drivercontroller
+        .button(21)
+        .onTrue(DriveCommands.reeflineup(drive, () -> .5, () -> 0, () -> 0))
         .onFalse(Commands.runOnce(drive::stop, drive));
 
     // Reset gyro to 0° when B button is pressed
@@ -209,37 +263,68 @@ public class RobotContainer {
                 .ignoringDisable(true));
 
     m_drivercontroller
-        .button(11)
-        .onFalse(new InstantCommand(m_coralground::shootpos)); // run to ground
+        .button(2)
+        .onTrue(
+            Commands.runOnce(
+                    () ->
+                        drive.setVisionPose(
+                            new Pose2d(
+                                LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
+                                    .getTranslation(),
+                                new Rotation2d(
+                                    LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
+                                        .getRotation()
+                                        .getDegrees()))),
+                    drive)
+                .ignoringDisable(true));
 
-    m_drivercontroller.button(10).onFalse(new InstantCommand(m_coralground::shootpos)); // shoot
+    // LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
+    // .getRotation()
+    // .getDegrees()
 
-    m_drivercontroller
-        .button(11)
-        .onTrue(new InstantCommand(m_coralground::pickupos)); // place coral on reef
+    // Reset gyro to 0° when B button is pressed
+    // m_drivercontroller
+    // .button(14)
+    // .onTrue(
+    //     Commands.runOnce(
+    //             () ->
+    //                 drive.setPose(
+    //                     new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
+    //             drive)
+    //         .ignoringDisable(true));
 
-    m_drivercontroller.button(10).onTrue(new InstantCommand(m_coralground::storagepos));
+    // m_drivercontroller
+    //     .button(11)
+    //     .onFalse(new InstantCommand(m_coralground::shootpos)); // run to ground
 
-    m_drivercontroller
-        .button(13)
-        .onTrue(new InstantCommand(m_coralground::runspinner))
-        .onFalse(new InstantCommand(m_coralground::stopspinner));
+    // m_drivercontroller.button(10).onFalse(new InstantCommand(m_coralground::shootpos)); // shoot
+
+    // m_drivercontroller
+    //     .button(11)
+    //     .onTrue(new InstantCommand(m_coralground::pickupos)); // place coral on reef
+
+    // m_drivercontroller.button(10).onTrue(new InstantCommand(m_coralground::storagepos));
+
+    // m_drivercontroller
+    //     .button(13)
+    //     .onTrue(new InstantCommand(m_coralground::runspinner))
+    //     .onFalse(new InstantCommand(m_coralground::stopspinner));
 
     m_drivercontroller
         .button(13)
         .onTrue(new InstantCommand(m_FerrisWheel::coraloutslow))
         .onFalse(new InstantCommand(m_FerrisWheel::coralhold));
 
-    m_drivercontroller // coral ground pickup homing
-        .button(15)
-        .whileTrue(new RunCommand(m_coralground::homingroutine))
-        .onFalse(new InstantCommand(m_coralground::stop));
+    // m_drivercontroller // coral ground pickup homing
+    //     .button(15)
+    //     .whileTrue(new RunCommand(m_coralground::homingroutine))
+    //     .onFalse(new InstantCommand(m_coralground::stop));
 
     // coral intake button binding
     controller
         .rightBumper()
         .onTrue(new InstantCommand(m_FerrisWheel::coraloutslow))
-        .onFalse(new InstantCommand(m_FerrisWheel::coralhold));
+        .onFalse(new InstantCommand(m_FerrisWheel::coralstop));
     controller
         .leftBumper()
         .onTrue(new InstantCommand(m_FerrisWheel::coralin))
@@ -259,17 +344,19 @@ public class RobotContainer {
         .leftStick()
         .onTrue(new InstantCommand(m_climber::climbup))
         .onFalse(new InstantCommand(m_climber::climbstop))
-        .onFalse(new InstantCommand(m_coralground::stopspinner));
+    /*
+    .onFalse(new InstantCommand(m_coralground::stopspinner))*/ ;
 
     controller
         .rightStick()
         .onTrue(new InstantCommand(m_climber::climbdown))
         .onFalse(new InstantCommand(m_climber::climbstop))
-        .onFalse(new InstantCommand(m_coralground::stopspinner));
+    /*
+    .onFalse(new InstantCommand(m_coralground::stopspinner))*/ ;
 
-    controller.leftStick().onTrue(new InstantCommand(m_coralground::stopspinner));
+    // controller.leftStick().onTrue(new InstantCommand(m_coralground::stopspinner));
 
-    controller.rightStick().onTrue(new InstantCommand(m_coralground::stopspinner));
+    // controller.rightStick().onTrue(new InstantCommand(m_coralground::stopspinner));
 
     // ferris wheel controls
 
@@ -292,6 +379,7 @@ public class RobotContainer {
     controller.x().onTrue(new InstantCommand(() -> moveToPosition(2)));
     controller.b().onTrue(new InstantCommand(() -> moveToPosition(3)));
     controller.y().onTrue(new InstantCommand(() -> moveToPosition(4)));
+    m_drivercontroller.button(4).onTrue(new InstantCommand(() -> moveToPosition(12)));
     // testcontroller.start().onTrue(new InstantCommand(() -> moveToPosition(11)));
   }
 
@@ -302,7 +390,8 @@ public class RobotContainer {
   }
 
   public Command setcoralgrouninit() {
-    return new InstantCommand(m_coralground::initstoragepos);
+    // return new InstantCommand(m_coralground::initstoragepos);
+    return null;
     // Update currentKey right after scheduling the command
   }
   /**
