@@ -91,6 +91,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Coral Intake", new InstantCommand(m_FerrisWheel::coralin));
     NamedCommands.registerCommand("Algae L2", new InstantCommand(() -> moveToPosition(6)));
     NamedCommands.registerCommand("Algae L3", new InstantCommand(() -> moveToPosition(7)));
+    // NamedCommands.registerCommand("Coral In Prox", new CoralInProx(m_FerrisWheel, 1));
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
@@ -184,7 +185,8 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true))
         .withWidget(BuiltInWidgets.kCommand);
-
+    // Prematch.add("Coral Prox Detect", new CoralInProx(m_FerrisWheel, 1).ignoringDisable(true))
+    //     .withWidget(BuiltInWidgets.kCommand);
     // ShuffleboardTab Prematch = Shuffleboard.getTab("Pre-Match");
     // Prematch.add(
     //         "Reset Pose",
@@ -262,21 +264,21 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-    m_drivercontroller
-        .button(2)
-        .onTrue(
-            Commands.runOnce(
-                    () ->
-                        drive.setVisionPose(
-                            new Pose2d(
-                                LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
-                                    .getTranslation(),
-                                new Rotation2d(
-                                    LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
-                                        .getRotation()
-                                        .getDegrees()))),
-                    drive)
-                .ignoringDisable(true));
+    // m_drivercontroller
+    //     .button(2)
+    //     .onTrue(
+    //         Commands.runOnce(
+    //                 () ->
+    //                     drive.setVisionPose(
+    //                         new Pose2d(
+    //                             LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
+    //                                 .getTranslation(),
+    //                             new Rotation2d(
+    //                                 LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
+    //                                     .getRotation()
+    //                                     .getDegrees()))),
+    //                 drive)
+    //             .ignoringDisable(true));
 
     // LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
     // .getRotation()
@@ -312,6 +314,11 @@ public class RobotContainer {
 
     m_drivercontroller
         .button(13)
+        .onTrue(new InstantCommand(m_FerrisWheel::dipsettrue))
+        .onFalse(new InstantCommand(m_FerrisWheel::dipsetfalse));
+
+    m_drivercontroller
+        .button(12)
         .onTrue(new InstantCommand(m_FerrisWheel::coraloutslow))
         .onFalse(new InstantCommand(m_FerrisWheel::coralhold));
 

@@ -24,6 +24,7 @@ import com.ctre.phoenix6.signals.NeutralModeValue;
 import com.ctre.phoenix6.signals.SensorDirectionValue;
 import edu.wpi.first.units.measure.Angle;
 import edu.wpi.first.units.measure.AngularVelocity;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -49,12 +50,20 @@ public class FerrisWheel extends SubsystemBase {
   static double coralplacepositionvalue;
   static double coralretreivepositionvalue;
   static double coralstartpositionvalue;
+  private DigitalInput m_coraldetect;
+  static boolean dipferriswheel;
+  private double dipamount;
+  private double lastcommandedposition;
 
   public FerrisWheel() {
 
     m_fwheelclear = false;
     currentgamepiecealgae = false;
     ferriswheelflippedvalue = 0;
+    m_coraldetect = new DigitalInput(1);
+    dipferriswheel = false;
+    dipamount = .08;
+    lastcommandedposition = ferriswheelvert;
 
     /* Configure CANcoder to zero the magnet appropriately */
     CANcoderConfiguration cc_cfg = new CANcoderConfiguration();
@@ -128,14 +137,28 @@ public class FerrisWheel extends SubsystemBase {
   }
 
   public void startingposition() {
-    if (m_elevatorlowered == false) {}
-    m_FerrisWheel.setControl(m_PositionDutyCycle.withPosition(ferriswheelvert));
+    final MotionMagicExpoVoltage m_request = new MotionMagicExpoVoltage(0);
+    m_FerrisWheel.setControl(m_request.withPosition(ferriswheelvert));
+  }
+
+  public void dipsettrue() {
+    dipferriswheel = true;
+    final MotionMagicExpoVoltage m_request = new MotionMagicExpoVoltage(0);
+    m_FerrisWheel.setControl(m_request.withPosition(lastcommandedposition + dipamount));
+    System.out.println("dip true");
+  }
+
+  public void dipsetfalse() {
+    dipferriswheel = false;
+    final MotionMagicExpoVoltage m_request = new MotionMagicExpoVoltage(0);
+    m_FerrisWheel.setControl(m_request.withPosition(lastcommandedposition));
+    System.out.println("dip false");
   }
 
   public void setposition(double position) {
     final MotionMagicExpoVoltage m_request = new MotionMagicExpoVoltage(0);
     m_FerrisWheel.setControl(m_request.withPosition(position));
-
+    lastcommandedposition = position;
     StatusSignal<Double> ferrisoutput = m_FerrisWheel.getDutyCycle();
 
     if (currentgamepiecealgae == true) {
