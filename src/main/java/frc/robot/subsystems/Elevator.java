@@ -57,8 +57,8 @@ public class Elevator extends SubsystemBase {
     elevator_cfg.Slot0.kS = 0;
     elevator_cfg.Slot0.kV = 0;
     elevator_cfg.Slot0.kA = 0;
-    elevator_cfg.Slot0.kP = 1.5; // was 2
-    elevator_cfg.Slot0.kI = 0;
+    elevator_cfg.Slot0.kP = 1.8; // was 2
+    elevator_cfg.Slot0.kI = 0.3;
     elevator_cfg.Slot0.kD = 0.1;
     elevator_cfg.Slot0.kG = 0;
     elevator_cfg.Voltage.PeakForwardVoltage = 12;

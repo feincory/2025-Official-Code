@@ -8,6 +8,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class CLIMBER extends SubsystemBase {
@@ -16,11 +17,16 @@ public class CLIMBER extends SubsystemBase {
 
   private final DutyCycleOut m_climbOutput = new DutyCycleOut(0);
   TalonFXConfiguration climb_cfg = new TalonFXConfiguration();
+  Servo m_funnelrelease;
+  boolean funnelokaytorelease;
 
   public CLIMBER() {
     climb_cfg.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .3;
     m_climber.getConfigurator().apply(climb_cfg);
     m_climber.setNeutralMode(NeutralModeValue.Brake);
+    m_funnelrelease = new Servo(0);
+    funnelokaytorelease = false;
+    m_funnelrelease.setAngle(20);
   }
 
   @Override
@@ -38,5 +44,21 @@ public class CLIMBER extends SubsystemBase {
 
   public void climbstop() {
     m_climber.setControl(m_climbOutput.withOutput(.0));
+  }
+
+  public void okaytorelease() {
+    funnelokaytorelease = true;
+  }
+
+  public void funnelrelease() {
+    if (funnelokaytorelease) {
+      m_funnelrelease.setAngle(175);
+    }
+  }
+
+  public void resetfunnel() {
+    if (funnelokaytorelease) {
+      m_funnelrelease.setAngle(20);
+    }
   }
 }

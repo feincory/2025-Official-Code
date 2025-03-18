@@ -31,10 +31,8 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-// import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-// import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.commands.ClearElevator;
 import frc.robot.commands.DriveCommands;
@@ -43,7 +41,6 @@ import frc.robot.commands.MoveToPositionCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlgaeIntake;
 import frc.robot.subsystems.CLIMBER;
-import frc.robot.subsystems.CoralIntake;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.FerrisWheel;
 import frc.robot.subsystems.drive.Drive;
@@ -64,19 +61,20 @@ import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
  * subsystems, commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
+  private final CommandXboxController controller = new CommandXboxController(1);
+  public final CommandJoystick m_drivercontroller = new CommandJoystick(0);
   // Subsystems
   private final Drive drive;
   public final Elevator m_Elevator = new Elevator();
   public final CLIMBER m_climber = new CLIMBER();
-  public final CoralIntake m_CoralIntake = new CoralIntake();
   public final AlgaeIntake m_AlgaeIntake = new AlgaeIntake();
   public final FerrisWheel m_FerrisWheel = new FerrisWheel();
+  // public final CANdleSystem m_CANdleSystem = new CANdleSystem();
   // public final CoralGround m_coralground = new CoralGround();
   private final Vision vision;
   // Controller
   // private final CommandXboxController testcontroller = new CommandXboxController(2);
-  private final CommandXboxController controller = new CommandXboxController(1);
-  public final CommandJoystick m_drivercontroller = new CommandJoystick(0);
+
   private int currentKey = 0; // Track the last known positio
   NetworkTable limelightTable = NetworkTableInstance.getDefault().getTable("limelight");
   // private final SendableChooser<Command> AutonChoice;
@@ -335,6 +333,7 @@ public class RobotContainer {
     controller
         .leftBumper()
         .onTrue(new InstantCommand(m_FerrisWheel::coralin))
+        // .onTrue(new InstantCommand(m_CANdleSystem::coralintake))
         .onFalse(new InstantCommand(m_FerrisWheel::coralhold));
 
     // algae intake button binding
@@ -345,25 +344,22 @@ public class RobotContainer {
     controller
         .leftTrigger()
         .onTrue(new InstantCommand(m_FerrisWheel::algaein))
+        // .onTrue(new InstantCommand(m_CANdleSystem::algaeintake))
         .onFalse(new InstantCommand(m_FerrisWheel::algaehold));
-    // climber
+    // // climber
     controller
         .leftStick()
         .onTrue(new InstantCommand(m_climber::climbup))
-        .onFalse(new InstantCommand(m_climber::climbstop))
-    /*
-    .onFalse(new InstantCommand(m_coralground::stopspinner))*/ ;
+        .onFalse(new InstantCommand(m_climber::climbstop));
 
     controller
         .rightStick()
         .onTrue(new InstantCommand(m_climber::climbdown))
-        .onFalse(new InstantCommand(m_climber::climbstop))
-    /*
-    .onFalse(new InstantCommand(m_coralground::stopspinner))*/ ;
+        .onFalse(new InstantCommand(m_climber::climbstop));
 
-    // controller.leftStick().onTrue(new InstantCommand(m_coralground::stopspinner));
+    controller.rightStick().onTrue(new InstantCommand(m_climber::funnelrelease));
 
-    // controller.rightStick().onTrue(new InstantCommand(m_coralground::stopspinner));
+    controller.leftStick().onTrue(new InstantCommand(m_climber::funnelrelease));
 
     // ferris wheel controls
 
@@ -387,6 +383,7 @@ public class RobotContainer {
     controller.b().onTrue(new InstantCommand(() -> moveToPosition(3)));
     controller.y().onTrue(new InstantCommand(() -> moveToPosition(4)));
     m_drivercontroller.button(4).onTrue(new InstantCommand(() -> moveToPosition(12)));
+    m_drivercontroller.button(4).onTrue(new InstantCommand(m_climber::okaytorelease));
     // testcontroller.start().onTrue(new InstantCommand(() -> moveToPosition(11)));
   }
 

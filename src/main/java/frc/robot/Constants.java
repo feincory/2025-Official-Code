@@ -57,14 +57,14 @@ public final class Constants {
 
   // Coral Elevator Positions
 
-  public static double elevatorRetreivepos = -5.46; // WAS -5.76
+  public static double elevatorRetreivepos = -6.25; // WAS -5.76
 
   public static double elevatorL2pos = -5.25;
   public static double elevatorL3pos = -14.75;
   public static double elevatorL4pos = -27.6; // was -27.3
   public static double ferriscoralplace = .179;
   public static double ferriscoralplaceL2 = .162;
-  public static double ferriscoralretreive = .620;
+  public static double ferriscoralretreive = .611; // was .620
 
   // climb
   public static double elevatorstow = -.2;

@@ -16,7 +16,10 @@ package frc.robot;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants.DriveMotorArrangement;
 import com.ctre.phoenix6.swerve.SwerveModuleConstants.SteerMotorArrangement;
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Threads;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.generated.TunerConstants;
@@ -36,6 +39,8 @@ import org.littletonrobotics.junction.wpilog.WPILOGWriter;
 public class Robot extends LoggedRobot {
   private Command autonomousCommand;
   private RobotContainer robotContainer;
+  private static final XboxController m_operatorController = new XboxController(1);
+  private final Timer m_Timer = new Timer();
 
   public Robot() {
 
@@ -155,11 +160,19 @@ public class Robot extends LoggedRobot {
     if (autonomousCommand != null) {
       autonomousCommand.cancel();
     }
+    m_Timer.start();
   }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+
+    if (m_Timer.get() >= 105 && m_Timer.get() <= 107) {
+      m_operatorController.setRumble(RumbleType.kBothRumble, 1);
+    } else {
+      m_operatorController.setRumble(RumbleType.kBothRumble, 0);
+    }
+  }
 
   /** This function is called once when test mode is enabled. */
   @Override
