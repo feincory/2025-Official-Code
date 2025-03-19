@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
@@ -38,8 +39,10 @@ import frc.robot.commands.ClearElevator;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.HomeLiftCommand;
 import frc.robot.commands.MoveToPositionCommand;
+import frc.robot.commands.WaitForGamePieceCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlgaeIntake;
+import frc.robot.subsystems.CANdleSystem;
 import frc.robot.subsystems.CLIMBER;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.FerrisWheel;
@@ -49,7 +52,6 @@ import frc.robot.subsystems.drive.GyroIOPigeon2;
 import frc.robot.subsystems.drive.ModuleIO;
 import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
-import frc.robot.subsystems.vision.LimelightHelpers;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIOLimelight;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
@@ -69,9 +71,10 @@ public class RobotContainer {
   public final CLIMBER m_climber = new CLIMBER();
   public final AlgaeIntake m_AlgaeIntake = new AlgaeIntake();
   public final FerrisWheel m_FerrisWheel = new FerrisWheel();
-  // public final CANdleSystem m_CANdleSystem = new CANdleSystem();
+  public final CANdleSystem m_CANdleSystem = new CANdleSystem();
   // public final CoralGround m_coralground = new CoralGround();
   private final Vision vision;
+
   // Controller
   // private final CommandXboxController testcontroller = new CommandXboxController(2);
 
@@ -87,9 +90,11 @@ public class RobotContainer {
     NamedCommands.registerCommand("Coral Outtake", new InstantCommand(m_FerrisWheel::coralout));
     NamedCommands.registerCommand("Coral L4", new InstantCommand(() -> moveToPosition(4)));
     NamedCommands.registerCommand("Coral Intake", new InstantCommand(m_FerrisWheel::coralin));
-    NamedCommands.registerCommand("Algae L2", new InstantCommand(() -> moveToPosition(6)));
-    NamedCommands.registerCommand("Algae L3", new InstantCommand(() -> moveToPosition(7)));
-    // NamedCommands.registerCommand("Coral In Prox", new CoralInProx(m_FerrisWheel, 1));
+    NamedCommands.registerCommand("Settle For Place", new WaitCommand(.5));
+    NamedCommands.registerCommand("Settle For Retreive", new WaitCommand(.3));
+    NamedCommands.registerCommand(
+        "Wait for Game Piece", new WaitForGamePieceCommand(m_FerrisWheel.getSensor(), 5));
+
     switch (Constants.currentMode) {
       case REAL:
         // Real robot, instantiate hardware IO implementations
@@ -153,13 +158,6 @@ public class RobotContainer {
     autoChooser.addOption(
         "Drive SysId (Dynamic Reverse)", drive.sysIdDynamic(SysIdRoutine.Direction.kReverse));
 
-    // AutonChoice = AutoBuilder.buildAutoChooser();
-
-    // Another option that allows you to specify the default auto by its name
-    // autoChooser = AutoBuilder.buildAutoChooser("My Default Auto");
-
-    // SmartDashboard.putData("Auto Chooser", AutonChoice);
-
     // Configure the button bindings
     configureButtonBindings();
 
@@ -168,21 +166,28 @@ public class RobotContainer {
 
   public void createautoDashboards() {
     ShuffleboardTab Prematch = Shuffleboard.getTab("Pre-Match");
+    // Prematch.add(
+    //         "Reset Pose",
+    //         Commands.runOnce(
+    //                 () ->
+    //                     drive.setVisionPose(
+    //                         new Pose2d(
+    //                             LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
+    //                                 .getTranslation(),
+    //                             new Rotation2d(
+    //                                 LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
+    //                                     .getRotation()
+    //                                     .getDegrees()))),
+    //                 drive)
+    //             .ignoringDisable(true))
+    //     .withWidget(BuiltInWidgets.kCommand);
+
     Prematch.add(
-            "Reset Pose",
-            Commands.runOnce(
-                    () ->
-                        drive.setVisionPose(
-                            new Pose2d(
-                                LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
-                                    .getTranslation(),
-                                new Rotation2d(
-                                    LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
-                                        .getRotation()
-                                        .getDegrees()))),
-                    drive)
-                .ignoringDisable(true))
+            "Test Game Piece Wait",
+            new WaitForGamePieceCommand(m_FerrisWheel.getSensor(), 5)
+                .ignoringDisable(true)) // Ensure you pass the sensor instance
         .withWidget(BuiltInWidgets.kCommand);
+
     // Prematch.add("Coral Prox Detect", new CoralInProx(m_FerrisWheel, 1).ignoringDisable(true))
     //     .withWidget(BuiltInWidgets.kCommand);
     // ShuffleboardTab Prematch = Shuffleboard.getTab("Pre-Match");
@@ -262,54 +267,6 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-    // m_drivercontroller
-    //     .button(2)
-    //     .onTrue(
-    //         Commands.runOnce(
-    //                 () ->
-    //                     drive.setVisionPose(
-    //                         new Pose2d(
-    //                             LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
-    //                                 .getTranslation(),
-    //                             new Rotation2d(
-    //                                 LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
-    //                                     .getRotation()
-    //                                     .getDegrees()))),
-    //                 drive)
-    //             .ignoringDisable(true));
-
-    // LimelightHelpers.getBotPose2d_wpiBlue("limelight-front")
-    // .getRotation()
-    // .getDegrees()
-
-    // Reset gyro to 0° when B button is pressed
-    // m_drivercontroller
-    // .button(14)
-    // .onTrue(
-    //     Commands.runOnce(
-    //             () ->
-    //                 drive.setPose(
-    //                     new Pose2d(drive.getPose().getTranslation(), new Rotation2d())),
-    //             drive)
-    //         .ignoringDisable(true));
-
-    // m_drivercontroller
-    //     .button(11)
-    //     .onFalse(new InstantCommand(m_coralground::shootpos)); // run to ground
-
-    // m_drivercontroller.button(10).onFalse(new InstantCommand(m_coralground::shootpos)); // shoot
-
-    // m_drivercontroller
-    //     .button(11)
-    //     .onTrue(new InstantCommand(m_coralground::pickupos)); // place coral on reef
-
-    // m_drivercontroller.button(10).onTrue(new InstantCommand(m_coralground::storagepos));
-
-    // m_drivercontroller
-    //     .button(13)
-    //     .onTrue(new InstantCommand(m_coralground::runspinner))
-    //     .onFalse(new InstantCommand(m_coralground::stopspinner));
-
     m_drivercontroller
         .button(13)
         .onTrue(new InstantCommand(m_FerrisWheel::dipsettrue))
@@ -333,7 +290,9 @@ public class RobotContainer {
     controller
         .leftBumper()
         .onTrue(new InstantCommand(m_FerrisWheel::coralin))
-        // .onTrue(new InstantCommand(m_CANdleSystem::coralintake))
+        .onTrue(
+            new InstantCommand(
+                () -> m_CANdleSystem.changeAnimation(CANdleSystem.AnimationTypes.Twinkle)))
         .onFalse(new InstantCommand(m_FerrisWheel::coralhold));
 
     // algae intake button binding
@@ -344,20 +303,27 @@ public class RobotContainer {
     controller
         .leftTrigger()
         .onTrue(new InstantCommand(m_FerrisWheel::algaein))
-        // .onTrue(new InstantCommand(m_CANdleSystem::algaeintake))
+        .onTrue(
+            new InstantCommand(
+                () -> m_CANdleSystem.changeAnimation(CANdleSystem.AnimationTypes.Fire)))
         .onFalse(new InstantCommand(m_FerrisWheel::algaehold));
     // // climber
     controller
         .leftStick()
         .onTrue(new InstantCommand(m_climber::climbup))
-        .onFalse(new InstantCommand(m_climber::climbstop));
+        .onFalse(new InstantCommand(m_climber::climbhold));
 
     controller
         .rightStick()
         .onTrue(new InstantCommand(m_climber::climbdown))
         .onFalse(new InstantCommand(m_climber::climbstop));
 
-    controller.rightStick().onTrue(new InstantCommand(m_climber::funnelrelease));
+    controller
+        .rightStick()
+        .onTrue(new InstantCommand(m_climber::funnelrelease))
+        .onTrue(
+            new InstantCommand(
+                () -> m_CANdleSystem.changeAnimation(CANdleSystem.AnimationTypes.Rainbow)));
 
     controller.leftStick().onTrue(new InstantCommand(m_climber::funnelrelease));
 
@@ -384,6 +350,10 @@ public class RobotContainer {
     controller.y().onTrue(new InstantCommand(() -> moveToPosition(4)));
     m_drivercontroller.button(4).onTrue(new InstantCommand(() -> moveToPosition(12)));
     m_drivercontroller.button(4).onTrue(new InstantCommand(m_climber::okaytorelease));
+    m_drivercontroller
+        .button(6)
+        .onTrue(new WaitForGamePieceCommand(m_FerrisWheel.getSensor(), 5.0));
+    // m_drivercontroller.button(6).onTrue(new WaitForGamePieceCommand(5));
     // testcontroller.start().onTrue(new InstantCommand(() -> moveToPosition(11)));
   }
 

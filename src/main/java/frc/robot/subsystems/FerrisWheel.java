@@ -50,17 +50,16 @@ public class FerrisWheel extends SubsystemBase {
   static double coralplacepositionvalue;
   static double coralretreivepositionvalue;
   static double coralstartpositionvalue;
-  private DigitalInput m_coraldetect;
   static boolean dipferriswheel;
   private double dipamount;
   private double lastcommandedposition;
+  private final DigitalInput coralsensor = new DigitalInput(1);
 
   public FerrisWheel() {
 
     m_fwheelclear = false;
     currentgamepiecealgae = false;
     ferriswheelflippedvalue = 0;
-    m_coraldetect = new DigitalInput(1);
     dipferriswheel = false;
     dipamount = .08;
     lastcommandedposition = ferriswheelvert;
@@ -120,7 +119,6 @@ public class FerrisWheel extends SubsystemBase {
     } else {
       m_fwheelclear = false;
     }
-
     getpostion();
     outputferris();
     // ferriswheelpos = m_cc.getPosition();
@@ -130,6 +128,14 @@ public class FerrisWheel extends SubsystemBase {
   // public StatusSignal<Angle> getmotoroutSignal() {
   //   return m_FerrisWheel.getBridgeOutput();
   // }
+
+  public boolean isGamePieceDetected() {
+    return coralsensor.get();
+  }
+
+  public DigitalInput getSensor() {
+    return coralsensor;
+  }
 
   public void placeposition() {
     if (m_elevatorlowered == false) {}

@@ -21,7 +21,7 @@ public class CLIMBER extends SubsystemBase {
   boolean funnelokaytorelease;
 
   public CLIMBER() {
-    climb_cfg.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .3;
+    climb_cfg.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .4;
     m_climber.getConfigurator().apply(climb_cfg);
     m_climber.setNeutralMode(NeutralModeValue.Brake);
     m_funnelrelease = new Servo(0);
@@ -39,7 +39,11 @@ public class CLIMBER extends SubsystemBase {
   }
 
   public void climbup() {
-    m_climber.setControl(m_climbOutput.withOutput(.25)); // was .5
+    m_climber.setControl(m_climbOutput.withOutput(.3)); // was .5
+  }
+
+  public void climbhold() {
+    m_climber.setControl(m_climbOutput.withOutput(.05));
   }
 
   public void climbstop() {

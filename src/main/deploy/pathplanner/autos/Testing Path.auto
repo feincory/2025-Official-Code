@@ -1,0 +1,61 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "test return"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "test approache"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Wait for Game Piece"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "test return"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "test approache"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Wait for Game Piece"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "test return"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "test approache"
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": true,
+  "folder": null,
+  "choreoAuto": false
+}
