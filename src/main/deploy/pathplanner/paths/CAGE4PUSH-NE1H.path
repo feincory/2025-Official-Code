@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.9,
-        "y": 2.47
+        "x": 6.98,
+        "y": 2.41
       },
       "prevControl": null,
       "nextControl": {
-        "x": 7.440022481562716,
-        "y": 2.165365060901744
+        "x": 7.520022481562716,
+        "y": 2.105365060901744
       },
       "isLocked": false,
       "linkedName": "CAGE4"
     },
     {
       "anchor": {
-        "x": 5.194005954122003,
-        "y": 2.833270761647959
+        "x": 5.454604493289245,
+        "y": 2.9918307931655734
       },
       "prevControl": {
-        "x": 5.498889579936346,
-        "y": 2.6160368178407336
+        "x": 5.759488119103588,
+        "y": 2.774596849358348
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,8 +45,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 3.8,
+    "maxAcceleration": 4.5,
     "maxAngularVelocity": 325.0,
     "maxAngularAcceleration": 325.0,
     "nominalVoltage": 12.0,
@@ -60,7 +60,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -27.0
+    "rotation": -28.500000000000004
   },
   "useDefaultConstraints": true
 }

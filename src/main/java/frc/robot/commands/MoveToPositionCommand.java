@@ -83,7 +83,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("1-11", MovementType.FE),
           Map.entry("1-12", MovementType.EIFE),
           Map.entry("2-0", MovementType.EIFE),
-          Map.entry("2-1", MovementType.EIFE),
+          Map.entry("2-1", MovementType.EIFEF),
           Map.entry("2-3", MovementType.E),
           Map.entry("2-4", MovementType.E),
           Map.entry("2-5", MovementType.EIFE),
@@ -160,7 +160,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("8-10", MovementType.EIFE),
           Map.entry("8-11", MovementType.EIFE),
           Map.entry("9-0", MovementType.EIFE),
-          Map.entry("9-1", MovementType.PARALLEL),
+          Map.entry("9-1", MovementType.FEF),
           // aint sure theres another way to pass through smoother
           Map.entry("9-2", MovementType.PARALLEL),
           Map.entry("9-3", MovementType.PARALLEL),

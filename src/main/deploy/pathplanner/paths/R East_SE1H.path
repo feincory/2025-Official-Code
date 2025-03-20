@@ -33,8 +33,19 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
+      "name": "Coral Intake",
+      "waypointRelativePos": 0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Coral Intake"
+        }
+      }
+    },
+    {
       "name": "Coral L4",
-      "waypointRelativePos": 0.2281284606865994,
+      "waypointRelativePos": 0.2881493506493512,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -45,8 +56,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 3.5,
-    "maxAcceleration": 3.5,
+    "maxVelocity": 3.6,
+    "maxAcceleration": 4.0,
     "maxAngularVelocity": 325.0,
     "maxAngularAcceleration": 325.0,
     "nominalVoltage": 12.0,
@@ -62,5 +73,5 @@
     "velocity": 0,
     "rotation": -128.2901631922431
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

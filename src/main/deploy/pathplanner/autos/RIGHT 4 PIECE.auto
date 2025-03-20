@@ -7,13 +7,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "NW1H"
+            "pathName": "CAGE4-NE1H"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.1
+            "waitTime": 0.2
           }
         },
         {
@@ -31,7 +31,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "NW1_R"
+            "pathName": "NE1_R"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral In Prox"
           }
         },
         {
@@ -43,13 +49,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "R_SW2H"
+            "pathName": "R East_SE1H"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.1
+            "waitTime": 0.3
           }
         },
         {
@@ -67,7 +73,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "SW2_R"
+            "pathName": "SE2-R EAST"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Intake"
           }
         },
         {
@@ -79,13 +91,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "R_SW1H"
+            "pathName": "R EAST-SE2"
           }
         },
         {
           "type": "wait",
           "data": {
-            "waitTime": 0.1
+            "waitTime": 0.3
           }
         },
         {
@@ -103,7 +115,13 @@
         {
           "type": "path",
           "data": {
-            "pathName": "SW1H-BACK"
+            "pathName": "SE2H-BACK"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Intake"
           }
         },
         {
@@ -115,7 +133,7 @@
         {
           "type": "path",
           "data": {
-            "pathName": "R_S2H"
+            "pathName": "R EAST-S1"
           }
         },
         {
