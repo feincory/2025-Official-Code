@@ -37,6 +37,12 @@
         {
           "type": "named",
           "data": {
+            "name": "Coral Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Wait for Game Piece"
           }
         },
@@ -73,6 +79,12 @@
         {
           "type": "named",
           "data": {
+            "name": "Coral Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
             "name": "Wait for Game Piece"
           }
         },
@@ -104,6 +116,24 @@
           "type": "path",
           "data": {
             "pathName": "SW1H-BACK"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Intake"
           }
         },
         {

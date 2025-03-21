@@ -4,12 +4,12 @@
     {
       "anchor": {
         "x": 6.94,
-        "y": 5.28
+        "y": 5.32
       },
       "prevControl": null,
       "nextControl": {
         "x": 6.204911313279932,
-        "y": 5.466445553864957
+        "y": 5.506445553864957
       },
       "isLocked": false,
       "linkedName": "CAGE3"
@@ -71,7 +71,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 31.0
+    "rotation": 31.5
   },
   "useDefaultConstraints": true
 }
