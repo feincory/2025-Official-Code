@@ -93,7 +93,7 @@ public class RobotContainer {
     NamedCommands.registerCommand("Settle For Place", new WaitCommand(.5));
     NamedCommands.registerCommand("Settle For Retreive", new WaitCommand(.3));
     NamedCommands.registerCommand(
-        "Wait for Game Piece", new WaitForGamePieceCommand(m_FerrisWheel.getSensor(), 5));
+        "Wait for Game Piece", new WaitForGamePieceCommand(m_FerrisWheel.getSensor(), 2.5));
 
     switch (Constants.currentMode) {
       case REAL:
