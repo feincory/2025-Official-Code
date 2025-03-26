@@ -75,19 +75,33 @@ public class FerrisWheel extends SubsystemBase {
     fx_cfg.Feedback.FeedbackRemoteSensorID = m_cc.getDeviceID();
     fx_cfg.Feedback.FeedbackSensorSource = FeedbackSensorSourceValue.FusedCANcoder;
     fx_cfg.Feedback.SensorToMechanismRatio = 1.0;
-    fx_cfg.Feedback.RotorToSensorRatio = 83.740234375;
+    fx_cfg.Feedback.RotorToSensorRatio = 46.401;
+    // fx_cfg.Feedback.RotorToSensorRatio = 83.740234375;
     fx_cfg.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .5;
     fx_cfg.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = .05;
     fx_cfg.Slot0.GravityType = GravityTypeValue.Elevator_Static;
     fx_cfg.Slot0.kS = 0;
     fx_cfg.Slot0.kV = 0;
     fx_cfg.Slot0.kA = 0;
-    fx_cfg.Slot0.kP = 50;
-    fx_cfg.Slot0.kD = 1.5;
+    fx_cfg.Slot0.kP = 110;
+    fx_cfg.Slot0.kD = 7;
     fx_cfg.Slot0.kI = kfIc;
     fx_cfg.Slot0.kG = kfGc;
     fx_cfg.Voltage.PeakForwardVoltage = 12;
     fx_cfg.Voltage.PeakReverseVoltage = -12;
+
+    // fx_cfg.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .5;
+    // fx_cfg.ClosedLoopRamps.DutyCycleClosedLoopRampPeriod = .05;
+    // fx_cfg.Slot0.GravityType = GravityTypeValue.Elevator_Static;
+    // fx_cfg.Slot0.kS = 0;
+    // fx_cfg.Slot0.kV = 0;
+    // fx_cfg.Slot0.kA = 0;
+    // fx_cfg.Slot0.kP = 50;
+    // fx_cfg.Slot0.kD = 1.5;
+    // fx_cfg.Slot0.kI = kfIc;
+    // fx_cfg.Slot0.kG = kfGc;
+    // fx_cfg.Voltage.PeakForwardVoltage = 12;
+    // fx_cfg.Voltage.PeakReverseVoltage = -12;
     // current limiting
     fx_cfg.CurrentLimits.SupplyCurrentLimit = 25;
     fx_cfg.CurrentLimits.SupplyCurrentLowerLimit = 30;
@@ -98,8 +112,15 @@ public class FerrisWheel extends SubsystemBase {
     // Configure MotionMagicExpo settings
     var motionMagicConfigs = fx_cfg.MotionMagic;
     motionMagicConfigs.MotionMagicCruiseVelocity = 0; // was 2
-    motionMagicConfigs.MotionMagicExpo_kV = 2; // was 6
-    motionMagicConfigs.MotionMagicExpo_kA = 2.25; // 4
+    motionMagicConfigs.MotionMagicExpo_kV = 5; // was 2
+
+    motionMagicConfigs.MotionMagicExpo_kA = 1.8; // 2.25
+
+    // // Configure MotionMagicExpo settings
+    // var motionMagicConfigs = fx_cfg.MotionMagic;
+    // motionMagicConfigs.MotionMagicCruiseVelocity = 0; // was 2
+    // motionMagicConfigs.MotionMagicExpo_kV = 2; // was 6
+    // motionMagicConfigs.MotionMagicExpo_kA = 2.25; // 4
 
     m_FerrisWheel.getConfigurator().apply(fx_cfg);
     m_FerrisWheel.setNeutralMode(NeutralModeValue.Coast);

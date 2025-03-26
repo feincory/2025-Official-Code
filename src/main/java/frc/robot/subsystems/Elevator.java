@@ -57,9 +57,9 @@ public class Elevator extends SubsystemBase {
     elevator_cfg.Slot0.kS = 0;
     elevator_cfg.Slot0.kV = 0;
     elevator_cfg.Slot0.kA = 0;
-    elevator_cfg.Slot0.kP = 1.8; // was 2
+    elevator_cfg.Slot0.kP = 4; // was 1.8
     elevator_cfg.Slot0.kI = 0.3;
-    elevator_cfg.Slot0.kD = 0.1;
+    elevator_cfg.Slot0.kD = 0.2;
     elevator_cfg.Slot0.kG = 0;
     elevator_cfg.Voltage.PeakForwardVoltage = 12;
     elevator_cfg.Voltage.PeakReverseVoltage = -12;
@@ -74,8 +74,8 @@ public class Elevator extends SubsystemBase {
     // Configure MotionMagicExpo settings
     var motionMagicConfigs = elevator_cfg.MotionMagic;
     motionMagicConfigs.MotionMagicCruiseVelocity = 0;
-    motionMagicConfigs.MotionMagicExpo_kV = .07;
-    motionMagicConfigs.MotionMagicExpo_kA = .075;
+    motionMagicConfigs.MotionMagicExpo_kV = .06;
+    motionMagicConfigs.MotionMagicExpo_kA = .06;
 
     m_liftlead.getConfigurator().apply(elevator_cfg);
     m_liftfollow.getConfigurator().apply(elevator_cfg);
@@ -143,7 +143,7 @@ public class Elevator extends SubsystemBase {
   }
 
   public void resetEncoder() {
-    m_liftlead.setPosition(0);
+    m_liftlead.setPosition(.18);
   }
 
   ////////////////////////////////////////////////////////

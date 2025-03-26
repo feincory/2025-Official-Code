@@ -47,7 +47,7 @@ public final class Constants {
   public static double elevatoridleposL2 = -15.5;
   public static double elevatorL2Algaepos = -9.73;
   public static double elevatorL3Algaepos = -17;
-  public static double elevatornetpos = -27;
+  public static double elevatornetpos = -27.3;
   public static double ferrisalageretreive = .918;
   public static double ferrisAlgaeReefPic = .814;
   public static double ferrisAlgaeNet = .625; // .615
@@ -57,14 +57,14 @@ public final class Constants {
 
   // Coral Elevator Positions
 
-  public static double elevatorRetreivepos = -5.86; // WAS -5.76
+  public static double elevatorRetreivepos = -4.4; // WAS -5.86
 
   public static double elevatorL2pos = -5.5;
   public static double elevatorL3pos = -14.75;
-  public static double elevatorL4pos = -27.6; // was -27.3
+  public static double elevatorL4pos = -27.3; // was -27.3
   public static double ferriscoralplace = .179;
   public static double ferriscoralplaceL2 = .162;
-  public static double ferriscoralretreive = .611; // was .620
+  public static double ferriscoralretreive = .593; // was .620
 
   // climb
   public static double elevatorstow = -.2;
