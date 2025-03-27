@@ -3,16 +3,32 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 3.8048218702103442,
-        "y": 5.232389507719882
+        "x": 6.94,
+        "y": 5.32
       },
       "prevControl": null,
       "nextControl": {
-        "x": 3.114574994201578,
-        "y": 5.99024137550338
+        "x": 6.182749666387679,
+        "y": 4.866942125863478
       },
       "isLocked": false,
-      "linkedName": "SW2"
+      "linkedName": "CAGE3"
+    },
+    {
+      "anchor": {
+        "x": 5.2087154799715,
+        "y": 5.22043741902337
+      },
+      "prevControl": {
+        "x": 5.612609396879859,
+        "y": 4.981988714071036
+      },
+      "nextControl": {
+        "x": 4.9055388335109065,
+        "y": 5.399425206890259
+      },
+      "isLocked": false,
+      "linkedName": null
     },
     {
       "anchor": {
@@ -20,23 +36,28 @@
         "y": 7.250169021249378
       },
       "prevControl": {
-        "x": 2.123452568265235,
-        "y": 6.554844643377173
+        "x": 2.172539796801077,
+        "y": 6.860232129562542
       },
       "nextControl": null,
       "isLocked": false,
       "linkedName": "Retrieve West"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 1.0088809946713988,
+      "rotationDegrees": 59.99999999999999
+    }
+  ],
   "constraintZones": [
     {
       "name": "Constraints Zone",
-      "minWaypointRelativePos": 0,
-      "maxWaypointRelativePos": 0.13732004429678943,
+      "minWaypointRelativePos": 0.8368953880764862,
+      "maxWaypointRelativePos": 1.0708661417322851,
       "constraints": {
-        "maxVelocity": 4.1,
-        "maxAcceleration": 3.8,
+        "maxVelocity": 0.25,
+        "maxAcceleration": 1.0,
         "maxAngularVelocity": 325.0,
         "maxAngularAcceleration": 325.0,
         "nominalVoltage": 12.0,
@@ -47,8 +68,30 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
+      "name": "Coral L4",
+      "waypointRelativePos": 0.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Coral L4"
+        }
+      }
+    },
+    {
+      "name": "Coral Outtake",
+      "waypointRelativePos": 0.890888638920136,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Coral Outtake"
+        }
+      }
+    },
+    {
       "name": "Coral Retreive",
-      "waypointRelativePos": 0.11960132890366397,
+      "waypointRelativePos": 1.2058492688413909,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -59,7 +102,7 @@
     },
     {
       "name": "Coral Intake",
-      "waypointRelativePos": 0.9191583610188333,
+      "waypointRelativePos": 1.8177727784026894,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -85,7 +128,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 120.96375653207346
+    "rotation": 31.5
   },
   "useDefaultConstraints": true
 }

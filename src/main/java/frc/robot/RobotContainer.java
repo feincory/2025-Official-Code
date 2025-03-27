@@ -18,6 +18,10 @@ import static frc.robot.subsystems.vision.VisionConstants.camera1Name;
 
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.auto.NamedCommands;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.networktables.NetworkTable;
@@ -54,6 +58,7 @@ import frc.robot.subsystems.drive.ModuleIOSim;
 import frc.robot.subsystems.drive.ModuleIOTalonFX;
 import frc.robot.subsystems.vision.Vision;
 import frc.robot.subsystems.vision.VisionIOLimelight;
+import java.util.List;
 import org.littletonrobotics.junction.networktables.LoggedDashboardChooser;
 
 /**
@@ -350,9 +355,12 @@ public class RobotContainer {
     controller.y().onTrue(new InstantCommand(() -> moveToPosition(4)));
     m_drivercontroller.button(4).onTrue(new InstantCommand(() -> moveToPosition(12)));
     m_drivercontroller.button(4).onTrue(new InstantCommand(m_climber::okaytorelease));
-    m_drivercontroller
-        .button(6)
-        .onTrue(new WaitForGamePieceCommand(m_FerrisWheel.getSensor(), 5.0));
+    // m_drivercontroller
+    //     .button(6)
+    //     .onTrue(new WaitForGamePieceCommand(m_FerrisWheel.getSensor(), 5.0));
+
+    m_drivercontroller.button(6).onTrue(drive.followPath());
+    m_drivercontroller.button(6).onFalse(new InstantCommand(drive::stop));
     // m_drivercontroller.button(6).onTrue(new WaitForGamePieceCommand(5));
     // testcontroller.start().onTrue(new InstantCommand(() -> moveToPosition(11)));
   }
@@ -377,5 +385,40 @@ public class RobotContainer {
     // new InstantCommand(m_coralground::initstoragepos);
     // return AutonChoice.getSelected();
     return autoChooser.get();
+  }
+
+  public void createpathforteleop() {
+    // Create a list of waypoints from poses. Each pose represents one waypoint.
+    // The rotation component of the pose should be the direction of travel. Do not use holonomic
+    // rotation.
+    List<Waypoint> waypoints =
+        PathPlannerPath.waypointsFromPoses(
+            new Pose2d(
+                drive.getPose().getTranslation().getX(),
+                drive.getPose().getTranslation().getY(),
+                drive.getPose().getRotation()),
+            new Pose2d(3.103, 3.706, Rotation2d.fromDegrees(180)));
+
+    PathConstraints constraints =
+        new PathConstraints(3.0, 3.0, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
+    // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can also use
+    // unlimited constraints, only limited by motor torque and nominal battery voltage
+
+    // Create the path using the waypoints created above
+    PathPlannerPath path =
+        new PathPlannerPath(
+            waypoints,
+            constraints,
+            null, // The ideal starting state, this is only relevant for pre-planned paths, so can
+            // be null for on-the-fly paths.
+            new GoalEndState(
+                0.0,
+                Rotation2d.fromDegrees(
+                    180)) // Goal end state. You can set a holonomic rotation here. If using a
+            // differential drivetrain, the rotation will have no effect.
+            );
+
+    // Prevent the path from being flipped if the coordinates are already correct
+    path.preventFlipping = true;
   }
 }

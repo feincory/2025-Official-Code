@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.62825,
-        "y": 0.8269999999999993
+        "x": 1.6086189995475328,
+        "y": 0.729580536048685
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.8253858008429926,
-        "y": 1.879971219704953
+        "x": 2.8057548003905257,
+        "y": 1.7825517557536386
       },
       "isLocked": false,
       "linkedName": "Retrieve East"
@@ -71,7 +71,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -128.2901631922431
+    "rotation": -126.75928817029218
   },
   "useDefaultConstraints": false
 }

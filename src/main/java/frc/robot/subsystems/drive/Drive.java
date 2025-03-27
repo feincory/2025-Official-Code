@@ -17,11 +17,17 @@ import static edu.wpi.first.units.Units.*;
 
 import com.ctre.phoenix6.CANBus;
 import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.commands.FollowPathCommand;
 import com.pathplanner.lib.config.ModuleConfig;
 import com.pathplanner.lib.config.PIDConstants;
 import com.pathplanner.lib.config.RobotConfig;
 import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.path.GoalEndState;
+import com.pathplanner.lib.path.PathConstraints;
+import com.pathplanner.lib.path.PathPlannerPath;
+import com.pathplanner.lib.path.Waypoint;
 import com.pathplanner.lib.pathfinding.Pathfinding;
+import com.pathplanner.lib.util.DriveFeedforwards;
 import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.hal.FRCNetComm.tInstances;
 import edu.wpi.first.hal.FRCNetComm.tResourceType;
@@ -46,12 +52,14 @@ import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import frc.robot.Constants.Mode;
 import frc.robot.generated.TunerConstants;
 import frc.robot.util.LocalADStarAK;
+import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 import org.littletonrobotics.junction.AutoLogOutput;
@@ -381,4 +389,107 @@ public class Drive extends SubsystemBase {
       new Translation2d(TunerConstants.BackRight.LocationX, TunerConstants.BackRight.LocationY)
     };
   }
+
+  public Command followPath() {
+
+    return runOnce(
+        () -> {
+          // Get the current robot pose from the drivetrain
+          List<Waypoint> waypoints =
+              PathPlannerPath.waypointsFromPoses(
+                  new Pose2d(getPose().getX(), getPose().getY(), getPose().getRotation()),
+                  new Pose2d(3.103, 3.706, Rotation2d.fromDegrees(0)));
+
+          PathConstraints constraints =
+              new PathConstraints(
+                  .5, .5, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
+
+          // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can
+          // also use
+          // unlimited constraints, only limited by motor torque and nominal battery voltage
+
+          // Create the path using the waypoints created above
+          PathPlannerPath path =
+              new PathPlannerPath(
+                  waypoints,
+                  constraints,
+                  null, // The ideal starting state, this is only relevant for pre-planned paths, so
+                  // can
+                  // be null for on-the-fly paths.
+                  new GoalEndState(
+                      0.0,
+                      Rotation2d.fromDegrees(
+                          180)) // Goal end state. You can set a holonomic rotation here. If using a
+                  // differential drivetrain, the rotation will have no effect.
+                  );
+          // Prevent the path from being flipped if the coordinates are already correct
+          // path.preventFlipping = true;
+
+          CommandScheduler.getInstance()
+              .schedule(
+                  new FollowPathCommand(
+                      path,
+                      this::getPose,
+                      this::getChassisSpeeds,
+                      // ChassisSpeeds, DriveFeedforwards
+                      (ChassisSpeeds speeds, DriveFeedforwards feedforward) -> {
+                        runVelocity(speeds);
+                      },
+                      new PPHolonomicDriveController(
+                          new PIDConstants(5.0, 0.0, 0.0), new PIDConstants(5.0, 0.0, 0.0)),
+                      PP_CONFIG,
+                      () -> {
+                        return DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;
+                      },
+                      this));
+        });
+  }
+
+  public boolean isPathComplete() {
+    // Check if the path is complete (based on odometry or path progress)
+    return true;
+  }
+
+  public Pose2d getCurrentPose() {
+    // Retrieve the current robot pose (from odometry or pose estimator)
+    return new Pose2d(1.0, 1.0, new Rotation2d(0)); // Placeholder
+  }
+
+  // public void createpathforteleop() {
+  //   // Create a list of waypoints from poses. Each pose represents one waypoint.
+  //   // The rotation component of the pose should be the direction of travel. Do not use holonomic
+  //   // rotation.
+  //   List<Waypoint> waypoints =
+  //       PathPlannerPath.waypointsFromPoses(
+  //           new Pose2d(
+  //               this.getPose().getTranslation().getX(),
+  //               this.getPose().getTranslation().getY(),
+  //               this.getPose().getRotation()),
+  //           new Pose2d(3.103, 3.706, Rotation2d.fromDegrees(180)));
+
+  //   PathConstraints constraints =
+  //       new PathConstraints(3.0, 3.0, 2 * Math.PI, 4 * Math.PI); // The constraints for this
+  // path.
+  //   // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can also
+  // use
+  //   // unlimited constraints, only limited by motor torque and nominal battery voltage
+
+  //   // Create the path using the waypoints created above
+  //   PathPlannerPath path =
+  //       new PathPlannerPath(
+  //           waypoints,
+  //           constraints,
+  //           null, // The ideal starting state, this is only relevant for pre-planned paths, so
+  // can
+  //           // be null for on-the-fly paths.
+  //           new GoalEndState(
+  //               0.0,
+  //               Rotation2d.fromDegrees(
+  //                   180)) // Goal end state. You can set a holonomic rotation here. If using a
+  //           // differential drivetrain, the rotation will have no effect.
+  //           );
+
+  //   // Prevent the path from being flipped if the coordinates are already correct
+  //   path.preventFlipping = true;
+  // }
 }

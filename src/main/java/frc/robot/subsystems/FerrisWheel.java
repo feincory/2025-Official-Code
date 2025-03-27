@@ -61,7 +61,7 @@ public class FerrisWheel extends SubsystemBase {
     currentgamepiecealgae = false;
     ferriswheelflippedvalue = 0;
     dipferriswheel = false;
-    dipamount = .08;
+    dipamount = .05;
     lastcommandedposition = ferriswheelvert;
 
     /* Configure CANcoder to zero the magnet appropriately */
@@ -256,7 +256,7 @@ public class FerrisWheel extends SubsystemBase {
   }
 
   public void coraloutslow() {
-    m_Algae.set(ControlMode.PercentOutput, -.325);
+    m_Algae.set(ControlMode.PercentOutput, -.45); // WAS -.325
   }
 
   public void coralhold() {
