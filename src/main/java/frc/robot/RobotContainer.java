@@ -272,10 +272,10 @@ public class RobotContainer {
                     drive)
                 .ignoringDisable(true));
 
-    m_drivercontroller
-        .button(13)
-        .onTrue(new InstantCommand(m_FerrisWheel::dipsettrue))
-        .onFalse(new InstantCommand(m_FerrisWheel::dipsetfalse));
+    // m_drivercontroller
+    //     .button(13)
+    //     .onTrue(new InstantCommand(m_FerrisWheel::dipsettrue))
+    //     .onFalse(new InstantCommand(m_FerrisWheel::dipsetfalse));
 
     m_drivercontroller
         .button(12)
@@ -359,8 +359,11 @@ public class RobotContainer {
     //     .button(6)
     //     .onTrue(new WaitForGamePieceCommand(m_FerrisWheel.getSensor(), 5.0));
 
-    m_drivercontroller.button(6).onTrue(drive.followPath());
-    m_drivercontroller.button(6).onFalse(new InstantCommand(drive::stop));
+    m_drivercontroller.button(13).onTrue(drive.followPath());
+    m_drivercontroller.button(13).onFalse(new InstantCommand(drive::stop));
+
+    m_drivercontroller.button(7).onTrue(new InstantCommand(() -> drive.findNearestPositiCommand()));
+    m_drivercontroller.button(7).onFalse(new InstantCommand(drive::stop));
     // m_drivercontroller.button(6).onTrue(new WaitForGamePieceCommand(5));
     // testcontroller.start().onTrue(new InstantCommand(() -> moveToPosition(11)));
   }

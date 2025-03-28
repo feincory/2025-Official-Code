@@ -58,7 +58,10 @@ import edu.wpi.first.wpilibj2.command.sysid.SysIdRoutine;
 import frc.robot.Constants;
 import frc.robot.Constants.Mode;
 import frc.robot.generated.TunerConstants;
+import frc.robot.util.HexagonPositionCalculator;
+import frc.robot.util.HexagonPositionCalculator.ScoringPosition;
 import frc.robot.util.LocalADStarAK;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -397,12 +400,21 @@ public class Drive extends SubsystemBase {
           // Get the current robot pose from the drivetrain
           List<Waypoint> waypoints =
               PathPlannerPath.waypointsFromPoses(
-                  new Pose2d(getPose().getX(), getPose().getY(), getPose().getRotation()),
-                  new Pose2d(3.103, 3.706, Rotation2d.fromDegrees(0)));
+                  new Pose2d(
+                      getPose().getX(),
+                      getPose().getY(),
+                      Rotation2d.fromRadians(
+                          Math.atan2(
+                              findNearestPositiCommand().position.getY() - getPose().getY(),
+                              findNearestPositiCommand().position.getX() - getPose().getX()))),
+                  // new Pose2d(getPose().getX(), getPose().getY(), Rotation2d.fromDegrees(-124)),
+                  new Pose2d(
+                      findNearestPositiCommand().position.getX(),
+                      findNearestPositiCommand().position.getY(),
+                      findNearestPositiCommand().rotation.rotateBy(Rotation2d.fromDegrees(180))));
 
           PathConstraints constraints =
-              new PathConstraints(
-                  .5, .5, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
+              new PathConstraints(3, 3, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
 
           // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can
           // also use
@@ -418,12 +430,13 @@ public class Drive extends SubsystemBase {
                   // be null for on-the-fly paths.
                   new GoalEndState(
                       0.0,
-                      Rotation2d.fromDegrees(
-                          180)) // Goal end state. You can set a holonomic rotation here. If using a
+                      findNearestPositiCommand()
+                          .rotation) // Goal end state. You can set a holonomic rotation here. If
+                  // using a
                   // differential drivetrain, the rotation will have no effect.
                   );
           // Prevent the path from being flipped if the coordinates are already correct
-          // path.preventFlipping = true;
+          path.preventFlipping = true;
 
           CommandScheduler.getInstance()
               .schedule(
@@ -436,7 +449,7 @@ public class Drive extends SubsystemBase {
                         runVelocity(speeds);
                       },
                       new PPHolonomicDriveController(
-                          new PIDConstants(5.0, 0.0, 0.0), new PIDConstants(5.0, 0.0, 0.0)),
+                          new PIDConstants(5.75, 0.0, 0.0), new PIDConstants(5.0, 0.0, 0.0)),
                       PP_CONFIG,
                       () -> {
                         return DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;
@@ -455,41 +468,40 @@ public class Drive extends SubsystemBase {
     return new Pose2d(1.0, 1.0, new Rotation2d(0)); // Placeholder
   }
 
-  // public void createpathforteleop() {
-  //   // Create a list of waypoints from poses. Each pose represents one waypoint.
-  //   // The rotation component of the pose should be the direction of travel. Do not use holonomic
-  //   // rotation.
-  //   List<Waypoint> waypoints =
-  //       PathPlannerPath.waypointsFromPoses(
-  //           new Pose2d(
-  //               this.getPose().getTranslation().getX(),
-  //               this.getPose().getTranslation().getY(),
-  //               this.getPose().getRotation()),
-  //           new Pose2d(3.103, 3.706, Rotation2d.fromDegrees(180)));
+  public ScoringPosition findNearestPositiCommand() {
+    double reefx = 0;
+    double reefy = 0;
+    Translation2d currentPosition = this.getPose().getTranslation();
+    ArrayList<ScoringPosition> positions =
+        HexagonPositionCalculator.calculateHexagonPositions(
+            // 5, // Hexagon center X
+            // 4, // Hexagon center Y
+            // 1, // Radius from center to midpoint of flat side
+            // 0, // X offset from midpoint
+            // 0, 0
 
-  //   PathConstraints constraints =
-  //       new PathConstraints(3.0, 3.0, 2 * Math.PI, 4 * Math.PI); // The constraints for this
-  // path.
-  //   // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can also
-  // use
-  //   // unlimited constraints, only limited by motor torque and nominal battery voltage
+            4.489323, // blue x
+            4.0259, // blue y
+            13.06322, // red x
+            4.0259, // red y
+            0.831723 - .0381, // Radius from center to midpoint of flat side //was 0.831723
+            0.5743, // X offset from midpoint
+            0.3181,
+            .0079
 
-  //   // Create the path using the waypoints created above
-  //   PathPlannerPath path =
-  //       new PathPlannerPath(
-  //           waypoints,
-  //           constraints,
-  //           null, // The ideal starting state, this is only relevant for pre-planned paths, so
-  // can
-  //           // be null for on-the-fly paths.
-  //           new GoalEndState(
-  //               0.0,
-  //               Rotation2d.fromDegrees(
-  //                   180)) // Goal end state. You can set a holonomic rotation here. If using a
-  //           // differential drivetrain, the rotation will have no effect.
-  //           );
+            // Y offset from midpoint
+            ,
+            DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red);
 
-  //   // Prevent the path from being flipped if the coordinates are already correct
-  //   path.preventFlipping = true;
-  // }
+    // 3.103, 3.706,
+    ScoringPosition nearest =
+        HexagonPositionCalculator.findNearestPosition(currentPosition, positions, reefx, reefy);
+
+    return nearest;
+    // System.out.println("Nearest Scoring Position: " + nearest);
+    // Implement logic to drive the robot to the nearest position
+    // x 4.489323
+    // y 4.0259
+
+  }
 }
