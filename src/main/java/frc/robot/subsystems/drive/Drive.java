@@ -414,7 +414,8 @@ public class Drive extends SubsystemBase {
                       findNearestPositiCommand().rotation.rotateBy(Rotation2d.fromDegrees(180))));
 
           PathConstraints constraints =
-              new PathConstraints(3, 3, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
+              new PathConstraints(
+                  3, 1.875, 2 * Math.PI, 4 * Math.PI); // The constraints for this path.
 
           // PathConstraints constraints = PathConstraints.unlimitedConstraints(12.0); // You can
           // also use
@@ -449,7 +450,7 @@ public class Drive extends SubsystemBase {
                         runVelocity(speeds);
                       },
                       new PPHolonomicDriveController(
-                          new PIDConstants(5.75, 0.0, 0.0), new PIDConstants(5.0, 0.0, 0.0)),
+                          new PIDConstants(5.2, 0.0, 0.0), new PIDConstants(5.0, 0.0, 0.0)),
                       PP_CONFIG,
                       () -> {
                         return DriverStation.getAlliance().orElse(Alliance.Blue) == Alliance.Red;

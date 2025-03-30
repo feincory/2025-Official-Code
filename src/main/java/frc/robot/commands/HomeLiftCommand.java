@@ -15,7 +15,7 @@ public class HomeLiftCommand extends Command {
   private final Elevator lift;
 
   private final DigitalInput homeSwitch;
-  private static final double HOMING_SPEED = 0.05; // Slow descent
+  private static final double HOMING_SPEED = 0.1; // Slow descent WAS .05
   private static final double TIMEOUT = 5.0; // Stop after 3 seconds
 
   private Timer timer = new Timer();

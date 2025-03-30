@@ -40,7 +40,7 @@ public class HexagonPositionCalculator {
     ArrayList<ScoringPosition> positions = new ArrayList<>();
     double angleIncrement = Math.toRadians(60);
 
-    for (int side = 0; side < 6; side++) {
+    for (int side = 0; side < 7; side++) {
       // double angle = 0;
       double angle = (side * angleIncrement);
       double angleradians1 = angle + Math.atan((+yOffset1) / (radius + xOffset));
@@ -55,20 +55,49 @@ public class HexagonPositionCalculator {
       double rotationAngle = angle;
       Rotation2d rotation = new Rotation2d(rotationAngle);
 
-      if (redside) {
-        double pos1X = targetx1 + centerredX;
-        double pos1Y = targety1 + centerredY;
-        double pos2X = targetx2 + centerredX;
-        double pos2Y = targety2 + centerredY;
-        positions.add(new ScoringPosition(new Translation2d(pos1X, pos1Y), rotation));
-        positions.add(new ScoringPosition(new Translation2d(pos2X, pos2Y), rotation));
+      double netbluex = 7.58;
+      double netbluey1 = 7.078;
+      double netbluey2 = 5.213;
+      double netredx = 8.77 + (8.77 - netbluex);
+      double netredy1 = 4.2059 - (netbluey1 - 4.0259);
+      double netredy2 = 4.2059 - (netbluey2 - 4.2059);
+
+      if (side == 6) {
+        if (redside) {
+          // 8.77 x
+          // 4.0259 y
+          positions.add(
+              new ScoringPosition(new Translation2d(netredx, netredy1), Rotation2d.fromDegrees(0)));
+          positions.add(
+              new ScoringPosition(new Translation2d(netredx, netredy2), Rotation2d.fromDegrees(0)));
+        } else {
+          positions.add(
+              new ScoringPosition(
+                  new Translation2d(netbluex, netbluey1), Rotation2d.fromDegrees(180)));
+          positions.add(
+              new ScoringPosition(
+                  new Translation2d(netbluex, netbluey2), Rotation2d.fromDegrees(180)));
+        }
+        // positions.add(new ScoringPosition(new Translation2d(netbluex, netbluey1),
+        // Rotation2d.fromDegrees(180)));
+        // positions.add(new ScoringPosition(new Translation2d(netbluex, netbluey2),
+        // Rotation2d.fromDegrees(180)));
       } else {
-        double pos1X = targetx1 + centerblueX;
-        double pos1Y = targety1 + centerblueY;
-        double pos2X = targetx2 + centerblueX;
-        double pos2Y = targety2 + centerblueY;
-        positions.add(new ScoringPosition(new Translation2d(pos1X, pos1Y), rotation));
-        positions.add(new ScoringPosition(new Translation2d(pos2X, pos2Y), rotation));
+        if (redside) {
+          double pos1X = targetx1 + centerredX;
+          double pos1Y = targety1 + centerredY;
+          double pos2X = targetx2 + centerredX;
+          double pos2Y = targety2 + centerredY;
+          positions.add(new ScoringPosition(new Translation2d(pos1X, pos1Y), rotation));
+          positions.add(new ScoringPosition(new Translation2d(pos2X, pos2Y), rotation));
+        } else {
+          double pos1X = targetx1 + centerblueX;
+          double pos1Y = targety1 + centerblueY;
+          double pos2X = targetx2 + centerblueX;
+          double pos2Y = targety2 + centerblueY;
+          positions.add(new ScoringPosition(new Translation2d(pos1X, pos1Y), rotation));
+          positions.add(new ScoringPosition(new Translation2d(pos2X, pos2Y), rotation));
+        }
       }
       // System.out.print("pos1x" + pos1X);
       // System.out.print("pos1y" + pos1Y);

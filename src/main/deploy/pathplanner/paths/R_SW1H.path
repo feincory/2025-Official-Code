@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.5368131501513815,
-        "y": 7.250169021249378
+        "x": 1.5733526067796795,
+        "y": 7.20967753395079
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.184174098377839,
-        "y": 6.466001819774292
+        "x": 2.2207135550061365,
+        "y": 6.425510332475705
       },
       "isLocked": false,
       "linkedName": "Retrieve West"
@@ -29,7 +29,21 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.7176178660049629,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 4.1,
+        "maxAcceleration": 3.75,
+        "maxAngularVelocity": 325.0,
+        "maxAngularAcceleration": 325.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [
     {

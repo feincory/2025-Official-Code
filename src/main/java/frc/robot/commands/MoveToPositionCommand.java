@@ -32,7 +32,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry(0, .520), // was vert  WAS .540
           Map.entry(1, ferriscoralretreive),
           Map.entry(2, ferriscoralplaceL2),
-          Map.entry(3, ferriscoralplace),
+          Map.entry(3, ferriscoralplacel3),
           Map.entry(4, ferriscoralplace),
           Map.entry(5, ferrisalageretreive),
           Map.entry(6, ferrisAlgaeReefPic),
@@ -149,7 +149,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("7-10", MovementType.FE),
           Map.entry("7-11", MovementType.FE),
           Map.entry("8-0", MovementType.EIFE),
-          Map.entry("8-1", MovementType.EIFE),
+          Map.entry("8-1", MovementType.EIFEF),
           Map.entry("8-2", MovementType.EIFE),
           Map.entry("8-3", MovementType.EIFE),
           Map.entry("8-4", MovementType.EIFE), // maybe parallel
@@ -160,7 +160,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("8-10", MovementType.EIFE),
           Map.entry("8-11", MovementType.EIFE),
           Map.entry("9-0", MovementType.EIFE),
-          Map.entry("9-1", MovementType.FEF),
+          Map.entry("9-1", MovementType.EIFEF),
           // aint sure theres another way to pass through smoother
           Map.entry("9-2", MovementType.EIFE),
           Map.entry("9-3", MovementType.EIFE),

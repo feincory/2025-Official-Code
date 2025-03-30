@@ -112,9 +112,9 @@ public class FerrisWheel extends SubsystemBase {
     // Configure MotionMagicExpo settings
     var motionMagicConfigs = fx_cfg.MotionMagic;
     motionMagicConfigs.MotionMagicCruiseVelocity = 0; // was 2
-    motionMagicConfigs.MotionMagicExpo_kV = 5; // was 2
+    motionMagicConfigs.MotionMagicExpo_kV = 6; // was 6
 
-    motionMagicConfigs.MotionMagicExpo_kA = 1.8; // 2.25
+    motionMagicConfigs.MotionMagicExpo_kA = 2.5; // 2.25
 
     // // Configure MotionMagicExpo settings
     // var motionMagicConfigs = fx_cfg.MotionMagic;
@@ -278,6 +278,6 @@ public class FerrisWheel extends SubsystemBase {
   }
 
   public void algaeout() {
-    m_Algae.set(ControlMode.PercentOutput, 1);
+    m_Algae.set(ControlMode.PercentOutput, .9);
   }
 }
