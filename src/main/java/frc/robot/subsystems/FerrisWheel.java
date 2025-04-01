@@ -54,6 +54,7 @@ public class FerrisWheel extends SubsystemBase {
   private double dipamount;
   private double lastcommandedposition;
   private final DigitalInput coralsensor = new DigitalInput(1);
+  private final DigitalInput L4clearsensor = new DigitalInput(2);
 
   public FerrisWheel() {
 
@@ -158,6 +159,14 @@ public class FerrisWheel extends SubsystemBase {
     return coralsensor;
   }
 
+  public boolean L4Clear() {
+    return L4clearsensor.get();
+  }
+
+  public DigitalInput getL4Sensor() {
+    return L4clearsensor;
+  }
+
   public void placeposition() {
     if (m_elevatorlowered == false) {}
     m_FerrisWheel.setControl(m_PositionDutyCycle.withPosition(coralplacepositionvalue));
@@ -256,7 +265,7 @@ public class FerrisWheel extends SubsystemBase {
   }
 
   public void coraloutslow() {
-    m_Algae.set(ControlMode.PercentOutput, -.45); // WAS -.325
+    m_Algae.set(ControlMode.PercentOutput, -.55); // WAS -.45
   }
 
   public void coralhold() {
@@ -278,6 +287,6 @@ public class FerrisWheel extends SubsystemBase {
   }
 
   public void algaeout() {
-    m_Algae.set(ControlMode.PercentOutput, .9);
+    m_Algae.set(ControlMode.PercentOutput, .5);
   }
 }

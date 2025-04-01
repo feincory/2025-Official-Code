@@ -63,8 +63,8 @@ public final class Constants {
   public static double elevatorL2pos = -5.5;
   public static double elevatorL3pos = -14.75;
   public static double elevatorL4pos = -27.3; // was -27.3
-  public static double ferriscoralplace = .189; // WAS .179
-  public static double ferriscoralplacel3 = .160; // WAS .179
+  public static double ferriscoralplace = .179; // WAS .179
+  public static double ferriscoralplacel3 = .160; // WAS .179000
   public static double ferriscoralplaceL2 = .145; // was .162
 
   // climb
