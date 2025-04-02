@@ -25,7 +25,8 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry(9, elevatornetpos),
           Map.entry(10, elevatorclimb),
           Map.entry(11, elevatoridlepos),
-          Map.entry(12, elevatorclimb));
+          Map.entry(12, elevatorclimb),
+          Map.entry(13, elevatorL4pos));
 
   private static final Map<Integer, Double> ferrisWheelPositions =
       Map.ofEntries(
@@ -41,7 +42,8 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry(9, ferrisAlgaeNet),
           Map.entry(10, ferriswheelvert),
           Map.entry(11, ferriswheelvert),
-          Map.entry(12, ferriswheelclimb));
+          Map.entry(12, ferriswheelclimb),
+          Map.entry(13, ferriscoralL4Clear));
 
   //   // Define movement rules directly in this command
   //   private static final Map<String, MovementType> movementRules =
@@ -115,6 +117,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("4-9", MovementType.FE), // either this or PARALLEL
           Map.entry("4-10", MovementType.FEIFE),
           Map.entry("4-11", MovementType.FE),
+          Map.entry("4-13", MovementType.PARALLEL),
           Map.entry("5-0", MovementType.EIFE),
           Map.entry("5-1", MovementType.EIFEF),
           Map.entry("5-2", MovementType.EIFE),
@@ -194,7 +197,8 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("11-7", MovementType.FE),
           Map.entry("11-8", MovementType.FEIFE),
           Map.entry("11-9", MovementType.PARALLEL),
-          Map.entry("11-10", MovementType.FEIFE));
+          Map.entry("11-10", MovementType.FEIFE),
+          Map.entry("13-1", MovementType.PARALLEL));
 
   public MoveToPositionCommand(
       Elevator elevator, FerrisWheel ferrisWheel, int currentKey, int targetKey) {

@@ -29,9 +29,41 @@
           }
         },
         {
-          "type": "named",
+          "type": "race",
           "data": {
-            "name": "Check L4 Clear"
+            "commands": [
+              {
+                "type": "named",
+                "data": {
+                  "name": "Check L4 Clear"
+                }
+              },
+              {
+                "type": "sequential",
+                "data": {
+                  "commands": [
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.2
+                      }
+                    },
+                    {
+                      "type": "named",
+                      "data": {
+                        "name": "L4 Clear Position"
+                      }
+                    },
+                    {
+                      "type": "wait",
+                      "data": {
+                        "waitTime": 0.5
+                      }
+                    }
+                  ]
+                }
+              }
+            ]
           }
         },
         {

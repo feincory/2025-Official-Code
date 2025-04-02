@@ -43,6 +43,7 @@ import frc.robot.commands.ClearElevator;
 import frc.robot.commands.DriveCommands;
 import frc.robot.commands.HomeLiftCommand;
 import frc.robot.commands.MoveToPositionCommand;
+import frc.robot.commands.WaitForClearL4;
 import frc.robot.commands.WaitForGamePieceCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlgaeIntake;
@@ -94,13 +95,15 @@ public class RobotContainer {
     NamedCommands.registerCommand("Coral Retreive", new InstantCommand(() -> moveToPosition(1)));
     NamedCommands.registerCommand("Coral Outtake", new InstantCommand(m_FerrisWheel::coralout));
     NamedCommands.registerCommand("Coral L4", new InstantCommand(() -> moveToPosition(4)));
+    NamedCommands.registerCommand(
+        "L4 Clear Position", new InstantCommand(() -> moveToPosition(13)));
     NamedCommands.registerCommand("Coral Intake", new InstantCommand(m_FerrisWheel::coralin));
     NamedCommands.registerCommand("Settle For Place", new WaitCommand(.5));
     NamedCommands.registerCommand("Settle For Retreive", new WaitCommand(.3));
     NamedCommands.registerCommand(
         "Wait for Game Piece", new WaitForGamePieceCommand(m_FerrisWheel.getSensor(), 2.5));
     NamedCommands.registerCommand(
-        "Check L4 Clear", new WaitForGamePieceCommand(m_FerrisWheel.getL4Sensor(), 15));
+        "Check L4 Clear", new WaitForClearL4(m_FerrisWheel.getL4Sensor()));
 
     switch (Constants.currentMode) {
       case REAL:
@@ -290,6 +293,7 @@ public class RobotContainer {
     //     .onFalse(new InstantCommand(m_coralground::stop));
 
     // coral intake button binding
+
     controller
         .rightBumper()
         .onTrue(new InstantCommand(m_FerrisWheel::coraloutslow))
@@ -354,7 +358,12 @@ public class RobotContainer {
     controller.a().onTrue(new InstantCommand(() -> moveToPosition(1)));
     controller.x().onTrue(new InstantCommand(() -> moveToPosition(2)));
     controller.b().onTrue(new InstantCommand(() -> moveToPosition(3)));
-    controller.y().onTrue(new InstantCommand(() -> moveToPosition(4)));
+    controller
+        .y()
+        .onTrue(new InstantCommand(() -> moveToPosition(4)))
+        .onTrue(
+            new InstantCommand(
+                () -> m_CANdleSystem.changeAnimation(CANdleSystem.AnimationTypes.Larson)));
     m_drivercontroller.button(4).onTrue(new InstantCommand(() -> moveToPosition(12)));
     m_drivercontroller.button(4).onTrue(new InstantCommand(m_climber::okaytorelease));
 
