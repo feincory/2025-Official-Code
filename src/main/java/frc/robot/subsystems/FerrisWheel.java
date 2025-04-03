@@ -287,6 +287,6 @@ public class FerrisWheel extends SubsystemBase {
   }
 
   public void algaeout() {
-    m_Algae.set(ControlMode.PercentOutput, .5);
+    m_Algae.set(ControlMode.PercentOutput, .65);
   }
 }
