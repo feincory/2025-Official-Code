@@ -40,7 +40,7 @@ public class LeftHexagonPositionCalculator {
     ArrayList<LeftScoringPosition> positions = new ArrayList<>();
     double angleIncrement = Math.toRadians(60);
 
-    for (int side = 0; side < 7; side++) {
+    for (int side = 0; side < 6; side++) {
       // double angle = 0;
       double angle = (side * angleIncrement);
       double angleradians1 = angle + Math.atan((+yOffset1) / (radius + xOffset));

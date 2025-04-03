@@ -198,7 +198,8 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("11-8", MovementType.FEIFE),
           Map.entry("11-9", MovementType.PARALLEL),
           Map.entry("11-10", MovementType.FEIFE),
-          Map.entry("13-1", MovementType.PARALLEL));
+          Map.entry("13-1", MovementType.PARALLEL),
+          Map.entry("13-7", MovementType.PARALLEL));
 
   public MoveToPositionCommand(
       Elevator elevator, FerrisWheel ferrisWheel, int currentKey, int targetKey) {

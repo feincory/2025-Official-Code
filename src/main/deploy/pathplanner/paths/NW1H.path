@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 7.027742884255056,
-        "y": 5.161752895117047
+        "x": 6.96,
+        "y": 5.48
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.198370037026896,
-        "y": 5.17199206607048
+        "x": 6.202759548209847,
+        "y": 5.3476488380314775
       },
       "isLocked": false,
       "linkedName": "CAGE3"
     },
     {
       "anchor": {
-        "x": 5.226912159242906,
-        "y": 5.212550508252491
+        "x": 5.208245650714309,
+        "y": 5.2083604056957915
       },
       "prevControl": {
-        "x": 5.76828748891325,
-        "y": 5.180539041347815
+        "x": 5.555755265269828,
+        "y": 5.282999476962063
       },
       "nextControl": null,
       "isLocked": false,
@@ -29,7 +29,21 @@
     }
   ],
   "rotationTargets": [],
-  "constraintZones": [],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.6423034330011037,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 4.1,
+        "maxAcceleration": 3.0,
+        "maxAngularVelocity": 325.0,
+        "maxAngularAcceleration": 325.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
@@ -71,7 +85,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 27.728257422319114
+    "rotation": 29.999999999999996
   },
   "useDefaultConstraints": true
 }

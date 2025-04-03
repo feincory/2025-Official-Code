@@ -3,13 +3,13 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 6.97,
-        "y": 2.35
+        "x": 6.95,
+        "y": 2.61
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.313924060510276,
-        "y": 2.631971412452283
+        "x": 6.293924060510276,
+        "y": 2.891971412452283
       },
       "isLocked": false,
       "linkedName": "CAGE4"
@@ -128,7 +128,7 @@
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": -29.699999999999996
+    "rotation": -29.000000000000004
   },
   "useDefaultConstraints": true
 }

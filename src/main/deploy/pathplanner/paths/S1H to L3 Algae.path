@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 1.483585736563827,
-        "y": 7.224986478750172
+        "x": 3.091813380281689,
+        "y": 3.84075704225352
       },
       "prevControl": null,
       "nextControl": {
-        "x": 1.8189743589713807,
-        "y": 6.336794871799352
+        "x": 2.6426786843013117,
+        "y": 3.7614045994303766
       },
       "isLocked": false,
-      "linkedName": "Retrieve West"
+      "linkedName": "S1"
     },
     {
       "anchor": {
-        "x": 3.0787925567055283,
-        "y": 4.20356528593969
+        "x": 3.1034642252643803,
+        "y": 3.879509200464797
       },
       "prevControl": {
-        "x": 2.708683081299246,
-        "y": 4.781552758280467
+        "x": 2.57469929030828,
+        "y": 3.955631439410465
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "S2H"
+      "linkedName": "L3 Algae"
     }
   ],
   "rotationTargets": [],
@@ -47,7 +47,7 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "Coral Intake",
+      "name": "Algae L3",
       "waypointRelativePos": 0,
       "endWaypointRelativePos": null,
       "command": {
@@ -58,8 +58,8 @@
       }
     },
     {
-      "name": "Coral L4",
-      "waypointRelativePos": 0.27906976744186096,
+      "name": "Coral Intake",
+      "waypointRelativePos": 0.8962779156327515,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -70,8 +70,8 @@
     }
   ],
   "globalConstraints": {
-    "maxVelocity": 4.1,
-    "maxAcceleration": 6.0,
+    "maxVelocity": 2.0,
+    "maxAcceleration": 2.0,
     "maxAngularVelocity": 325.0,
     "maxAngularAcceleration": 325.0,
     "nominalVoltage": 12.0,
@@ -79,13 +79,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 164.82708465447456
+    "rotation": 179.34145682243647
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 126.06043499684844
+    "rotation": 179.51853419416165
   },
   "useDefaultConstraints": false
 }

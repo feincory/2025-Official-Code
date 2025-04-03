@@ -16,12 +16,12 @@
     },
     {
       "anchor": {
-        "x": 1.5733526067796795,
-        "y": 7.20967753395079
+        "x": 1.483585736563827,
+        "y": 7.224986478750172
       },
       "prevControl": {
-        "x": 1.832176576977326,
-        "y": 6.854718946251161
+        "x": 1.7424097067614734,
+        "y": 6.870027891050543
       },
       "nextControl": null,
       "isLocked": false,
@@ -33,7 +33,7 @@
     {
       "name": "Constraints Zone",
       "minWaypointRelativePos": 0,
-      "maxWaypointRelativePos": 0.1949058693244718,
+      "maxWaypointRelativePos": 0.3145071982281287,
       "constraints": {
         "maxVelocity": 3.85,
         "maxAcceleration": 4.0,
@@ -48,7 +48,7 @@
   "eventMarkers": [
     {
       "name": "Coral Retreive",
-      "waypointRelativePos": 0.2193548387096765,
+      "waypointRelativePos": 0.15060908084164015,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
@@ -60,7 +60,7 @@
   ],
   "globalConstraints": {
     "maxVelocity": 4.1,
-    "maxAcceleration": 4.6,
+    "maxAcceleration": 6.0,
     "maxAngularVelocity": 325.0,
     "maxAngularAcceleration": 325.0,
     "nominalVoltage": 12.0,
@@ -76,5 +76,5 @@
     "velocity": 0,
     "rotation": 121.27427119660739
   },
-  "useDefaultConstraints": true
+  "useDefaultConstraints": false
 }

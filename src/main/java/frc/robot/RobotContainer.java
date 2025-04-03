@@ -95,9 +95,12 @@ public class RobotContainer {
     NamedCommands.registerCommand("Coral Retreive", new InstantCommand(() -> moveToPosition(1)));
     NamedCommands.registerCommand("Coral Outtake", new InstantCommand(m_FerrisWheel::coralout));
     NamedCommands.registerCommand("Coral L4", new InstantCommand(() -> moveToPosition(4)));
+    NamedCommands.registerCommand("Algae L3", new InstantCommand(() -> moveToPosition(7)));
     NamedCommands.registerCommand(
         "L4 Clear Position", new InstantCommand(() -> moveToPosition(13)));
+
     NamedCommands.registerCommand("Coral Intake", new InstantCommand(m_FerrisWheel::coralin));
+    NamedCommands.registerCommand("Algae Intake", new InstantCommand(m_FerrisWheel::algaein));
     NamedCommands.registerCommand("Settle For Place", new WaitCommand(.5));
     NamedCommands.registerCommand("Settle For Retreive", new WaitCommand(.3));
     NamedCommands.registerCommand(
