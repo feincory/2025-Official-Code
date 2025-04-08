@@ -370,12 +370,12 @@ public class RobotContainer {
     m_drivercontroller.button(4).onTrue(new InstantCommand(() -> moveToPosition(12)));
     m_drivercontroller.button(4).onTrue(new InstantCommand(m_climber::okaytorelease));
 
-    m_drivercontroller.button(2).onTrue(drive.leftfollowPath());
-    m_drivercontroller.button(2).onFalse(new InstantCommand(drive::stop));
+    m_drivercontroller.button(3).onTrue(drive.leftfollowPath());
+    m_drivercontroller.button(3).onFalse(new InstantCommand(drive::stop));
     // m_drivercontroller.button(1).onFalse(autoChooser.followPath(null).cancel());
 
-    m_drivercontroller.button(3).onTrue(drive.rightfollowPath());
-    m_drivercontroller.button(3).onFalse(new InstantCommand(drive::stop));
+    m_drivercontroller.button(2).onTrue(drive.rightfollowPath());
+    m_drivercontroller.button(2).onFalse(new InstantCommand(drive::stop));
 
     m_drivercontroller.button(13).onTrue(drive.AlgaefollowPath());
     m_drivercontroller.button(13).onFalse(new InstantCommand(drive::stop));
