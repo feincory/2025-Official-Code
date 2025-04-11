@@ -3,29 +3,29 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.31375,
-        "y": 5.0584999999999996
+        "x": 5.811111617354253,
+        "y": 4.13644681853396
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.819455128205128,
-        "y": 5.450679487179488
+        "x": 6.141368027610664,
+        "y": 3.0115109210980617
       },
       "isLocked": false,
-      "linkedName": "H1"
+      "linkedName": "NA"
     },
     {
       "anchor": {
-        "x": 5.877469954377088,
-        "y": 4.002465625269286
+        "x": 5.998782051282051,
+        "y": 0.5985897435897425
       },
       "prevControl": {
-        "x": 5.62977764668478,
-        "y": 3.5380425483462097
+        "x": 5.813012820512819,
+        "y": 1.3003846153846155
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "n1"
+      "linkedName": "AP"
     }
   ],
   "rotationTargets": [],
@@ -33,13 +33,24 @@
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "Trigger1",
-      "waypointRelativePos": 0.3388704318936881,
+      "name": "Algae Processor",
+      "waypointRelativePos": 0.24806201550387696,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "Coral L4"
+          "name": "Algae Processor"
+        }
+      }
+    },
+    {
+      "name": "Algae Outtake",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Algae Outtake"
         }
       }
     }
@@ -54,13 +65,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 90.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.74356283647073
+    "rotation": 0.0
   },
   "useDefaultConstraints": true
 }

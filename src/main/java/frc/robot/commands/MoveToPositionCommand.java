@@ -199,6 +199,7 @@ public class MoveToPositionCommand extends SequentialCommandGroup {
           Map.entry("11-9", MovementType.PARALLEL),
           Map.entry("11-10", MovementType.FEIFE),
           Map.entry("13-1", MovementType.PARALLEL),
+          Map.entry("13-6", MovementType.PARALLEL),
           Map.entry("13-7", MovementType.PARALLEL));
 
   public MoveToPositionCommand(

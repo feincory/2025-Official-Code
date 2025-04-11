@@ -8,6 +8,7 @@ import com.ctre.phoenix6.configs.TalonFXConfiguration;
 import com.ctre.phoenix6.controls.DutyCycleOut;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.NeutralModeValue;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -20,8 +21,11 @@ public class CLIMBER extends SubsystemBase {
   Servo m_funnelrelease;
   boolean funnelokaytorelease;
 
+  // ⬅️ NEW: DigitalInput for the limit switch
+  private final DigitalInput m_topLimitSwitch = new DigitalInput(3); // DIO port 0
+
   public CLIMBER() {
-    climb_cfg.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .5;
+    climb_cfg.OpenLoopRamps.DutyCycleOpenLoopRampPeriod = .3;
     m_climber.getConfigurator().apply(climb_cfg);
     m_climber.setNeutralMode(NeutralModeValue.Brake);
     m_funnelrelease = new Servo(0);
@@ -35,15 +39,30 @@ public class CLIMBER extends SubsystemBase {
   }
 
   public void climbdown() {
-    m_climber.setControl(m_climbOutput.withOutput(-.7)); // was -.75
+    m_climber.setControl(m_climbOutput.withOutput(-1)); // was -.75
   }
 
   public void climbup() {
-    m_climber.setControl(m_climbOutput.withOutput(.5)); // was .3
+    if (m_topLimitSwitch.get()) {
+      // Switch not pressed – OK to move up
+      m_climber.setControl(m_climbOutput.withOutput(.9));
+    } else {
+      // Switch pressed – stop!
+      m_climber.setControl(m_climbOutput.withOutput(0.0));
+    }
+    // m_climber.setControl(m_climbOutput.withOutput(.5)); // was .3
   }
 
   public void climbhold() {
-    m_climber.setControl(m_climbOutput.withOutput(.05));
+    if (m_topLimitSwitch.get()) {
+      // Switch not pressed – OK to move up
+      m_climber.setControl(m_climbOutput.withOutput(.05));
+    } else {
+      // Switch pressed – stop!
+      m_climber.setControl(m_climbOutput.withOutput(0.0));
+    }
+
+    // m_climber.setControl(m_climbOutput.withOutput(.05));
   }
 
   public void climbstop() {

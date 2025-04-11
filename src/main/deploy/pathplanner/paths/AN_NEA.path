@@ -1,0 +1,96 @@
+{
+  "version": "2025.0",
+  "waypoints": [
+    {
+      "anchor": {
+        "x": 7.402019895052059,
+        "y": 4.646607478800595
+      },
+      "prevControl": null,
+      "nextControl": {
+        "x": 6.546122739404089,
+        "y": 2.6330791401404032
+      },
+      "isLocked": false,
+      "linkedName": "AN"
+    },
+    {
+      "anchor": {
+        "x": 5.30221228925119,
+        "y": 2.911842949069753
+      },
+      "prevControl": {
+        "x": 6.138342708294905,
+        "y": 1.5174021336188424
+      },
+      "nextControl": null,
+      "isLocked": false,
+      "linkedName": "NEA"
+    }
+  ],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.7666666666666628,
+      "rotationDegrees": -59.54135317185268
+    }
+  ],
+  "constraintZones": [
+    {
+      "name": "Constraints Zone",
+      "minWaypointRelativePos": 0.5116279069767442,
+      "maxWaypointRelativePos": 1.0,
+      "constraints": {
+        "maxVelocity": 2.0,
+        "maxAcceleration": 1.0,
+        "maxAngularVelocity": 325.0,
+        "maxAngularAcceleration": 325.0,
+        "nominalVoltage": 12.0,
+        "unlimited": false
+      }
+    }
+  ],
+  "pointTowardsZones": [],
+  "eventMarkers": [
+    {
+      "name": "Algae L3",
+      "waypointRelativePos": 0.061936936936936124,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Algae L3"
+        }
+      }
+    },
+    {
+      "name": "Algae Intake",
+      "waypointRelativePos": 0.7464008859357667,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Algae Intake"
+        }
+      }
+    }
+  ],
+  "globalConstraints": {
+    "maxVelocity": 4.0,
+    "maxAcceleration": 3.5,
+    "maxAngularVelocity": 325.0,
+    "maxAngularAcceleration": 325.0,
+    "nominalVoltage": 12.0,
+    "unlimited": false
+  },
+  "goalEndState": {
+    "velocity": 0,
+    "rotation": -59.13910831165055
+  },
+  "reversed": false,
+  "folder": null,
+  "idealStartingState": {
+    "velocity": 0,
+    "rotation": 180.0
+  },
+  "useDefaultConstraints": false
+}

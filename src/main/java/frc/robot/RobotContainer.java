@@ -34,6 +34,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandJoystick;
@@ -47,10 +48,10 @@ import frc.robot.commands.WaitForClearL4;
 import frc.robot.commands.WaitForGamePieceCommand;
 import frc.robot.generated.TunerConstants;
 import frc.robot.subsystems.AlgaeIntake;
-import frc.robot.subsystems.CANdleSystem;
 import frc.robot.subsystems.CLIMBER;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.FerrisWheel;
+import frc.robot.subsystems.GroundIntake;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -77,7 +78,7 @@ public class RobotContainer {
   public final CLIMBER m_climber = new CLIMBER();
   public final AlgaeIntake m_AlgaeIntake = new AlgaeIntake();
   public final FerrisWheel m_FerrisWheel = new FerrisWheel();
-  public final CANdleSystem m_CANdleSystem = new CANdleSystem();
+  public final GroundIntake m_GroundIntake = new GroundIntake();
   // public final CoralGround m_coralground = new CoralGround();
   private final Vision vision;
 
@@ -96,11 +97,16 @@ public class RobotContainer {
     NamedCommands.registerCommand("Coral Outtake", new InstantCommand(m_FerrisWheel::coralout));
     NamedCommands.registerCommand("Coral L4", new InstantCommand(() -> moveToPosition(4)));
     NamedCommands.registerCommand("Algae L3", new InstantCommand(() -> moveToPosition(7)));
+    NamedCommands.registerCommand("Algae L2", new InstantCommand(() -> moveToPosition(6)));
+    NamedCommands.registerCommand("Algae Net", new InstantCommand(() -> moveToPosition(9)));
     NamedCommands.registerCommand(
         "L4 Clear Position", new InstantCommand(() -> moveToPosition(13)));
 
     NamedCommands.registerCommand("Coral Intake", new InstantCommand(m_FerrisWheel::coralin));
     NamedCommands.registerCommand("Algae Intake", new InstantCommand(m_FerrisWheel::algaein));
+    NamedCommands.registerCommand("Algae Hold", new InstantCommand(m_FerrisWheel::algaehold));
+
+    NamedCommands.registerCommand("Algae Outtake", new InstantCommand(m_FerrisWheel::algaeout));
     NamedCommands.registerCommand("Settle For Place", new WaitCommand(.5));
     NamedCommands.registerCommand("Settle For Retreive", new WaitCommand(.3));
     NamedCommands.registerCommand(
@@ -304,9 +310,6 @@ public class RobotContainer {
     controller
         .leftBumper()
         .onTrue(new InstantCommand(m_FerrisWheel::coralin))
-        .onTrue(
-            new InstantCommand(
-                () -> m_CANdleSystem.changeAnimation(CANdleSystem.AnimationTypes.Twinkle)))
         .onFalse(new InstantCommand(m_FerrisWheel::coralhold));
 
     // algae intake button binding
@@ -317,27 +320,19 @@ public class RobotContainer {
     controller
         .leftTrigger()
         .onTrue(new InstantCommand(m_FerrisWheel::algaein))
-        .onTrue(
-            new InstantCommand(
-                () -> m_CANdleSystem.changeAnimation(CANdleSystem.AnimationTypes.Fire)))
         .onFalse(new InstantCommand(m_FerrisWheel::algaehold));
     // // climber
     controller
         .leftStick()
-        .onTrue(new InstantCommand(m_climber::climbup))
-        .onFalse(new InstantCommand(m_climber::climbhold));
+        .whileTrue(new RunCommand(m_climber::climbup))
+        .onFalse(new RunCommand(m_climber::climbhold));
 
     controller
         .rightStick()
-        .onTrue(new InstantCommand(m_climber::climbdown))
-        .onFalse(new InstantCommand(m_climber::climbstop));
+        .whileTrue(new RunCommand(m_climber::climbdown))
+        .onFalse(new RunCommand(m_climber::climbstop));
 
-    controller
-        .rightStick()
-        .onTrue(new InstantCommand(m_climber::funnelrelease))
-        .onTrue(
-            new InstantCommand(
-                () -> m_CANdleSystem.changeAnimation(CANdleSystem.AnimationTypes.Rainbow)));
+    controller.rightStick().onTrue(new InstantCommand(m_climber::funnelrelease));
 
     controller.leftStick().onTrue(new InstantCommand(m_climber::funnelrelease));
 
@@ -361,14 +356,11 @@ public class RobotContainer {
     controller.a().onTrue(new InstantCommand(() -> moveToPosition(1)));
     controller.x().onTrue(new InstantCommand(() -> moveToPosition(2)));
     controller.b().onTrue(new InstantCommand(() -> moveToPosition(3)));
-    controller
-        .y()
-        .onTrue(new InstantCommand(() -> moveToPosition(4)))
-        .onTrue(
-            new InstantCommand(
-                () -> m_CANdleSystem.changeAnimation(CANdleSystem.AnimationTypes.Larson)));
+    controller.y().onTrue(new InstantCommand(() -> moveToPosition(4)));
+
     m_drivercontroller.button(4).onTrue(new InstantCommand(() -> moveToPosition(12)));
     m_drivercontroller.button(4).onTrue(new InstantCommand(m_climber::okaytorelease));
+    m_drivercontroller.button(4).onTrue(new InstantCommand(m_GroundIntake::pickupposition));
 
     m_drivercontroller.button(3).onTrue(drive.leftfollowPath());
     m_drivercontroller.button(3).onFalse(new InstantCommand(drive::stop));
@@ -380,9 +372,28 @@ public class RobotContainer {
     m_drivercontroller.button(13).onTrue(drive.AlgaefollowPath());
     m_drivercontroller.button(13).onFalse(new InstantCommand(drive::stop));
 
-    // m_drivercontroller.button(7).onTrue(new InstantCommand(() ->
-    // drive.findNearestPositiCommand()));
-    // m_drivercontroller.button(7).onFalse(new InstantCommand(drive::stop));
+    m_drivercontroller.button(11).onTrue(new InstantCommand(m_GroundIntake::pickupposition));
+    m_drivercontroller.button(11).onTrue(new InstantCommand(m_GroundIntake::spinnerfwd));
+
+    m_drivercontroller.button(11).onFalse(new InstantCommand(m_GroundIntake::l1ScorePosition));
+    m_drivercontroller.button(11).onFalse(new InstantCommand(m_GroundIntake::spinnerstop));
+    m_drivercontroller.button(10).onFalse(new InstantCommand(m_GroundIntake::l1ScorePosition));
+    m_drivercontroller.button(10).onFalse(new InstantCommand(m_GroundIntake::spinnerstop));
+    // m_drivercontroller.button(11).onTrue(new InstantCommand(m_GroundIntake::pickupposition));
+
+    m_drivercontroller
+        .button(10)
+        .onTrue(
+            new InstantCommand(m_GroundIntake::spinnerrev)
+                .andThen(new WaitCommand(.25))
+                .andThen(new InstantCommand(m_GroundIntake::stowposition))
+                .andThen(new InstantCommand(m_GroundIntake::spinnerstop)));
+
+    // m_drivercontroller.button(8).onTrue(new InstantCommand(m_GroundIntake::spinnerfwd));
+    // m_drivercontroller.button(9).onTrue(new InstantCommand(m_GroundIntake::spinnerrev));
+
+    // m_drivercontroller.button(9).onFalse(new InstantCommand(m_GroundIntake::spinnerstop));
+    // m_drivercontroller.button(8).onFalse(new InstantCommand(m_GroundIntake::spinnerstop));
   }
 
   private void moveToPosition(int targetKey) {

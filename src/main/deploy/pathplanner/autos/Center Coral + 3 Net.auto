@@ -1,0 +1,163 @@
+{
+  "version": "2025.0",
+  "command": {
+    "type": "sequential",
+    "data": {
+      "commands": [
+        {
+          "type": "path",
+          "data": {
+            "pathName": "Center_N1"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Coral Outtake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "L4 Clear Position"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.1
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "N1_NA"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Algae Intake"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Algae Hold"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NA_AN"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Algae Outtake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.75
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AN_NWA"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Algae Intake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Algae Hold"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NWA_AN"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Algae Outtake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.75
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "AN_NEA"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Algae Intake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.2
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Algae Hold"
+          }
+        },
+        {
+          "type": "path",
+          "data": {
+            "pathName": "NEA_AN"
+          }
+        },
+        {
+          "type": "named",
+          "data": {
+            "name": "Algae Outtake"
+          }
+        },
+        {
+          "type": "wait",
+          "data": {
+            "waitTime": 0.25
+          }
+        }
+      ]
+    }
+  },
+  "resetOdom": false,
+  "folder": null,
+  "choreoAuto": false
+}

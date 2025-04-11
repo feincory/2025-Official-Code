@@ -3,43 +3,59 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 5.31375,
-        "y": 5.0584999999999996
+        "x": 5.037062102816363,
+        "y": 5.3003491629692565
       },
       "prevControl": null,
       "nextControl": {
-        "x": 5.819455128205128,
-        "y": 5.450679487179488
+        "x": 5.802692307692308,
+        "y": 6.976666666666667
       },
       "isLocked": false,
-      "linkedName": "H1"
+      "linkedName": "NWA"
     },
     {
       "anchor": {
-        "x": 5.877469954377088,
-        "y": 4.002465625269286
+        "x": 7.402019895052059,
+        "y": 4.646607478800595
       },
       "prevControl": {
-        "x": 5.62977764668478,
-        "y": 3.5380425483462097
+        "x": 6.402019895052059,
+        "y": 4.646607478800595
       },
       "nextControl": null,
       "isLocked": false,
-      "linkedName": "n1"
+      "linkedName": "AN"
     }
   ],
-  "rotationTargets": [],
+  "rotationTargets": [
+    {
+      "waypointRelativePos": 0.105263157894744,
+      "rotationDegrees": 59.99999999999999
+    }
+  ],
   "constraintZones": [],
   "pointTowardsZones": [],
   "eventMarkers": [
     {
-      "name": "Trigger1",
-      "waypointRelativePos": 0.3388704318936881,
+      "name": "Algae Net",
+      "waypointRelativePos": 0.20376522702104194,
       "endWaypointRelativePos": null,
       "command": {
         "type": "named",
         "data": {
-          "name": "Coral L4"
+          "name": "Algae Net"
+        }
+      }
+    },
+    {
+      "name": "Algae Outtake",
+      "waypointRelativePos": 1.0,
+      "endWaypointRelativePos": null,
+      "command": {
+        "type": "named",
+        "data": {
+          "name": "Algae Outtake"
         }
       }
     }
@@ -54,13 +70,13 @@
   },
   "goalEndState": {
     "velocity": 0,
-    "rotation": 0.0
+    "rotation": 180.0
   },
   "reversed": false,
   "folder": null,
   "idealStartingState": {
     "velocity": 0,
-    "rotation": 59.74356283647073
+    "rotation": 61.60698057861688
   },
   "useDefaultConstraints": true
 }
