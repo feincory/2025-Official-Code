@@ -101,7 +101,7 @@ public class GroundIntake extends SubsystemBase {
 
     // constant values
     stowposition = .35;
-    pickupposition = -.05;
+    pickupposition = -.02; // was -.05
     l1ScorePosition = .31;
 
     // stowposition = .6;
@@ -124,6 +124,11 @@ public class GroundIntake extends SubsystemBase {
     System.out.println("Target" + pickupposition);
   }
 
+  public void ClimbPosition() {
+    final MotionMagicExpoVoltage m_request = new MotionMagicExpoVoltage(0);
+    m_tiltmtr.setControl(m_request.withPosition(.13));
+  }
+
   public void l1ScorePosition() {
     final MotionMagicExpoVoltage m_request = new MotionMagicExpoVoltage(0);
     m_tiltmtr.setControl(m_request.withPosition(l1ScorePosition));
@@ -134,7 +139,7 @@ public class GroundIntake extends SubsystemBase {
   }
 
   public void spinnerrev() {
-    m_spinner.setControl(m_spinnerdDutyCycleOut.withOutput(0.60));
+    m_spinner.setControl(m_spinnerdDutyCycleOut.withOutput(0.70));
   }
 
   public void spinnerstop() {

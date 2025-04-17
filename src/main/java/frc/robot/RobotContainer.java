@@ -360,7 +360,7 @@ public class RobotContainer {
 
     m_drivercontroller.button(4).onTrue(new InstantCommand(() -> moveToPosition(12)));
     m_drivercontroller.button(4).onTrue(new InstantCommand(m_climber::okaytorelease));
-    m_drivercontroller.button(4).onTrue(new InstantCommand(m_GroundIntake::pickupposition));
+    m_drivercontroller.button(4).onTrue(new InstantCommand(m_GroundIntake::ClimbPosition));
 
     m_drivercontroller.button(3).onTrue(drive.leftfollowPath());
     m_drivercontroller.button(3).onFalse(new InstantCommand(drive::stop));
