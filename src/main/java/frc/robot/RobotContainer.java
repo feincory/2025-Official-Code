@@ -51,7 +51,6 @@ import frc.robot.subsystems.AlgaeIntake;
 import frc.robot.subsystems.CLIMBER;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.FerrisWheel;
-import frc.robot.subsystems.GroundIntake;
 import frc.robot.subsystems.drive.Drive;
 import frc.robot.subsystems.drive.GyroIO;
 import frc.robot.subsystems.drive.GyroIOPigeon2;
@@ -78,7 +77,7 @@ public class RobotContainer {
   public final CLIMBER m_climber = new CLIMBER();
   public final AlgaeIntake m_AlgaeIntake = new AlgaeIntake();
   public final FerrisWheel m_FerrisWheel = new FerrisWheel();
-  public final GroundIntake m_GroundIntake = new GroundIntake();
+  //   public final GroundIntake m_GroundIntake = new GroundIntake();
   // public final CoralGround m_coralground = new CoralGround();
   private final Vision vision;
 
@@ -360,7 +359,7 @@ public class RobotContainer {
 
     m_drivercontroller.button(4).onTrue(new InstantCommand(() -> moveToPosition(12)));
     m_drivercontroller.button(4).onTrue(new InstantCommand(m_climber::okaytorelease));
-    m_drivercontroller.button(4).onTrue(new InstantCommand(m_GroundIntake::ClimbPosition));
+    // m_drivercontroller.button(4).onTrue(new InstantCommand(m_GroundIntake::ClimbPosition));
 
     m_drivercontroller.button(3).onTrue(drive.leftfollowPath());
     m_drivercontroller.button(3).onFalse(new InstantCommand(drive::stop));
@@ -372,22 +371,22 @@ public class RobotContainer {
     m_drivercontroller.button(13).onTrue(drive.AlgaefollowPath());
     m_drivercontroller.button(13).onFalse(new InstantCommand(drive::stop));
 
-    m_drivercontroller.button(11).onTrue(new InstantCommand(m_GroundIntake::pickupposition));
-    m_drivercontroller.button(11).onTrue(new InstantCommand(m_GroundIntake::spinnerfwd));
+    // m_drivercontroller.button(11).onTrue(new InstantCommand(m_GroundIntake::pickupposition));
+    // m_drivercontroller.button(11).onTrue(new InstantCommand(m_GroundIntake::spinnerfwd));
 
-    m_drivercontroller.button(11).onFalse(new InstantCommand(m_GroundIntake::l1ScorePosition));
-    m_drivercontroller.button(11).onFalse(new InstantCommand(m_GroundIntake::spinnerstop));
-    m_drivercontroller.button(10).onFalse(new InstantCommand(m_GroundIntake::l1ScorePosition));
-    m_drivercontroller.button(10).onFalse(new InstantCommand(m_GroundIntake::spinnerstop));
+    // m_drivercontroller.button(11).onFalse(new InstantCommand(m_GroundIntake::l1ScorePosition));
+    // m_drivercontroller.button(11).onFalse(new InstantCommand(m_GroundIntake::spinnerstop));
+    // m_drivercontroller.button(10).onFalse(new InstantCommand(m_GroundIntake::l1ScorePosition));
+    // m_drivercontroller.button(10).onFalse(new InstantCommand(m_GroundIntake::spinnerstop));
     // m_drivercontroller.button(11).onTrue(new InstantCommand(m_GroundIntake::pickupposition));
 
-    m_drivercontroller
-        .button(10)
-        .onTrue(
-            new InstantCommand(m_GroundIntake::spinnerrev)
-                .andThen(new WaitCommand(.25))
-                .andThen(new InstantCommand(m_GroundIntake::stowposition))
-                .andThen(new InstantCommand(m_GroundIntake::spinnerstop)));
+    // m_drivercontroller
+    //     .button(10)
+    //     .onTrue(
+    //         new InstantCommand(m_GroundIntake::spinnerrev)
+    //             .andThen(new WaitCommand(.25))
+    //             .andThen(new InstantCommand(m_GroundIntake::stowposition))
+    //             .andThen(new InstantCommand(m_GroundIntake::spinnerstop)));
 
     // m_drivercontroller.button(8).onTrue(new InstantCommand(m_GroundIntake::spinnerfwd));
     // m_drivercontroller.button(9).onTrue(new InstantCommand(m_GroundIntake::spinnerrev));
