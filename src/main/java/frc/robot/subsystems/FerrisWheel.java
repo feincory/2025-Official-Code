@@ -214,6 +214,11 @@ public class FerrisWheel extends SubsystemBase {
     // }
   }
 
+  public void setclearforreset() {
+    final MotionMagicExpoVoltage m_request = new MotionMagicExpoVoltage(0);
+    m_FerrisWheel.setControl(m_request.withPosition(.057));
+  }
+
   public void retreiveposition() {
     if (m_elevatorlowered == false) {}
     m_FerrisWheel.setControl(m_PositionDutyCycle.withPosition(coralretreivepositionvalue));

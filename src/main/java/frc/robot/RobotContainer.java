@@ -324,12 +324,12 @@ public class RobotContainer {
     controller
         .leftStick()
         .whileTrue(new RunCommand(m_climber::climbup))
-        .onFalse(new RunCommand(m_climber::climbhold));
+        .onFalse(new InstantCommand(m_climber::climbhold));
 
     controller
         .rightStick()
         .whileTrue(new RunCommand(m_climber::climbdown))
-        .onFalse(new RunCommand(m_climber::climbstop));
+        .onFalse(new InstantCommand(m_climber::climbstop));
 
     controller.rightStick().onTrue(new InstantCommand(m_climber::funnelrelease));
 
@@ -370,6 +370,13 @@ public class RobotContainer {
 
     m_drivercontroller.button(13).onTrue(drive.AlgaefollowPath());
     m_drivercontroller.button(13).onFalse(new InstantCommand(drive::stop));
+
+    m_drivercontroller
+        .button(1)
+        .onTrue(new InstantCommand(m_Elevator::elevatormanualup))
+        .onFalse(new InstantCommand(m_Elevator::elevatorstop));
+
+    m_drivercontroller.button(1).onTrue(new InstantCommand(m_FerrisWheel::setclearforreset));
 
     // m_drivercontroller.button(11).onTrue(new InstantCommand(m_GroundIntake::pickupposition));
     // m_drivercontroller.button(11).onTrue(new InstantCommand(m_GroundIntake::spinnerfwd));

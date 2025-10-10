@@ -130,6 +130,16 @@ public class Elevator extends SubsystemBase {
     m_liftlead.set(power);
   }
 
+  // Elevator HomeLiftCommand
+  public void elevatormanualup() {
+    m_liftlead.set(-.05);
+  }
+
+  // Elevator HomeLiftCommand
+  public void elevatorstop() {
+    m_liftlead.set(0);
+  }
+
   // Elevator set position
   public void setElevatorpositon(double position) {
     final MotionMagicExpoVoltage m_request = new MotionMagicExpoVoltage(0);
